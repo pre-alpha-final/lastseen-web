@@ -2,7 +2,7 @@
 
 namespace LastSeenWeb.Data.Identity
 {
-    public class Class1
-    {
-    }
+	public class Class1
+	{
+	}
 }
