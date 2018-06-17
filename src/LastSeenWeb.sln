@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LastSeenWeb.Front", "LastSeenWeb.Front\LastSeenWeb.Front.csproj", "{AD25D343-B54F-47B7-A4B9-409747EC8570}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LastSeenWeb.Core", "LastSeenWeb.Core\LastSeenWeb.Core.csproj", "{1936FE3F-A720-4B64-BD17-8FF6E23132AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastSeenWeb.Core", "LastSeenWeb.Core\LastSeenWeb.Core.csproj", "{1936FE3F-A720-4B64-BD17-8FF6E23132AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LastSeenWeb.Data", "LastSeenWeb.Data\LastSeenWeb.Data.csproj", "{E1970825-3FD9-4045-A3F6-94FDFFFA5827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastSeenWeb.Data", "LastSeenWeb.Data\LastSeenWeb.Data.csproj", "{E1970825-3FD9-4045-A3F6-94FDFFFA5827}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastSeenWeb.Data.Identity", "LastSeenWeb.Data.Identity\LastSeenWeb.Data.Identity.csproj", "{0CC2A5B7-C44E-4E07-8E93-3623DFD4166F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LastSeenWeb.Data.Identity", "LastSeenWeb.Data.Identity\LastSeenWeb.Data.Identity.csproj", "{0CC2A5B7-C44E-4E07-8E93-3623DFD4166F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AD25D343-B54F-47B7-A4B9-409747EC8570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD25D343-B54F-47B7-A4B9-409747EC8570}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD25D343-B54F-47B7-A4B9-409747EC8570}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD25D343-B54F-47B7-A4B9-409747EC8570}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1936FE3F-A720-4B64-BD17-8FF6E23132AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1936FE3F-A720-4B64-BD17-8FF6E23132AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1936FE3F-A720-4B64-BD17-8FF6E23132AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
