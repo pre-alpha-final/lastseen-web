@@ -17,37 +17,39 @@
 	</environment>
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a asp-page="/Index" class="navbar-brand">LastSeenWeb.Front</a>
+				<a class="navbar-brand" href="#">Last Seen</a>
 			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a asp-page="/Index">Home</a></li>
-					<li><a asp-page="/About">About</a></li>
-					<li><a asp-page="/Contact">Contact</a></li>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav navbar-right">
+					@*@if (SignInManager.IsSignedIn(User))
+					{
+						<li><a href="/Auth/Logout">Log out</a></li>
+					}
+					else
+					{*@
+						<li><a href="/Auth/Register">Register</a></li>
+						<li><a href="/Auth/Login">Log in</a></li>
+					@*}*@
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<div class="container body-content">
 		@RenderBody()
-		<hr />
-		<footer>
-			<p>&copy; 2017 - LastSeenWeb.Front</p>
-		</footer>
 	</div>
 
 	<environment include="Development">
 		<script src="~/lib/jquery/dist/jquery.js"></script>
 		<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 		<script src="~/js/site.js" asp-append-version="true"></script>
 	</environment>
 	<environment exclude="Development">
@@ -63,6 +65,7 @@
 				crossorigin="anonymous"
 				integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
 		</script>
+		<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 		<script src="~/js/site.min.js" asp-append-version="true"></script>
 	</environment>
 
