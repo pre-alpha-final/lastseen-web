@@ -274,11 +274,3 @@ __pycache__/
 # tools/**
 # !tools/packages.config
 
-# ignore Xamarin.Android Resource.Designer.cs files
-**/*.Droid/**/[Rr]esource.[Dd]esigner.cs
-**/*.Android/**/[Rr]esource.[Dd]esigner.cs
-**/Android/**/[Rr]esource.[Dd]esigner.cs
-.vs/
-
-#Components folder
-Components/
