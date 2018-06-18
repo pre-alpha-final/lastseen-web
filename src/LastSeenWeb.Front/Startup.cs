@@ -1,3 +1,4 @@
+using LastSeenWeb.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,8 @@ namespace LastSeenWeb.Front
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddTransient<ApplicationSettings>();
+
 			services.AddMvc();
 		}
 
