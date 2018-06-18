@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace LastSeenWeb.Front
@@ -64,8 +65,8 @@ namespace LastSeenWeb.Front
 
 			app.UseMvc();
 
-			//var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
-			//loggerFactory.AddAzureWebAppDiagnostics();
+			var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
+			loggerFactory.AddAzureWebAppDiagnostics();
 		}
 	}
 }
