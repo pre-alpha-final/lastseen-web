@@ -1,5 +1,8 @@
 ﻿@using LastSeenWeb.Core
+@using LastSeenWeb.Data.Identity.Models
+@using Microsoft.AspNetCore.Identity
 @inject ApplicationSettings ApplicationSettings
+@inject SignInManager<ApplicationUser> SignInManager
 
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
@@ -13,17 +16,20 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav navbar-right">
-				@*@if (SignInManager.IsSignedIn(User))
-					{
-						<li><a href="/Auth/Logout">Log out</a></li>
-					}
-					else
-					{*@
-				@foreach (var link in ApplicationSettings.NavBarLoggedOut)
+				@if (SignInManager.IsSignedIn(User))
 				{
-					<li><a href="@link.Item1">@link.Item2</a></li>
+					@foreach (var link in ApplicationSettings.NavBarLoggedIn)
+					{
+						<li><a href="@link.Item1">@link.Item2</a></li>
+					}
 				}
-				@*}*@
+				else
+				{
+					@foreach (var link in ApplicationSettings.NavBarLoggedOut)
+					{
+						<li><a href="@link.Item1">@link.Item2</a></li>
+					}
+				}
 			</ul>
 		</div>
 	</div>

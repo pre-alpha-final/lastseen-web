@@ -5,6 +5,7 @@ namespace LastSeenWeb.Core
 	public class ApplicationSettings
 	{
 		public string ApplicationName { get; set; } = "Last Seen";
+		public string Domain { get; set; } = "lastseen.azurewebsites.net";
 		public List<(string, string)> NavBarLoggedOut { get; set; } = new List<(string, string)>
 		{
 			("/Auth/Register","Register"),
