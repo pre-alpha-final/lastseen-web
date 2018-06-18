@@ -1,11 +1,13 @@
-﻿@using LastSeenWeb.Front.Pages.Components.Title
+﻿@using LastSeenWeb.Core
+@using LastSeenWeb.Front.Pages.Components.NavBar
+@inject ApplicationSettings ApplicationSettings
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	@await Component.InvokeAsync(nameof(Title))
+	<title>@ApplicationSettings.ApplicationName</title>
 
 	<environment include="Development">
 		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -19,31 +21,7 @@
 	</environment>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Last Seen</a>
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav navbar-right">
-					@*@if (SignInManager.IsSignedIn(User))
-					{
-						<li><a href="/Auth/Logout">Log out</a></li>
-					}
-					else
-					{*@
-						<li><a href="/Auth/Register">Register</a></li>
-						<li><a href="/Auth/Login">Log in</a></li>
-					@*}*@
-				</ul>
-			</div>
-		</div>
-	</nav>
+	@await Component.InvokeAsync(nameof(NavBar))
 	<div class="container body-content">
 		@RenderBody()
 	</div>
