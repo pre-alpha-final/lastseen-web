@@ -1,3 +1,5 @@
-﻿@page
+﻿@page "{PageNumber:int?}"
 @model Pages.IndexModel
+@using Pages.Components.Pagination
 
+@await Component.InvokeAsync(nameof(Pagination))

@@ -6,6 +6,7 @@ namespace LastSeenWeb.Core
 	{
 		public string ApplicationName { get; set; } = "Last Seen";
 		public string Domain { get; set; } = "lastseen.azurewebsites.net";
+		public int ItemsPerPage { get; set; } = 12;
 		public List<(string, string)> NavBarLoggedOut { get; set; } = new List<(string, string)>
 		{
 			("/Auth/Register","Register"),
