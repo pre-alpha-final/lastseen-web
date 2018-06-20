@@ -1,6 +1,6 @@
 ﻿namespace LastSeenWeb.Front.Pages.Components.Pagination
 {
-	public class Model
+	public class PaginationModel
 	{
 		public int ItemCount { get; set; }
 		public int PageNumber { get; set; }

@@ -5,12 +5,8 @@ namespace LastSeenWeb.Front.Pages.Components.Pagination
 {
 	public class Pagination : ViewComponent
 	{
-		public async Task<IViewComponentResult> InvokeAsync()
+		public async Task<IViewComponentResult> InvokeAsync(PaginationModel model)
 		{
-			var model = new Model();
-			model.PageNumber = 2;
-			model.ItemCount = 30;
-
 			return View(model);
 		}
 	}

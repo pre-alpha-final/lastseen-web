@@ -2,4 +2,4 @@
 @model Pages.IndexModel
 @using Pages.Components.Pagination
 
-@await Component.InvokeAsync(nameof(Pagination))
+@await Component.InvokeAsync(nameof(Pagination), Model.PaginationModel)
