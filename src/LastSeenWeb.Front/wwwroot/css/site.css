@@ -1,0 +1,30 @@
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	color: #fff;
+	background-color: #111;
+}
+
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.btn {
+	padding: 10px 20px;
+	background-color: #333;
+	color: #f1f1f1;
+	border-radius: 0;
+	transition: .2s;
+}
+
+.button-spacing {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+.btn:hover, .btn:focus {
+	border: 1px solid #333;
+	background-color: #fff;
+	color: #000;
+}
