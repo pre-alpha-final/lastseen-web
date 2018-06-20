@@ -15,4 +15,7 @@
     <ProjectReference Include="..\LastSeenWeb.Core\LastSeenWeb.Core.csproj" />
     <ProjectReference Include="..\LastSeenWeb.Data.Identity\LastSeenWeb.Data.Identity.csproj" />
   </ItemGroup>
+  <Target Name="MinPreCompileTarget" BeforeTargets="Build">
+    <Exec Command="gulp min" />
+  </Target>
 </Project>
