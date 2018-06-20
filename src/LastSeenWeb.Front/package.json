@@ -1,0 +1,11 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-htmlmin": "^4.0.0",
+    "merge-stream": "^1.0.1"
+  }
+}
