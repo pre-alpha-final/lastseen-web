@@ -1,10 +1,12 @@
 ﻿using LastSeenWeb.Front.Pages.Components.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
 namespace LastSeenWeb.Front.Pages
 {
+	[Authorize]
 	public class IndexModel : PageModel
 	{
 		[BindProperty(SupportsGet = true)]
