@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace LastSeenWeb.Front.Pages.Components.Thumbnail
+namespace LastSeenWeb.Front.Pages.Components.ItemView
 {
-	public class Thumbnail : ViewComponent
+	public class ItemView : ViewComponent
 	{
 		public async Task<IViewComponentResult> InvokeAsync()
 		{
