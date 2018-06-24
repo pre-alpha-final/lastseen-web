@@ -12,6 +12,7 @@
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/site.js",
+      "wwwroot/js/ajaxhelpers.js",
       "Pages/Components/Popup/popup.js"
     ],
     "minify": {

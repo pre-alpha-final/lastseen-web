@@ -1,13 +1,19 @@
-﻿var modal = document.getElementById('popup');
+﻿var _popup = {};
 
-var btn = document.getElementById("popupButton");
+(popup => {
+	var modal = document.getElementById('popup');
+	window.onclick = function (event) {
+		if (event.target == modal) {
+			popup.close();
+		}
+	}
 
-btn.onclick = function () {
-	modal.style.display = "block";
-}
+	popup.open = async id => {
+		await ajaxGetAndReplace('/Popup/Content/' + id, '#popupContent')
+		modal.style.display = "flex";
+	}
 
-window.onclick = function (event) {
-	if (event.target == modal) {
+	popup.close = () => {
 		modal.style.display = "none";
 	}
-}
+})(_popup);
