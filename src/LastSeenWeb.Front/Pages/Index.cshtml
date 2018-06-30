@@ -1,5 +1,7 @@
 ﻿@page "{PageNumber:int?}"
 @model Pages.IndexModel
 @using Pages.Components.Pagination
+@using Pages.Components.Popup
 
+@await Component.InvokeAsync(nameof(Popup))
 @await Component.InvokeAsync(nameof(Pagination), Model.PaginationModel)
