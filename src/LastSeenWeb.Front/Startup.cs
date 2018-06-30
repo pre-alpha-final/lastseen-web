@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace LastSeenWeb.Front
 {
@@ -40,7 +41,9 @@ namespace LastSeenWeb.Front
 
 			services.AddSingleton<IEmailSender, EmailSender>();
 
-			services.AddMvc();
+			services
+				.AddMvc()
+				.AddRazorOptions(e => e.ViewLocationFormats.Add("/Pages/{0}.cshtml"));
 
 			services.Configure<MvcOptions>(options =>
 			{

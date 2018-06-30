@@ -1,0 +1,22 @@
+﻿.itemview {
+	padding: 0;
+}
+
+.itemview .thumbnail p {
+	margin-top: 0;
+	color: #555;
+}
+
+.itemview .thumbnail .image {
+	height: 200px;
+}
+
+.itemview .thumbnail .title {
+	margin-top: 15px;
+	font-size: 22px;
+}
+
+.itemview .thumbnail .price {
+	font-size: 20px;
+	color: #ff0044;
+}
