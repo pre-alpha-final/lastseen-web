@@ -40,6 +40,7 @@ namespace LastSeenWeb.Front
 			});
 
 			services.AddSingleton<IEmailSender, EmailSender>();
+			services.AddSingleton<IWebClientService, WebClientService>();
 
 			services
 				.AddMvc()
