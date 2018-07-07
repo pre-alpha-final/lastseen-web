@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Threading.Tasks;
 
 namespace LastSeenWeb.Front
 {
@@ -41,6 +40,7 @@ namespace LastSeenWeb.Front
 
 			services.AddSingleton<IEmailSender, EmailSender>();
 			services.AddSingleton<IWebClientService, WebClientService>();
+			services.AddSingleton<IAzureKicker, AzureKicker>();
 
 			services
 				.AddMvc()
@@ -71,6 +71,8 @@ namespace LastSeenWeb.Front
 
 			var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
 			loggerFactory.AddAzureWebAppDiagnostics();
+
+			serviceProvider.GetService<IAzureKicker>().Start();
 		}
 	}
 }
