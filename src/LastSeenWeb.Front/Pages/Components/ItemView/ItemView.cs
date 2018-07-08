@@ -5,9 +5,9 @@ namespace LastSeenWeb.Front.Pages.Components.ItemView
 {
 	public class ItemView : ViewComponent
 	{
-		public async Task<IViewComponentResult> InvokeAsync()
+		public Task<IViewComponentResult> InvokeAsync()
 		{
-			return View();
+			return Task.FromResult<IViewComponentResult>(View());
 		}
 	}
 }

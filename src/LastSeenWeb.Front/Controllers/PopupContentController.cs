@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace LastSeenWeb.Front.Controllers
 {
-	[Route("[controller]/[action]")]
+	[Route("[controller]")]
 	[Authorize]
-	public class PopupController : Controller
+	public class PopupContentController : Controller
 	{
 		[HttpGet("{id}")]
-		public async Task<IActionResult> Content(int id)
+		public Task<IActionResult> OnGetAsync(int id)
 		{
-			return ViewComponent(nameof(PopupContent), id);
+			return Task.FromResult<IActionResult>(ViewComponent(nameof(PopupContent), id));
 		}
 	}
 }
