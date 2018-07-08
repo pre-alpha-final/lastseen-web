@@ -5,9 +5,9 @@ namespace LastSeenWeb.Front.Pages.Components.Pagination
 {
 	public class Pagination : ViewComponent
 	{
-		public async Task<IViewComponentResult> InvokeAsync(PaginationModel model)
+		public Task<IViewComponentResult> InvokeAsync(PaginationModel model)
 		{
-			return View(model);
+			return Task.FromResult<IViewComponentResult>(View(model));
 		}
 	}
 }

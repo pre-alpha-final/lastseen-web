@@ -9,7 +9,7 @@
 	}
 
 	popup.open = async id => {
-		await ajaxGetAndReplace('/Popup/Content/' + id, '#popupContent')
+		await ajaxGetAndReplace('/PopupContent/' + id, '#popupContent')
 		modal.style.display = "flex";
 	}
 

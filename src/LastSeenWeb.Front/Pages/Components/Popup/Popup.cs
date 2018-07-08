@@ -5,9 +5,9 @@ namespace LastSeenWeb.Front.Pages.Components.Popup
 {
 	public class Popup : ViewComponent
 	{
-		public async Task<IViewComponentResult> InvokeAsync()
+		public Task<IViewComponentResult> InvokeAsync()
 		{
-			return View();
+			return Task.FromResult<IViewComponentResult>(View());
 		}
 	}
 }

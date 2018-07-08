@@ -14,7 +14,7 @@ namespace LastSeenWeb.Front.Pages
 
 		public PaginationModel PaginationModel { get; set; }
 
-		public async Task OnGetAsync()
+		public Task<IActionResult> OnGetAsync()
 		{
 			PageNumber = PageNumber ?? 1;
 
@@ -23,6 +23,8 @@ namespace LastSeenWeb.Front.Pages
 				ItemCount = 33,
 				PageNumber = (int)PageNumber
 			};
+
+			return Task.FromResult<IActionResult>(Page());
 		}
 	}
 }
