@@ -7,14 +7,15 @@ namespace LastSeenWeb.Core
 		public string ApplicationName { get; set; } = "Last Seen";
 		public string Domain { get; set; } = "lastseen.azurewebsites.net";
 		public int ItemsPerPage { get; set; } = 12;
-		public List<(string, string)> NavBarLoggedOut { get; set; } = new List<(string, string)>
+		public List<(string, string, string)> NavBarLoggedOut { get; set; } = new List<(string, string, string)>
 		{
-			("/Auth/Register","Register"),
-			("/Auth/Login","Log in")
+			("/Auth/Register", "", "Register"),
+			("/Auth/Login", "", "Log in")
 		};
-		public List<(string, string)> NavBarLoggedIn { get; set; } = new List<(string, string)>
+		public List<(string, string, string)> NavBarLoggedIn { get; set; } = new List<(string, string, string)>
 		{
-			("/Auth/Logout","Log out")
+			("javascript:void(0);", "_popup.open()", "Add Item"),
+			("/Auth/Logout", "", "Log out")
 		};
 	}
 }
