@@ -12,7 +12,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Last Seen</a>
+			<a class="navbar-brand" href="#">@ApplicationSettings.ApplicationName</a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav navbar-right">
@@ -20,14 +20,14 @@
 				{
 					@foreach (var link in ApplicationSettings.NavBarLoggedIn)
 					{
-						<li><a href="@link.Item1">@link.Item2</a></li>
+						<li><a href="@link.Item1" onclick="@link.Item2">@link.Item3</a></li>
 					}
 				}
 				else
 				{
 					@foreach (var link in ApplicationSettings.NavBarLoggedOut)
 					{
-						<li><a href="@link.Item1">@link.Item2</a></li>
+						<li><a href="@link.Item1" onclick="@link.Item2">@link.Item3</a></li>
 					}
 				}
 			</ul>
