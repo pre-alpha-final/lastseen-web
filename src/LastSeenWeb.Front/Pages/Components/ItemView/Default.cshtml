@@ -1,5 +1,22 @@
-﻿<div class="itemview">
+﻿@using LastSeenWeb.Core.Infrastructure
+@model LastSeenItem
+
+<div class="itemview">
 	<div class="thumbnail">
-		fjldsakf;lksdafj;lsakdfj;sdlkfj;lkdj
+		<img class="image" src="@Html.Raw(Model.ImageUrl)" />
+		<div class="title"><p><strong>@Html.Raw(Model.Name)</strong></p></div>
+		@*<img class="image" src="@Html.Raw(Model.JsonParse(auctionHunterItem.ContentJson).SelectToken("$.image"))" />
+		<div class="title"><p><strong>@Html.Raw(Model.JsonParse(auctionHunterItem.ContentJson).SelectToken("$.name"))</strong></p></div>
+		<div class="price"><b>@Html.Raw(Model.JsonParse(auctionHunterItem.ContentJson).SelectToken("$.price"))</b></div>
+		<p>@Html.Raw($"Found on page: {auctionHunterItem.OnPage}")</p>
+		<form method="post">
+			<div class="row">
+				@Html.Hidden("id", @auctionHunterItem.Id)
+				@Html.Hidden("showAll", @Model.ShowAll)
+				<a class="btn button-spacing" href="@Html.Raw(auctionHunterItem.AuctionLink)">Visit</a>
+				<button class="btn button-spacing" asp-page-handler="MarkAsRead">Mark read</button>
+				<a class="btn button-spacing" href="@Html.Raw(Model.GetReviewLink(auctionHunterItem.ContentJson))">See review</a>
+			</div>
+		</form>*@
 	</div>
 </div>

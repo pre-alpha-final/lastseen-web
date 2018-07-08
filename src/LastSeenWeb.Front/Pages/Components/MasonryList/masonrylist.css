@@ -1,0 +1,24 @@
+﻿.item-list {
+	list-style-type: none;
+	padding: 0;
+}
+
+.item-list .list-item:nth-child(-n+3) {
+	margin-top: 30px;
+}
+
+@media screen and (max-width: 1229px) {
+	.item-list .list-item {
+		width: calc(100% - 40px);
+		float: left;
+		margin-left: 20px;
+	}
+}
+
+@media only screen and (min-width:1230px) {
+	.item-list .list-item {
+		width: calc(33.33333% - 40px);
+		float: left;
+		margin-left: 30px;
+	}
+}
