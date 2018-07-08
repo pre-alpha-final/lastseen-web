@@ -8,15 +8,12 @@
 }
 
 .itemview .thumbnail .image {
-	height: 200px;
+	height: auto;
+	max-height: 200px;
+	max-width: 100%;
 }
 
 .itemview .thumbnail .title {
 	margin-top: 15px;
 	font-size: 22px;
-}
-
-.itemview .thumbnail .price {
-	font-size: 20px;
-	color: #ff0044;
 }

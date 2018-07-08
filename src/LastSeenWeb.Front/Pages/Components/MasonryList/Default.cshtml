@@ -1,0 +1,14 @@
+﻿@using LastSeenWeb.Core.Infrastructure
+@using LastSeenWeb.Front.Pages.Components.ItemView
+@model List<LastSeenItem>
+
+<div class="row text-center">
+	<ul class="item-list">
+		@foreach (var lastSeenItem in Model)
+		{
+			<li class="list-item">
+				@await Component.InvokeAsync(nameof(ItemView), lastSeenItem)
+			</li>
+		}
+	</ul>
+</div>

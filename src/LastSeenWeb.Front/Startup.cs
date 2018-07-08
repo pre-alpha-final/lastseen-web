@@ -41,6 +41,7 @@ namespace LastSeenWeb.Front
 			services.AddSingleton<IEmailSender, EmailSender>();
 			services.AddSingleton<IWebClientService, WebClientService>();
 			services.AddSingleton<IAzureKicker, AzureKicker>();
+			services.AddSingleton<ILastSeenService, LastSeenService>();
 
 			services
 				.AddMvc()

@@ -2,6 +2,18 @@
 @model Pages.IndexModel
 @using Pages.Components.Pagination
 @using Pages.Components.Popup
+@using Pages.Components.MasonryList
 
 @await Component.InvokeAsync(nameof(Popup))
+
+@if (Model.HasItems)
+{
+	@await Component.InvokeAsync(nameof(MasonryList), Model.Items)
+}
+else
+{
+	<h4>No shows added yet</h4>
+}
+
+<hr />
 @await Component.InvokeAsync(nameof(Pagination), Model.PaginationModel)

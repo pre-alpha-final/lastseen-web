@@ -5,6 +5,7 @@
       "wwwroot/css/site.css",
       "Pages/Components/NavBar/navbar.css",
       "Pages/Components/Popup/popup.css",
+      "Pages/Components/MasonryList/masonrylist.css",
       "Pages/Components/ItemView/itemview.css"
     ]
   },
@@ -13,7 +14,8 @@
     "inputFiles": [
       "wwwroot/js/site.js",
       "wwwroot/js/ajaxhelpers.js",
-      "Pages/Components/Popup/popup.js"
+      "Pages/Components/Popup/popup.js",
+      "Pages/Components/MasonryList/masonrylist.js"
     ],
     "minify": {
       "enabled": true,
