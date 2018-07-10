@@ -5,11 +5,11 @@ namespace LastSeenWeb.Front.Pages.Components.PopupContent
 {
 	public class PopupContent : ViewComponent
 	{
-		public Task<IViewComponentResult> InvokeAsync(int id)
+		public Task<IViewComponentResult> InvokeAsync(string id)
 		{
 			var popupContentModel = new PopupContentModel
 			{
-				Name = "foo",
+				Id = id,
 			};
 
 			return Task.FromResult<IViewComponentResult>(View(popupContentModel));
