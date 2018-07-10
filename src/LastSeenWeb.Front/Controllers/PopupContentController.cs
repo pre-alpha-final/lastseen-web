@@ -10,7 +10,7 @@ namespace LastSeenWeb.Front.Controllers
 	public class PopupContentController : Controller
 	{
 		[HttpGet("{id}")]
-		public Task<IActionResult> OnGetAsync(int id)
+		public Task<IActionResult> OnGetAsync(string id)
 		{
 			return Task.FromResult<IActionResult>(ViewComponent(nameof(PopupContent), id));
 		}

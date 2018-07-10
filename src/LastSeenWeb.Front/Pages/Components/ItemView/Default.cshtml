@@ -5,6 +5,10 @@
 	<div class="thumbnail">
 		<img class="image" src="@Html.Raw(Model.ImageUrl)" />
 		<div class="title"><p><strong>@Html.Raw(Model.Name)</strong></p></div>
+		<div class="row">
+			<a class="btn button-spacing" href="javascript:void(0);" onclick="_popup.open(@Html.Raw(Model.Id))">Update</a>
+			<a class="btn button-spacing" href="@Html.Raw(Model.VisitUrl)">Visit</a>
+		</div>
 		@*<img class="image" src="@Html.Raw(Model.JsonParse(auctionHunterItem.ContentJson).SelectToken("$.image"))" />
 		<div class="title"><p><strong>@Html.Raw(Model.JsonParse(auctionHunterItem.ContentJson).SelectToken("$.name"))</strong></p></div>
 		<div class="price"><b>@Html.Raw(Model.JsonParse(auctionHunterItem.ContentJson).SelectToken("$.price"))</b></div>
