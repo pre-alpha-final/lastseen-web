@@ -1,0 +1,24 @@
+﻿.custom-tooltip-inner, .custom-tooltip-inner:hover, .custom-tooltip-inner:visited {
+	color: #000;
+}
+
+.custom-tooltip .tooltip-inner {
+	background-color: #00acd6;
+	color: #fff;
+}
+
+.custom-tooltip .tooltip.top .tooltip-arrow {
+	border-top-color: #00acd6;
+}
+
+.custom-tooltip .tooltip.right .tooltip-arrow {
+	border-right-color: #00acd6;
+}
+
+.custom-tooltip .tooltip.bottom .tooltip-arrow {
+	border-bottom-color: #00acd6;
+}
+
+.custom-tooltip .tooltip.left .tooltip-arrow {
+	border-left-color: #00acd6;
+}

@@ -1,0 +1,13 @@
+﻿@model Pages.Components.Tooltip.TooltipModel
+
+<span class="custom-tooltip">
+	<a class="custom-tooltip-inner" data-toggle="tooltip" data-placement="@Html.Raw(Model.Position)" title="@Html.Raw(Model.Text)">
+		@Html.Raw(Model.Name)
+	</a>
+</span>
+
+<script>
+	(() => {
+		$('.custom-tooltip-inner').tooltip()
+	})();
+</script>
