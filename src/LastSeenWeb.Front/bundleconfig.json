@@ -6,7 +6,8 @@
       "Pages/Components/NavBar/navbar.css",
       "Pages/Components/Popup/popup.css",
       "Pages/Components/MasonryList/masonrylist.css",
-      "Pages/Components/ItemView/itemview.css"
+      "Pages/Components/ItemView/itemview.css",
+      "Pages/Components/Tooltip/tooltip.css"
     ]
   },
   {
