@@ -18,7 +18,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 			_webClient = new CookieAwareWebClient();
 		}
 
-		public async Task<WebClientResult> Get(string url, int retryCount = 5)
+		public async Task<WebClientResult> Get(string url, int retryCount = 10)
 		{
 			Task<string> makeRequest()
 			{

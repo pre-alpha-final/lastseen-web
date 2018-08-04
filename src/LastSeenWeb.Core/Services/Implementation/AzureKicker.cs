@@ -7,7 +7,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 	{
 		private readonly IWebClientService _webClientService;
 		private readonly double _dueTime = 0;
-		private readonly double _period = 10;
+		private readonly double _period = 5;
 		private Timer _timer;
 
 		public AzureKicker(IWebClientService webClientService)
