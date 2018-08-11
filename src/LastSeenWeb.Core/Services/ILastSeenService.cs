@@ -1,4 +1,4 @@
-﻿using LastSeenWeb.Core.Infrastructure;
+﻿using LastSeenWeb.Domain.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

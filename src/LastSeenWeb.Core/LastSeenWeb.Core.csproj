@@ -8,4 +8,8 @@
     <PackageReference Include="Sendgrid" Version="9.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LastSeenWeb.Domain\LastSeenWeb.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
