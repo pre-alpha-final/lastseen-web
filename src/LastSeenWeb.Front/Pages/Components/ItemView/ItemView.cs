@@ -1,4 +1,4 @@
-﻿using LastSeenWeb.Domain.Model;
+﻿using LastSeenWeb.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

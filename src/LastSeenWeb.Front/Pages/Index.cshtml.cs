@@ -1,4 +1,4 @@
-﻿using LastSeenWeb.Domain.Model;
+﻿using LastSeenWeb.Domain.Models;
 using LastSeenWeb.Core.Services;
 using LastSeenWeb.Front.Pages.Components.Pagination;
 using Microsoft.AspNetCore.Authorization;
