@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LastSeenWeb.Domain.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using LastSeenWeb.Core.Infrastructure;
 
 namespace LastSeenWeb.Core.Services.Implementation
 {

@@ -1,4 +1,4 @@
-﻿namespace LastSeenWeb.Core.Infrastructure
+﻿namespace LastSeenWeb.Domain.Model
 {
 	public class LastSeenItem
 	{
