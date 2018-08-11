@@ -1,7 +1,11 @@
+using AutoMapper;
 using LastSeenWeb.Core;
 using LastSeenWeb.Core.Services;
 using LastSeenWeb.Core.Services.Implementation;
 using LastSeenWeb.Data.Identity.Models;
+using LastSeenWeb.Data.Services;
+using LastSeenWeb.Data.Services.Implementation;
+using LastSeenWeb.Front.MappingProfiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -42,6 +46,9 @@ namespace LastSeenWeb.Front
 			services.AddSingleton<IWebClientService, WebClientService>();
 			services.AddSingleton<IAzureKicker, AzureKicker>();
 			services.AddSingleton<ILastSeenService, LastSeenService>();
+			services.AddSingleton<ILastSeenRepository, LastSeenRepository>();
+			services.AddSingleton(CreateMapperConfiguration());
+			services.AddTransient(e => e.GetService<MapperConfiguration>().CreateMapper());
 
 			services
 				.AddMvc()
@@ -74,6 +81,14 @@ namespace LastSeenWeb.Front
 			loggerFactory.AddAzureWebAppDiagnostics();
 
 			serviceProvider.GetService<IAzureKicker>().Start();
+		}
+
+		private static MapperConfiguration CreateMapperConfiguration()
+		{
+			return new MapperConfiguration(e =>
+			{
+				e.AddProfile<AppMappingProfile>();
+			});
 		}
 	}
 }

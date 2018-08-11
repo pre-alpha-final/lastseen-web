@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LastSeenWeb.Core.Services
+namespace LastSeenWeb.Data.Services
 {
-	public interface ILastSeenService
+	public interface ILastSeenRepository
 	{
 		Task<List<LastSeenItem>> Get();
 	}

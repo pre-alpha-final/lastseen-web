@@ -4,6 +4,7 @@
     <UserSecretsId>f7d6fad3-0e80-47f9-8f0c-82168934c89f</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="2.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
