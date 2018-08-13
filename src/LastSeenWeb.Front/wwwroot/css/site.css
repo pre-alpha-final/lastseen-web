@@ -1,8 +1,8 @@
 body {
 	padding-top: 50px;
 	padding-bottom: 20px;
-	color: #fff;
-	background-color: #111;
+	color: #eee;
+	background-color: #222;
 }
 
 .body-content {
@@ -13,7 +13,7 @@ body {
 .btn {
 	padding: 10px 20px;
 	background-color: #333;
-	color: #f1f1f1;
+	color: #eee;
 	border-radius: 0;
 	transition: .2s;
 }
@@ -25,6 +25,6 @@ body {
 
 .btn:hover, .btn:focus {
 	border: 1px solid #333;
-	background-color: #fff;
-	color: #000;
+	background-color: #eee;
+	color: #222;
 }
