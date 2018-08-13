@@ -2,9 +2,14 @@
 	padding: 0;
 }
 
+.itemview .thumbnail {
+	background-color: #f9f9ff
+}
+
 .itemview .thumbnail p {
-	margin-top: 0;
-	color: #555;
+	color: #333;
+	padding-bottom: 4px;
+	margin: 0;
 }
 
 .itemview .thumbnail .image {
@@ -16,4 +21,16 @@
 .itemview .thumbnail .title {
 	margin-top: 15px;
 	font-size: 22px;
+}
+
+.itemview .thumbnail .season-episode {
+	color: #555;
+	font-size: 18px;
+	padding-bottom: 4px;
+}
+
+.itemview .thumbnail .seen {
+	color: #555;
+	font-size: 18px;
+	padding-bottom: 4px;
 }
