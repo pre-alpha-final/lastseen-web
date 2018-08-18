@@ -22,7 +22,7 @@ namespace LastSeenWeb.Domain.Models
 		public string Name { get; set; }
 		public string ImageUrl { get; set; }
 
-		// Update section
+		// Tracking section
 		public string TrackingUrl { get; set; }
 		public int EpisodesBehind { get; set; }
 	}

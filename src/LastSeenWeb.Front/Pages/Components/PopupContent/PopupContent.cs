@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LastSeenWeb.Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace LastSeenWeb.Front.Pages.Components.PopupContent
@@ -7,12 +8,12 @@ namespace LastSeenWeb.Front.Pages.Components.PopupContent
 	{
 		public Task<IViewComponentResult> InvokeAsync(string id)
 		{
-			var popupContentModel = new PopupContentModel
+			var domain = new LastSeenItem
 			{
 				Id = id,
 			};
 
-			return Task.FromResult<IViewComponentResult>(View(popupContentModel));
+			return Task.FromResult<IViewComponentResult>(View(domain));
 		}
 	}
 }

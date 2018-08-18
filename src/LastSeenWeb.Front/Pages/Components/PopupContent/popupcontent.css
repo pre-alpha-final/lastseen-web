@@ -1,0 +1,12 @@
+﻿.popup-content {
+	padding: 15px;
+}
+
+.popup-content .panel-heading {
+	color: #fff;
+	background-color: #333;
+}
+
+.popup-content .update-button {
+	text-align: center;
+}

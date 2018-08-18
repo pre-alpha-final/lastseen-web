@@ -26,9 +26,9 @@
 }
 
 .popup #popupContent {
-	background-color: green;
+	background-color: #f1f1f1;
 	width: 300px;
-	height: 100px;
+	height: 100%;
 }
 
 @-webkit-keyframes animatetop {
