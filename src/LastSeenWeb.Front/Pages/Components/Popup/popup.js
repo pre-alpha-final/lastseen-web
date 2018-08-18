@@ -9,8 +9,12 @@
 	}
 
 	popup.open = async id => {
-		await ajaxGetAndReplace('/PopupContent/' + id, '#popupContent')
+		await ajaxGetAndReplace('/PopupContent/' + id, '#popupContent');
 		modal.style.display = "flex";
+	}
+
+	popup.update = async data => {
+		await ajaxPost('/PopupContent/', data);
 	}
 
 	popup.close = () => {

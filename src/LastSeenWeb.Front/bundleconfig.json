@@ -5,6 +5,7 @@
       "wwwroot/css/site.css",
       "Pages/Components/NavBar/navbar.css",
       "Pages/Components/Popup/popup.css",
+      "Pages/Components/PopupContent/popupcontent.css",
       "Pages/Components/MasonryList/masonrylist.css",
       "Pages/Components/ItemView/itemview.css",
       "Pages/Components/Tooltip/tooltip.css"
