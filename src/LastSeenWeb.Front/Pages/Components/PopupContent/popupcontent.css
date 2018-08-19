@@ -10,3 +10,37 @@
 .popup-content .update-button {
 	text-align: center;
 }
+
+.popup-content .standard {
+	width: 100%;
+}
+
+.popup-content .unfinished {
+	width: 30px;
+}
+
+.popup-content .line {
+	margin: 8px 5px;
+	width: 250px;
+}
+
+.popup-content .name {
+	width: 30%;
+	display: inline-block;
+}
+
+.popup-content .input {
+	width: 55%;
+	display: inline-block;
+}
+
+.popup-content .input-short {
+	width: 15px;
+	display: inline-block;
+}
+
+.popup-content .info {
+	width: 15px;
+	display: inline-block;
+	text-align: center;
+}

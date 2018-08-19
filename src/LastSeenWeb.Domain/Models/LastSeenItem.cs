@@ -12,11 +12,11 @@ namespace LastSeenWeb.Domain.Models
 		// Status section
 		public int Season { get; set; }
 		public int Episode { get; set; }
+		public string VisitUrl { get; set; }
 		public bool Unfinished { get; set; }
 		public int Hours { get; set; }
 		public int Minutes { get; set; }
 		public int Seconds { get; set; }
-		public string VisitUrl { get; set; }
 
 		// Config section
 		public string Name { get; set; }
