@@ -11,6 +11,7 @@ namespace LastSeenWeb.Front.Pages.Components.PopupContent
 			var domain = new LastSeenItem
 			{
 				Id = id,
+				Unfinished = true,
 			};
 
 			return Task.FromResult<IViewComponentResult>(View(domain));
