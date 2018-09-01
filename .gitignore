@@ -274,3 +274,6 @@ __pycache__/
 # tools/**
 # !tools/packages.config
 
+#Minified files
+**/js/*.min.js
+**/css/*.min.css
