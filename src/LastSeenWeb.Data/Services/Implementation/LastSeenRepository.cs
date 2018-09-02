@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using LastSeenWeb.Data.Models;
@@ -9,15 +10,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 	public class LastSeenRepository : ILastSeenRepository
 	{
 		private readonly IMapper _mapper;
-
-		public LastSeenRepository(IMapper mapper)
-		{
-			_mapper = mapper;
-		}
-
-		public Task<List<LastSeenItem>> Get()
-		{
-			var list = new List<LastSeenItemEntity>
+		private List<LastSeenItemEntity> _list = new List<LastSeenItemEntity>
 			{
 				new LastSeenItemEntity
 				{
@@ -147,7 +140,30 @@ namespace LastSeenWeb.Data.Services.Implementation
 				},
 			};
 
-			return Task.FromResult(_mapper.Map<List<LastSeenItem>>(list));
+		public LastSeenRepository(IMapper mapper)
+		{
+			_mapper = mapper;
+		}
+
+		public Task<List<LastSeenItem>> GetAll(string ownerName)
+		{
+			return Task.FromResult(_mapper.Map<List<LastSeenItem>>(_list));
+		}
+
+		public async Task<LastSeenItem> Get(string id, string ownerName)
+		{
+			var item = _list.Where(e => e.Id == id).FirstOrDefault();
+			if (item == null)
+			{
+				return null;
+			}
+
+			if (ownerName == null || item.OwnerName == ownerName)
+			{
+				return _mapper.Map<LastSeenItem>(item);
+			}
+
+			return null;
 		}
 	}
 }

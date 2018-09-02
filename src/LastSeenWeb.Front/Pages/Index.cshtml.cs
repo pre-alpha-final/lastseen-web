@@ -30,11 +30,11 @@ namespace LastSeenWeb.Front.Pages
 		{
 			PageNumber = PageNumber ?? 1;
 
-			Items = await _lastSeenService.Get();
+			Items = await _lastSeenService.GetAll(HttpContext.User.Identity.Name);
 
 			PaginationModel = new PaginationModel
 			{
-				ItemCount = 33,
+				ItemCount = Items.Count,
 				PageNumber = (int)PageNumber
 			};
 

@@ -16,9 +16,9 @@ namespace LastSeenWeb.Front.Controllers
 			return Task.FromResult<IActionResult>(ViewComponent(nameof(PopupContent), id));
 		}
 
-		public async Task<IActionResult> OnPostAsync(LastSeenItem model)
+		public Task<IActionResult> OnPostAsync(LastSeenItem model)
 		{
-			return Ok();
+			return Task.FromResult<IActionResult>(Ok());
 		}
 	}
 }

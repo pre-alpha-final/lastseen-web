@@ -9,6 +9,7 @@ namespace LastSeenWeb.Front.MappingProfiles
 		public AppMappingProfile()
 		{
 			CreateMap<LastSeenItem, LastSeenItemEntity>()
+				.ForMember(d => d.OwnerName, s => s.Ignore())
 				.ReverseMap();
 		}
 	}

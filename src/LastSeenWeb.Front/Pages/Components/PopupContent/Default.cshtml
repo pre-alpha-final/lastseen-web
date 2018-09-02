@@ -12,9 +12,7 @@
 				</div>
 				<div id="collapse1" class="panel-collapse collapse in">
 					<div class="panel-body">
-						@*Id: @Html.TextBoxFor(e => e.Id)<br />
-							Owner: @Html.TextBoxFor(e => e.Owner)<br />
-							Modified: @Html.TextBoxFor(e => e.Modified)<br />*@
+						@Html.HiddenFor(e => e.Id)
 
 						<div class="line">
 							<span class="name">Season:</span>
