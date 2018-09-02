@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 using System;
 
 namespace LastSeenWeb.Front
@@ -36,6 +37,12 @@ namespace LastSeenWeb.Front
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<UsersDbContext>()
 				.AddDefaultTokenProviders();
+
+			services.AddSingleton<IMongoClient>(e =>
+			{
+				var configuration = e.GetService<IConfiguration>();
+				return new MongoClient(configuration.GetConnectionString("LastSeenWebDb"));
+			});
 
 			services.ConfigureApplicationCookie(options =>
 			{

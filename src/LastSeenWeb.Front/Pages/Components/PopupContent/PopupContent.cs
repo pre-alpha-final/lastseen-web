@@ -1,4 +1,5 @@
 ﻿using LastSeenWeb.Core.Services;
+using LastSeenWeb.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,7 +16,12 @@ namespace LastSeenWeb.Front.Pages.Components.PopupContent
 
 		public async Task<IViewComponentResult> InvokeAsync(string id)
 		{
-			var domain = await _lastSeenService.Get(id, null);
+			if (string.IsNullOrWhiteSpace(id) || id == "undefined")
+			{
+				return View(new LastSeenItem());
+			}
+
+			var domain = await _lastSeenService.Get(id, HttpContext.User.Identity.Name);
 
 			return View(domain);
 		}
