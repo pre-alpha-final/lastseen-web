@@ -14,7 +14,7 @@
 	}
 
 	popup.update = async data => {
-		await ajaxPost('/PopupContent/', data);
+		await ajaxPost('/PopupContent/', data, () => { });
 	}
 
 	popup.close = () => {

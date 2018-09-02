@@ -1,4 +1,5 @@
-﻿using LastSeenWeb.Domain.Models;
+﻿using LastSeenWeb.Core.Services;
+using LastSeenWeb.Domain.Models;
 using LastSeenWeb.Front.Pages.Components.PopupContent;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +11,24 @@ namespace LastSeenWeb.Front.Controllers
 	[Authorize]
 	public class PopupContentController : Controller
 	{
+		private readonly ILastSeenService _lastSeenService;
+
+		public PopupContentController(ILastSeenService lastSeenService)
+		{
+			_lastSeenService = lastSeenService;
+		}
+
 		[HttpGet("{id}")]
 		public Task<IActionResult> OnGetAsync(string id)
 		{
 			return Task.FromResult<IActionResult>(ViewComponent(nameof(PopupContent), id));
 		}
 
-		public Task<IActionResult> OnPostAsync(LastSeenItem model)
+		public async Task<IActionResult> OnPostAsync(LastSeenItem model)
 		{
-			return Task.FromResult<IActionResult>(Ok());
+			await _lastSeenService.Upsert(model, HttpContext.User.Identity.Name);
+
+			return Ok();
 		}
 	}
 }

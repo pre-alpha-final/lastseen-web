@@ -23,5 +23,17 @@ namespace LastSeenWeb.Core.Services.Implementation
 		{
 			return _lastSeenRepository.GetAll(ownerName);
 		}
+
+		public async Task Upsert(LastSeenItem lastSeenItem, string ownerName)
+		{
+			if (lastSeenItem.Unfinished)
+			{
+				lastSeenItem.Hours = 0;
+				lastSeenItem.Minutes = 0;
+				lastSeenItem.Seconds = 0;
+			}
+
+			await _lastSeenRepository.Upsert(lastSeenItem, ownerName);
+		}
 	}
 }

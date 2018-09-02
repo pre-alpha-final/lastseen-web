@@ -8,5 +8,6 @@ namespace LastSeenWeb.Data.Services
 	{
 		Task<List<LastSeenItem>> GetAll(string ownerName);
 		Task<LastSeenItem> Get(string id, string ownerName);
+		Task Upsert(LastSeenItem lastSeenItem, string ownerName);
 	}
 }
