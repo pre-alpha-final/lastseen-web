@@ -38,7 +38,7 @@
 							<span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Check if You haven't finished watching the entire episode" })</span>
 						</div>
 
-						<div class="line">
+						<div id="times" class="line" style="@(Model.Unfinished ? "" : "display: none;")">
 							@Html.TextBoxFor(e => e.Hours, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) h&nbsp;&nbsp;
 							@Html.TextBoxFor(e => e.Minutes, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) m&nbsp;&nbsp;
 							@Html.TextBoxFor(e => e.Seconds, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) s&nbsp;&nbsp;
@@ -96,5 +96,11 @@
 		document.getElementById('Hours').disabled = !checkbox.checked;
 		document.getElementById('Minutes').disabled = !checkbox.checked;
 		document.getElementById('Seconds').disabled = !checkbox.checked;
+
+		if (checkbox.checked === true) {
+			$('#times').slideDown();
+		} else {
+			$('#times').slideUp();
+		}
 	};
 </script>

@@ -17,6 +17,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 					Id = "1",
 					VisitUrl = "link",
 					Name = "Large",
+					Unfinished = true,
 					ImageUrl = "https://images.unsplash.com/photo-1494249465471-5655b7878482?ixlib=rb-0.3.5&ixId=eyJhcHBfaWQiOjEyMDd9&s=191559dc1cae3f8967d568dfd8a77093&auto=format&fit=crop&w=1050&q=80",
 					Season = 1,
 					Episode = 2,
@@ -24,6 +25,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 				new LastSeenItemEntity
 				{
 					Id = "2",
+					Unfinished = false,
 					VisitUrl = "link",
 					Name = "Tall",
 					ImageUrl = "https://ae01.alicdn.com/kf/HTB1vZZCLFXXXXbAXXXXq6xXFXXX2/S0127-BEELZEBUB-DEMON-SWORD-OF-VAELEN-DARKNESS-SATIN-FINISH-TWO-SIDE-BLADES-38.jpg",
