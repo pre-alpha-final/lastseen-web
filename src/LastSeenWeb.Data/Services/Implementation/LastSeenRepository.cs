@@ -167,5 +167,12 @@ namespace LastSeenWeb.Data.Services.Implementation
 
 			return null;
 		}
+
+		public async Task Upsert(LastSeenItem lastSeenItem, string ownerName)
+		{
+			var entity = _mapper.Map<LastSeenItemEntity>(lastSeenItem);
+			entity.OwnerName = ownerName;
+			_list.Insert(0, entity);
+		}
 	}
 }

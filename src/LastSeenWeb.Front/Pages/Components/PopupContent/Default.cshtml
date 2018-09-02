@@ -88,8 +88,9 @@
 </div>
 
 <script type="text/javascript">
-	function popupContentUpdate() {
-		_popup.update($("#itemdata").serialize())
+	async function popupContentUpdate() {
+		await _popup.update($("#itemdata").serialize());
+		location.reload();
 	};
 
 	function checkUnfinished(checkbox) {
