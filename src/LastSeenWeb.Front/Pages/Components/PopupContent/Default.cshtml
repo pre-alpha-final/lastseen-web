@@ -80,6 +80,21 @@
 					</div>
 				</div>
 			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Removal</a>
+					</h4>
+				</div>
+				<div id="collapse4" class="panel-collapse collapse">
+					<div class="panel-body">
+						@Html.HiddenFor(e => e.Remove)
+						<div class="removal-button">
+							<a class="btn btn-red button-spacing" href="javascript:void(0);" onclick="popupContentUpdateRemove()">Remove</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</form>
 	<div class="update-button">
@@ -89,6 +104,12 @@
 
 <script type="text/javascript">
 	async function popupContentUpdate() {
+		await _popup.update($("#itemdata").serialize());
+		location.reload();
+	};
+
+	async function popupContentUpdateRemove() {
+		document.getElementById('Remove').value = true;
 		await _popup.update($("#itemdata").serialize());
 		location.reload();
 	};

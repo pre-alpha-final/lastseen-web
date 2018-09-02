@@ -18,6 +18,10 @@
 	transition: .2s;
 }
 
+.btn-red {
+	background-color: #d43f3a;
+}
+
 .button-spacing {
 	margin-left: 3px;
 	margin-right: 3px;

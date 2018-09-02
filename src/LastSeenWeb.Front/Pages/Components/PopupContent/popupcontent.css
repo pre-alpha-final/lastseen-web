@@ -7,6 +7,10 @@
 	background-color: #333;
 }
 
+.popup-content .removal-button {
+	text-align: center;
+}
+
 .popup-content .update-button {
 	text-align: center;
 }
