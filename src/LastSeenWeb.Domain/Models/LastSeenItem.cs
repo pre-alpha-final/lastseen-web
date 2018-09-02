@@ -24,5 +24,8 @@ namespace LastSeenWeb.Domain.Models
 		// Tracking section
 		public string TrackingUrl { get; set; }
 		public int EpisodesBehind { get; set; }
+
+		// Removal
+		public bool Remove { get; set; }
 	}
 }

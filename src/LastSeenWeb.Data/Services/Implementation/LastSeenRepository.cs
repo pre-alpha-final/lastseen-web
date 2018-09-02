@@ -93,5 +93,19 @@ namespace LastSeenWeb.Data.Services.Implementation
 				_logger.LogError(e.Message);
 			}
 		}
+
+		public async Task Delete(string id, string ownerName)
+		{
+			try
+			{
+				var db = _mongoClient.GetDatabase(DatabaseName);
+				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
+				await lastSeenItems.DeleteOneAsync(e => e.Id == id && e.OwnerName == ownerName);
+			}
+			catch (Exception e)
+			{
+				_logger.LogError(e.Message);
+			}
+		}
 	}
 }

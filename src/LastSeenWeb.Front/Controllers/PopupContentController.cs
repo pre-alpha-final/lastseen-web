@@ -26,7 +26,14 @@ namespace LastSeenWeb.Front.Controllers
 
 		public async Task<IActionResult> OnPostAsync(LastSeenItem model)
 		{
-			await _lastSeenService.Upsert(model, HttpContext.User.Identity.Name);
+			if (model.Remove == true)
+			{
+				await _lastSeenService.Delete(model.Id, HttpContext.User.Identity.Name);
+			}
+			else
+			{
+				await _lastSeenService.Upsert(model, HttpContext.User.Identity.Name);
+			}
 
 			return Ok();
 		}
