@@ -6,7 +6,6 @@ namespace LastSeenWeb.Domain.Models
 	{
 		// Data section
 		public string Id { get; set; }
-		public string Owner { get; set; }
 		public DateTime Modified { get; set; }
 
 		// Status section

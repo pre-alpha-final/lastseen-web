@@ -14,9 +14,14 @@ namespace LastSeenWeb.Core.Services.Implementation
 			_lastSeenRepository = lastSeenRepository;
 		}
 
-		public Task<List<LastSeenItem>> Get()
+		public Task<LastSeenItem> Get(string id, string ownerName)
 		{
-			return _lastSeenRepository.Get();
+			return _lastSeenRepository.Get(id, ownerName);
+		}
+
+		public Task<List<LastSeenItem>> GetAll(string ownerName)
+		{
+			return _lastSeenRepository.GetAll(ownerName);
 		}
 	}
 }

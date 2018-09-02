@@ -10,7 +10,7 @@ namespace LastSeenWeb.Data.Models
 		[BsonId]
 		[BsonRepresentation(BsonType.ObjectId)]
 		public string Id { get; set; }
-		public string Owner { get; set; }
+		public string OwnerName { get; set; }
 		public DateTime Modified { get; set; }
 
 		// Status section
