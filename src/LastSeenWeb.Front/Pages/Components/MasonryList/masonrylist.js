@@ -1,5 +1,5 @@
 ﻿$(window).load(function () {
-	$('.item-list').masonry({
-		itemSelector: '.list-item'
+	$(".item-list").masonry({
+		itemSelector: ".list-item"
 	});
 });

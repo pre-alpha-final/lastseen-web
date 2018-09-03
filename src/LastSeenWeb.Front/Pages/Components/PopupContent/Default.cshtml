@@ -106,13 +106,13 @@
 	async function popupContentUpdate() {
 		await _popup.update($("#itemdata").serialize());
 		location.reload();
-	};
+	}
 
 	async function popupContentUpdateRemove() {
 		document.getElementById('Remove').value = true;
 		await _popup.update($("#itemdata").serialize());
 		location.reload();
-	};
+	}
 
 	function checkUnfinished(checkbox) {
 		document.getElementById('Hours').disabled = !checkbox.checked;
@@ -124,7 +124,7 @@
 		} else {
 			$('#times').slideUp();
 		}
-	};
+	}
 
 	$('.standard').click(function () {
 		this.select();

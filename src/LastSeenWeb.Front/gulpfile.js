@@ -20,7 +20,7 @@ var regex = {
 gulp.task("min", ["min:js", "min:css", "min:html"]);
 
 gulp.task("min:js", function () {
-	var tasks = getBundles(regex.js).map(function (bundle) {
+	const tasks = getBundles(regex.js).map(function (bundle) {
 		return gulp.src(bundle.inputFiles, { base: "." })
 			.pipe(concat(bundle.outputFileName))
 			.pipe(uglify())
@@ -30,7 +30,7 @@ gulp.task("min:js", function () {
 });
 
 gulp.task("min:css", function () {
-	var tasks = getBundles(regex.css).map(function (bundle) {
+	const tasks = getBundles(regex.css).map(function (bundle) {
 		return gulp.src(bundle.inputFiles, { base: "." })
 			.pipe(concat(bundle.outputFileName))
 			.pipe(cssmin())
@@ -40,7 +40,7 @@ gulp.task("min:css", function () {
 });
 
 gulp.task("min:html", function () {
-	var tasks = getBundles(regex.html).map(function (bundle) {
+	const tasks = getBundles(regex.html).map(function (bundle) {
 		return gulp.src(bundle.inputFiles, { base: "." })
 			.pipe(concat(bundle.outputFileName))
 			.pipe(htmlmin({ collapseWhitespace: true, minifyCSS: true, minifyJS: true }))
@@ -50,7 +50,7 @@ gulp.task("min:html", function () {
 });
 
 gulp.task("clean", function () {
-	var files = bundleconfig.map(function (bundle) {
+	const files = bundleconfig.map(function (bundle) {
 		return bundle.outputFileName;
 	});
 

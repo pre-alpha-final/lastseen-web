@@ -1,5 +1,5 @@
-﻿@using LastSeenWeb.Core
-@using LastSeenWeb.Data.Identity.Models
+﻿@using Core
+@using Data.Identity.Models
 @using Microsoft.AspNetCore.Identity
 @inject ApplicationSettings ApplicationSettings
 @inject SignInManager<ApplicationUser> SignInManager
@@ -18,14 +18,14 @@
 			<ul class="nav navbar-nav navbar-right">
 				@if (SignInManager.IsSignedIn(User))
 				{
-					@foreach (var link in ApplicationSettings.NavBarLoggedIn)
+					foreach (var link in ApplicationSettings.NavBarLoggedIn)
 					{
 						<li><a href="@link.Item1" onclick="@link.Item2">@link.Item3</a></li>
 					}
 				}
 				else
 				{
-					@foreach (var link in ApplicationSettings.NavBarLoggedOut)
+					foreach (var link in ApplicationSettings.NavBarLoggedOut)
 					{
 						<li><a href="@link.Item1" onclick="@link.Item2">@link.Item3</a></li>
 					}

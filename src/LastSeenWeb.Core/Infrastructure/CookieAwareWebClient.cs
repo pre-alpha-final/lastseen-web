@@ -10,9 +10,9 @@ namespace LastSeenWeb.Core.Infrastructure
 		protected override WebRequest GetWebRequest(Uri address)
 		{
 			var request = base.GetWebRequest(address);
-			if (request is HttpWebRequest)
+			if (request is HttpWebRequest webRequest)
 			{
-				(request as HttpWebRequest).CookieContainer = _container;
+				webRequest.CookieContainer = _container;
 			}
 			return request;
 		}

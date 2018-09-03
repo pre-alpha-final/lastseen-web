@@ -19,7 +19,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 				HtmlContent = message
 			};
 			msg.AddTo(new EmailAddress(email));
-			var response = await client.SendEmailAsync(msg);
+			await client.SendEmailAsync(msg);
 		}
 
 		public async Task SendEmailConfirmationAsync(string email, string callbackUrl)

@@ -6,8 +6,8 @@ namespace LastSeenWeb.Core.Services.Implementation
 	public class AzureKicker : IAzureKicker
 	{
 		private readonly IWebClientService _webClientService;
-		private readonly double _dueTime = 0;
-		private readonly double _period = 5;
+		private const double DueTime = 0;
+		private const double Period = 5;
 		private Timer _timer;
 
 		public AzureKicker(IWebClientService webClientService)
@@ -19,7 +19,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 		{
 			if (_timer == null)
 			{
-				_timer = new Timer(OnTimerOnElapsed, null, TimeSpan.FromMinutes(_dueTime), TimeSpan.FromMinutes(_period));
+				_timer = new Timer(OnTimerOnElapsed, null, TimeSpan.FromMinutes(DueTime), TimeSpan.FromMinutes(Period));
 			}
 		}
 
