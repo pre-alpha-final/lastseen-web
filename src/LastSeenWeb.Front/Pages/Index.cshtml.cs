@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using LastSeenWeb.Core;
 
 namespace LastSeenWeb.Front.Pages
 {
@@ -31,12 +33,17 @@ namespace LastSeenWeb.Front.Pages
 			PageNumber = PageNumber ?? 1;
 
 			Items = await _lastSeenService.GetAll(HttpContext.User.Identity.Name);
-
 			PaginationModel = new PaginationModel
 			{
 				ItemCount = Items.Count,
 				PageNumber = (int)PageNumber
 			};
+
+			var applicationSettings = new ApplicationSettings();
+			Items = Items
+				.Skip(((int)PageNumber - 1) * applicationSettings.ItemsPerPage)
+				.Take(applicationSettings.ItemsPerPage)
+				.ToList();
 
 			return Page();
 		}
