@@ -16,6 +16,7 @@
 	height: auto;
 	max-height: 200px;
 	max-width: 100%;
+	margin-top: 10px;
 }
 
 .itemview .thumbnail .title {
@@ -26,11 +27,17 @@
 .itemview .thumbnail .season-episode {
 	color: #555;
 	font-size: 18px;
-	padding-bottom: 4px;
+	margin-bottom: 4px;
 }
 
 .itemview .thumbnail .seen {
 	color: #555;
 	font-size: 18px;
-	padding-bottom: 4px;
+	margin-bottom: 4px;
+}
+
+.itemview .thumbnail .notes {
+	margin: 0px 15px 10px;
+	font-size: 16px;
+	color: #bbb;
 }

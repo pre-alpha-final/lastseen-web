@@ -33,6 +33,12 @@
 						</div>
 
 						<div class="line">
+							<span class="name">Notes:</span>
+							<span class="input">@Html.TextBoxFor(e => e.Notes, new { @class = "standard" })</span>
+							<span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Notes will appear under items if present" })</span>
+						</div>
+
+						<div class="line">
 							<span class="name">Unfinished:</span>
 							<span class="input-short">@Html.CheckBoxFor(e => e.Unfinished, new { onchange = "checkUnfinished(this)" })</span>
 							<span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Check if You haven't finished watching the entire episode" })</span>
