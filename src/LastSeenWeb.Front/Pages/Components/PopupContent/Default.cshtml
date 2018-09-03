@@ -1,5 +1,5 @@
-﻿@model LastSeenWeb.Domain.Models.LastSeenItem
-@using LastSeenWeb.Front.Pages.Components.Tooltip
+﻿@model Domain.Models.LastSeenItem
+@using Front.Pages.Components.Tooltip
 
 <div class="popup-content">
 	<form id="itemdata">
@@ -34,7 +34,7 @@
 
 						<div class="line">
 							<span class="name">Unfinished:</span>
-							<span class="input-short">@Html.CheckBoxFor(e => e.Unfinished, new { @class = "standard", onchange = "checkUnfinished(this)" })</span>
+							<span class="input-short">@Html.CheckBoxFor(e => e.Unfinished, new { onchange = "checkUnfinished(this)" })</span>
 							<span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Check if You haven't finished watching the entire episode" })</span>
 						</div>
 
@@ -109,29 +109,36 @@
 	}
 
 	async function popupContentUpdateRemove() {
-		document.getElementById('Remove').value = true;
+		document.getElementById("Remove").value = true;
 		await _popup.update($("#itemdata").serialize());
 		location.reload();
 	}
 
 	function checkUnfinished(checkbox) {
-		document.getElementById('Hours').disabled = !checkbox.checked;
-		document.getElementById('Minutes').disabled = !checkbox.checked;
-		document.getElementById('Seconds').disabled = !checkbox.checked;
+		document.getElementById("Hours").disabled = !checkbox.checked;
+		document.getElementById("Minutes").disabled = !checkbox.checked;
+		document.getElementById("Seconds").disabled = !checkbox.checked;
 
 		if (checkbox.checked === true) {
-			$('#times').slideDown();
+			$("#times").slideDown();
 		} else {
-			$('#times').slideUp();
+			$("#times").slideUp();
 		}
 	}
 
+	function blurAll() {
+		$('.standard').blur();
+		$('.unfinished').blur();
+	}
+
 	$('.standard').click(function () {
+		blurAll();
 		this.focus();
 		this.select();
 	});
 
 	$('.unfinished').click(function () {
+		blurAll();
 		this.focus();
 		this.select();
 	});
