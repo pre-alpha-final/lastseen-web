@@ -5,7 +5,6 @@ using AutoMapper;
 using LastSeenWeb.Data.Models;
 using LastSeenWeb.Domain.Models;
 using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace LastSeenWeb.Data.Services.Implementation

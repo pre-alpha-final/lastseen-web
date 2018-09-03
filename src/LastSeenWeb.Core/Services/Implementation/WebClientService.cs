@@ -20,7 +20,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 
 		public async Task<WebClientResult> Get(string url, int retryCount = 10)
 		{
-			Task<string> makeRequest()
+			Task<string> MakeRequest()
 			{
 				_webClient.Headers["User-Agent"] =
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0";
@@ -31,13 +31,13 @@ namespace LastSeenWeb.Core.Services.Implementation
 
 			using (await _semaphoreSlim.DisposableWaitAsync(TimeSpan.FromMinutes(10)))
 			{
-				return await RetryableRequest(makeRequest, retryCount);
+				return await RetryableRequest(MakeRequest, retryCount);
 			}
 		}
 
 		public async Task<WebClientResult> Post(string url, NameValueCollection values, int retryCount = 5)
 		{
-			Task<string> makeRequest()
+			Task<string> MakeRequest()
 			{
 				_webClient.Headers["User-Agent"] =
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0";
@@ -49,11 +49,11 @@ namespace LastSeenWeb.Core.Services.Implementation
 
 			using (await _semaphoreSlim.DisposableWaitAsync(TimeSpan.FromMinutes(10)))
 			{
-				return await RetryableRequest(makeRequest, retryCount);
+				return await RetryableRequest(MakeRequest, retryCount);
 			}
 		}
 
-		private async Task<WebClientResult> RetryableRequest(Func<Task<string>> makeRequest, int retryCount)
+		private static async Task<WebClientResult> RetryableRequest(Func<Task<string>> makeRequest, int retryCount)
 		{
 			var webClientResult = new WebClientResult();
 			for (var attempt = 0; attempt < retryCount; attempt++)

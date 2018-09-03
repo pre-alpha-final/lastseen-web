@@ -28,7 +28,7 @@ namespace LastSeenWeb.Core.Extensions
 			var miliseconds = (int)timeout.TotalMilliseconds;
 			if (timeout == TimeSpan.MaxValue)
 			{
-				miliseconds = Int32.MaxValue; // Max for WaitAsync
+				miliseconds = int.MaxValue; // Max for WaitAsync
 			}
 			await semaphoreSlim.WaitAsync(miliseconds).ConfigureAwait(false);
 
