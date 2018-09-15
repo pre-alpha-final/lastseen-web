@@ -17,6 +17,7 @@ namespace LastSeenWeb.Domain.Models
 		public int Minutes { get; set; }
 		public int Seconds { get; set; }
 		public string Notes { get; set; }
+		public bool MoveToTop { get; set; }
 
 		// Config section
 		public string Name { get; set; }

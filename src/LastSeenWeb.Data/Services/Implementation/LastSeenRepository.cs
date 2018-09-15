@@ -72,10 +72,14 @@ namespace LastSeenWeb.Data.Services.Implementation
 			{
 				var db = _mongoClient.GetDatabase(DatabaseName);
 				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
+				var oldEntity = await lastSeenItems
+					.Find(e => e.OwnerName == ownerName && e.Id == lastSeenItem.Id)
+					.FirstOrDefaultAsync();
+				var lastModified = oldEntity != null ? oldEntity.Modified : DateTime.UtcNow;
 
 				var entity = _mapper.Map<LastSeenItemEntity>(lastSeenItem);
 				entity.OwnerName = ownerName;
-				entity.Modified = DateTime.UtcNow;
+				entity.Modified = lastSeenItem.MoveToTop ? DateTime.UtcNow : lastModified;
 
 				if (string.IsNullOrWhiteSpace(entity.Id) || entity.Id == "undefined")
 				{
