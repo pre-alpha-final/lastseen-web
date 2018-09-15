@@ -70,6 +70,11 @@ namespace LastSeenWeb.Data.Services.Implementation
 		{
 			try
 			{
+				if (string.IsNullOrWhiteSpace(lastSeenItem.Id) || lastSeenItem.Id == "undefined")
+				{
+					lastSeenItem.Id = null;
+				}
+
 				var db = _mongoClient.GetDatabase(DatabaseName);
 				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
 				var oldEntity = await lastSeenItems
@@ -81,9 +86,8 @@ namespace LastSeenWeb.Data.Services.Implementation
 				entity.OwnerName = ownerName;
 				entity.Modified = lastSeenItem.MoveToTop ? DateTime.UtcNow : lastModified;
 
-				if (string.IsNullOrWhiteSpace(entity.Id) || entity.Id == "undefined")
+				if (entity.Id == null)
 				{
-					entity.Id = null;
 					await lastSeenItems.InsertOneAsync(entity);
 				}
 				else
