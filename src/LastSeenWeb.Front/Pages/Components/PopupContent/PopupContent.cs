@@ -18,7 +18,10 @@ namespace LastSeenWeb.Front.Pages.Components.PopupContent
 		{
 			if (string.IsNullOrWhiteSpace(id) || id == "undefined")
 			{
-				return View(new LastSeenItem());
+				return View(new LastSeenItem
+				{
+					MoveToTop = true,
+				});
 			}
 
 			var domain = await _lastSeenService.Get(id, HttpContext.User.Identity.Name);
