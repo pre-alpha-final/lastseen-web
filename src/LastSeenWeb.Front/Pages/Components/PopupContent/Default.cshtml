@@ -35,7 +35,7 @@
 						<div class="line">
 							<span class="name">Notes:</span>
 							<span class="input">@Html.TextBoxFor(e => e.Notes, new { @class = "standard" })</span>
-							<span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Notes will appear under items if present" })</span>
+							<span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Notes will appear on item if present" })</span>
 						</div>
 
 						<div class="line">
@@ -48,6 +48,12 @@
 							@Html.TextBoxFor(e => e.Hours, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) h&nbsp;&nbsp;
 							@Html.TextBoxFor(e => e.Minutes, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) m&nbsp;&nbsp;
 							@Html.TextBoxFor(e => e.Seconds, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) s&nbsp;&nbsp;
+						</div>
+
+						<div class="line">
+							<span class="name">Move to top:</span>
+							<span class="input-short">@Html.CheckBoxFor(e => e.MoveToTop)</span>
+							<span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Move item to top of the list" })</span>
 						</div>
 					</div>
 				</div>

@@ -29,7 +29,8 @@
 }
 
 .popup-content .name {
-	width: 30%;
+	width: 35%;
+	white-space: nowrap;
 	display: inline-block;
 }
 

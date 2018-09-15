@@ -22,6 +22,7 @@ namespace LastSeenWeb.Front.Pages.Components.PopupContent
 			}
 
 			var domain = await _lastSeenService.Get(id, HttpContext.User.Identity.Name);
+			domain.MoveToTop = true;
 
 			return View(domain);
 		}
