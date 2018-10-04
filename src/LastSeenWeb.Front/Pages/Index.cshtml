@@ -1,10 +1,18 @@
 ﻿@page "{PageNumber:int?}"
 @model Pages.IndexModel
+@using Core
 @using Pages.Components.Pagination
 @using Pages.Components.Popup
 @using Pages.Components.MasonryList
+@inject ApplicationSettings ApplicationSettings
+
 
 @await Component.InvokeAsync(nameof(Popup))
+
+@if (ApplicationSettings.DemoUsername == User.Identity.Name)
+{
+	<h4>Application working in demo mode (read-only)</h4>
+}
 
 @if (Model.HasItems)
 {
