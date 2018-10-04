@@ -3,7 +3,7 @@
 (popup => {
 	var modal = document.getElementById("popup");
 	window.onclick = function(event) {
-		if (event.target == modal) {
+		if (event.target === modal) {
 			popup.close();
 		}
 	};

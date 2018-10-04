@@ -26,6 +26,11 @@ namespace LastSeenWeb.Core.Services.Implementation
 
 		public async Task Upsert(LastSeenItem lastSeenItem, string ownerName)
 		{
+			if (new ApplicationSettings().DemoUsername == ownerName)
+			{
+				return;
+			}
+
 			if (lastSeenItem.Unfinished == false)
 			{
 				lastSeenItem.Hours = 0;
@@ -38,7 +43,9 @@ namespace LastSeenWeb.Core.Services.Implementation
 
 		public Task Delete(string id, string ownerName)
 		{
-			return _lastSeenRepository.Delete(id, ownerName);
+			return new ApplicationSettings().DemoUsername == ownerName
+				? Task.CompletedTask
+				: _lastSeenRepository.Delete(id, ownerName);
 		}
 	}
 }
