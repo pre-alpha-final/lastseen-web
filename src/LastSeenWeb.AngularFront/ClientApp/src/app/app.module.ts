@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar.component';
+import { JQUERY_PROVIDER } from './jquery.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { NavBarComponent } from './nav-bar.component';
     RouterModule.forRoot([
     ])
   ],
-  providers: [],
+  providers: [JQUERY_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
