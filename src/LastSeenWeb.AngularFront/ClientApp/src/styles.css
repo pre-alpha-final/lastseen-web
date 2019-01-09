@@ -1,1 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	color: #f1f1f1 !important;
+	background-color: #111 !important;
+}
+
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.btn {
+	padding: 10px 20px;
+	background-color: #333;
+	color: #f1f1f1;
+	border-radius: 0;
+	transition: .2s;
+}
+
+.btn-red {
+	background-color: #d43f3a;
+}
+
+.button-spacing {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+.btn:hover, .btn:focus {
+	border: 1px solid #333;
+	background-color: #f1f1f1;
+	color: #000;
+}
