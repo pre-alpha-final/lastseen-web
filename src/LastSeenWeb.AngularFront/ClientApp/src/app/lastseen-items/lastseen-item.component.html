@@ -1,6 +1,6 @@
 <div class="itemview">
   <div class="thumbnail">
-    <div><img class="image" [src]="item?.imageUrl" /></div>
+    <div><img class="image" [src]="item?.imageUrl" (load)="onLoad()"/></div>
     <div class="title">
       <p><strong>{{item?.name}}</strong></p>
     </div>
