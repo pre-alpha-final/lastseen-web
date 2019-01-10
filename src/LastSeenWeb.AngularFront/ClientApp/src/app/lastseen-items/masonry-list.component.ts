@@ -6,6 +6,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MasonryListComponent implements OnInit {
 
+  masonryItems = [
+    { title: 'item 1' },
+    { title: 'item 2' },
+    { title: 'item 3' },
+    { title: 'item 4' },
+    { title: 'item 5' },
+    { title: 'item 6' }
+  ];
+
   constructor() { }
 
   ngOnInit() {
