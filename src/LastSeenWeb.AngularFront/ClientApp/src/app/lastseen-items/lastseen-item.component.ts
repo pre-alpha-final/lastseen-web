@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export interface ILastSeenItem {
   // Data section
@@ -33,14 +33,9 @@ export interface ILastSeenItem {
   templateUrl: './lastseen-item.component.html',
   styleUrls: ['./lastseen-item.component.css']
 })
-export class LastseenItemComponent implements OnInit {
+export class LastseenItemComponent {
   @Input() item: ILastSeenItem;
   @Output() loaded: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   public onLoad(): void  {
     this.loaded.emit();

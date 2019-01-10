@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar.component';
 import { MasonryListComponent } from './lastseen-items/masonry-list.component';
 import { LastseenItemsModule } from './lastseen-items/lastseen-items.module';
+import { MasonryListResolver } from './lastseen-items/masonry-list-resolver.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,12 @@ import { LastseenItemsModule } from './lastseen-items/lastseen-items.module';
     FormsModule,
     LastseenItemsModule,
     RouterModule.forRoot([
-      { path: '', component: MasonryListComponent, pathMatch: 'full' },
+      {
+        path: '',
+        component: MasonryListComponent,
+        pathMatch: 'full',
+        resolve: { lastseenitems: MasonryListResolver }
+      }
     ])
   ],
   providers: [JQUERY_PROVIDER],
