@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row text-center" id="masonry-display">
-    <ngx-masonry>
+    <ngx-masonry [updateLayout]="updateMasonryLayout">
       <ngxMasonryItem class="masonry-item" *ngFor="let item of masonryItems">
-        <app-lastseen-item [item]=item></app-lastseen-item>
+        <app-lastseen-item [item]=item (loaded)="onLoaded()"></app-lastseen-item>
       </ngxMasonryItem>
     </ngx-masonry>
   </div>
