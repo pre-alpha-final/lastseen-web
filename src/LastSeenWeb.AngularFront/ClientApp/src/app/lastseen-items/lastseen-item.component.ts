@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { UpdatePopupService } from '../shared/update-popup.service';
 
 export interface ILastSeenItem {
   // Data section
@@ -37,7 +38,13 @@ export class LastseenItemComponent {
   @Input() item: ILastSeenItem;
   @Output() loaded: EventEmitter<any> = new EventEmitter<any>();
 
-  public onLoad(): void  {
+  constructor(private updatePopupService: UpdatePopupService) { }
+
+  onLoad(): void {
     this.loaded.emit();
+  }
+
+  onClick(): void {
+    this.updatePopupService.loadContent();
   }
 }

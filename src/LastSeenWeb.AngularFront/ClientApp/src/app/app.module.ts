@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { JQUERY_PROVIDER } from './jquery.service';
+import { JQUERY_PROVIDER } from './shared/jquery.service';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar.component';
 import { MasonryListComponent } from './lastseen-items/masonry-list.component';
 import { LastseenItemsModule } from './lastseen-items/lastseen-items.module';
 import { MasonryListResolver } from './lastseen-items/masonry-list-resolver.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MasonryListResolver } from './lastseen-items/masonry-list-resolver.serv
     HttpClientModule,
     FormsModule,
     LastseenItemsModule,
+    SharedModule,
     RouterModule.forRoot([
       {
         path: '',
