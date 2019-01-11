@@ -20,6 +20,7 @@
 		</div>
     <div class="row">
 			<a *ngIf="item?.visitUrl" class="btn button-spacing" [href]="item?.visitUrl" target="_blank">Watch</a>
+			<button class="btn button-spacing" (click)="onClick()">Popup test</button>
 			<!-- <a class="btn button-spacing" href="javascript:void(0);" onclick="_popup.open('@Html.Raw(Model.Id)')">Update</a> -->
 		</div>
   </div>
