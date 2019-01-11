@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data } from '@angular/router';
-import { ILastSeenItem } from './lastseen-item.component';
+import { LastSeenItem } from '../shared/lastseenitem';
 
 @Component({
   templateUrl: './masonry-list.component.html',
@@ -8,7 +8,7 @@ import { ILastSeenItem } from './lastseen-item.component';
 })
 export class MasonryListComponent implements OnInit {
   updateMasonryLayout: boolean;
-  masonryItems: ILastSeenItem[];
+  masonryItems: LastSeenItem[];
 
   constructor(private route: ActivatedRoute) { }
 
