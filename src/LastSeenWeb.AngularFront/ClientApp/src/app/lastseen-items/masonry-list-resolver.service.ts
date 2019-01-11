@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ILastSeenItem } from './lastseen-item.component';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { LastSeenItem } from '../shared/lastseenitem';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class MasonryListResolver implements Resolve<any> {
     // https://github.com/DeborahK/Angular-Routing/blob/master/APM-Final/src/app/products/product-resolver.service.ts
     // return this.http.get('');
 
-    return of<ILastSeenItem[]>([
+    return of<LastSeenItem[]>([
       // tslint:disable-next-line:max-line-length
       { name: 'item 1', season: 1, unfinished: true, hours: 2, minutes: 3, notes: 'some notes', visitUrl: 'http://google.com', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png' },
       // tslint:disable-next-line:max-line-length

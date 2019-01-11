@@ -1,33 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UpdatePopupService } from '../shared/update-popup.service';
-
-export interface ILastSeenItem {
-  // Data section
-  id?: string;
-  modified?: Date;
-
-  // Status section
-  season?: number;
-  episode?: number;
-  visitUrl?: string;
-  unfinished?: boolean;
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  notes?: string;
-  moveToTop?: boolean;
-
-  // Config section
-  name?: string;
-  imageUrl?: string;
-
-  // Tracking section
-  trackingUrl?: string;
-  episodesBehind?: number;
-
-  // Removal
-  remove?: boolean;
-}
+import { LastSeenItem } from '../shared/lastseenitem';
 
 @Component({
   selector: 'app-lastseen-item',
@@ -35,7 +8,7 @@ export interface ILastSeenItem {
   styleUrls: ['./lastseen-item.component.css']
 })
 export class LastseenItemComponent {
-  @Input() item: ILastSeenItem;
+  @Input() item: LastSeenItem;
   @Output() loaded: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private updatePopupService: UpdatePopupService) { }
