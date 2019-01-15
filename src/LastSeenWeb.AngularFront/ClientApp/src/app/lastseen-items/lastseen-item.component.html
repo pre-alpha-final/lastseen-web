@@ -1,0 +1,27 @@
+<div class="itemview">
+  <div class="thumbnail">
+    <div><img class="image" [src]="item?.imageUrl" (load)="onLoad()"/></div>
+    <div class="title">
+      <p><strong>{{item?.name}}</strong></p>
+    </div>
+    <div class="season-episode">
+      <span *ngIf="item?.season">S: {{item.season}}</span>
+      <span *ngIf="item?.season && item.season != 0 && item?.episode && item.episode != 0">, </span>
+      <span *ngIf="item?.episode">E: {{item.episode}}</span>
+    </div>
+    <div *ngIf="item?.unfinished && (item?.hours != 0 || item?.minutes != 0 || item?.seconds != 0)" class="seen">
+      <span>Seen: </span>
+      <span *ngIf="item?.hours != 0">{{item.hours}}h</span>
+      <span *ngIf="item?.minutes != 0"> {{item.minutes}}m</span>
+      <span *ngIf="item?.seconds != 0"> {{item.seconds}}s</span>
+    </div>
+    <div *ngIf="item?.notes != ''" class="notes">
+      <span>{{item.notes}}</span>
+		</div>
+    <div class="row">
+			<a *ngIf="item?.visitUrl" class="btn button-spacing" [href]="item?.visitUrl" target="_blank">Watch</a>
+			<button class="btn button-spacing" (click)="onClick()">Popup test</button>
+			<!-- <a class="btn button-spacing" href="javascript:void(0);" onclick="_popup.open('@Html.Raw(Model.Id)')">Update</a> -->
+		</div>
+  </div>
+</div>
