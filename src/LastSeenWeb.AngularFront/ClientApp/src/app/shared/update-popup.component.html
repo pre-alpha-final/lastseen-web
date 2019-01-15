@@ -1,7 +1,145 @@
 <div id="popup" class="popup">
   <div class="thumbnail">
     <div class="popup-content-shell">
-      {{content?.name}}
+
+      
+
+
+
+
+
+
+
+<form [formGroup]="form">
+      <div class="popup-content">
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Status</a>
+                </h4>
+              </div>
+              <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <div class="line">
+                    <span class="name">Season:</span>
+                    <span class="input standard"><input type="text" class="standard" formControlName="season"></span>
+                    <span class="info"></span>
+                  </div>
+      
+                  <div class="line">
+                    <span class="name">Episode:</span>
+                    <span class="input"><input type="text" class="standard" formControlName="episode"></span>
+                    <span class="info"></span>
+                  </div>
+      
+                  <div class="line">
+                    <span class="name">Watch Url:</span>
+                    <span class="input"><input type="text" class="standard" formControlName="visitUrl"></span>
+                    <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto" title="Link to go to when 'Watch' button is pressed">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                  </div>
+
+                  <!-- <div class="line">
+                    <span class="name">Notes:</span>
+                    <span class="input">@Html.TextBoxFor(e => e.Notes, new { @class = "standard" })</span>
+                    <span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Notes will appear on item if present" })</span>
+                  </div>
+      
+                  <div class="line">
+                    <span class="name">Unfinished:</span>
+                    <span class="input-short">@Html.CheckBoxFor(e => e.Unfinished, new { onchange = "checkUnfinished(this)" })</span>
+                    <span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Check if You haven't finished watching the entire episode" })</span>
+                  </div>
+      
+                  <div id="times" class="line" style="@(Model.Unfinished ? "" : "display: none;")">
+                    @Html.TextBoxFor(e => e.Hours, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) h&nbsp;&nbsp;
+                    @Html.TextBoxFor(e => e.Minutes, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) m&nbsp;&nbsp;
+                    @Html.TextBoxFor(e => e.Seconds, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) s&nbsp;&nbsp;
+                  </div>
+      
+                  <div class="line">
+                    <span class="name">Move to top:</span>
+                    <span class="input-short">@Html.CheckBoxFor(e => e.MoveToTop)</span>
+                    <span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Move item to top of the list" })</span>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <!-- <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Config</a>
+                </h4>
+              </div>
+              <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="line">
+                    <span class="name">Name:</span>
+                    <span class="input">@Html.TextBoxFor(e => e.Name, new { @class = "standard" })</span>
+                    <span class="info"></span>
+                  </div>
+      
+                  <div class="line">
+                    <span class="name">Image Url:</span>
+                    <span class="input">@Html.TextBoxFor(e => e.ImageUrl, new { @class = "standard" })</span>
+                    <span class="info"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Tracking</a>
+                </h4>
+              </div>
+              <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                  Currently in development
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Removal</a>
+                </h4>
+              </div>
+              <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                  @Html.HiddenFor(e => e.Remove)
+                  <div class="removal-button">
+                    <a class="btn btn-red button-spacing" href="javascript:void(0);" onclick="popupContentUpdateRemove()">Remove</a>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        <!-- <div class="update-button">
+          <a class="btn button-spacing" href="javascript:void(0);" onclick="popupContentUpdate()">Update</a>
+        </div> -->
+      </div>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
 </div>
