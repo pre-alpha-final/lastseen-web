@@ -117,3 +117,8 @@
 .popup-content input:disabled {
 	background: #ddd;
 }
+
+.custom-tooltip, .custom-tooltip:hover, .custom-tooltip:visited {
+	color: #000;
+	margin-left: 3px;
+}

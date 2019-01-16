@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { LastSeenItem } from './lastseenitem';
+import { LastSeenItem } from '../shared/lastseenitem';
 
 @Injectable({
   providedIn: 'root'
