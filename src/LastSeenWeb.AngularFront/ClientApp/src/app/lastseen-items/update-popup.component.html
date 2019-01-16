@@ -1,17 +1,8 @@
 <div id="popup" class="popup">
   <div class="thumbnail">
     <div class="popup-content-shell">
-
-      
-
-
-
-
-
-
-
-<form [formGroup]="form">
-      <div class="popup-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="popup-content">
           <div class="panel-group" id="accordion">
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -21,18 +12,20 @@
               </div>
               <div id="collapse1" class="panel-collapse collapse in">
                 <div class="panel-body">
+                  <input type="hidden" formControlName="id">
+
                   <div class="line">
                     <span class="name">Season:</span>
                     <span class="input standard"><input type="text" class="standard" formControlName="season"></span>
                     <span class="info"></span>
                   </div>
-      
+
                   <div class="line">
                     <span class="name">Episode:</span>
                     <span class="input"><input type="text" class="standard" formControlName="episode"></span>
                     <span class="info"></span>
                   </div>
-      
+
                   <div class="line">
                     <span class="name">Watch Url:</span>
                     <span class="input"><input type="text" class="standard" formControlName="visitUrl"></span>
@@ -41,33 +34,39 @@
                     </a>
                   </div>
 
-                  <!-- <div class="line">
+                  <div class="line">
                     <span class="name">Notes:</span>
-                    <span class="input">@Html.TextBoxFor(e => e.Notes, new { @class = "standard" })</span>
-                    <span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Notes will appear on item if present" })</span>
+                    <span class="input"><input type="text" class="standard" formControlName="notes"></span>
+                    <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto" title="Notes will appear on item if present">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
                   </div>
-      
+
                   <div class="line">
                     <span class="name">Unfinished:</span>
-                    <span class="input-short">@Html.CheckBoxFor(e => e.Unfinished, new { onchange = "checkUnfinished(this)" })</span>
-                    <span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Check if You haven't finished watching the entire episode" })</span>
+                    <span class="input-short"><input type="checkbox" class="standard" formControlName="unfinished"></span>
+                    <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto" title="Check if You haven't finished watching the entire episode">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
                   </div>
-      
-                  <div id="times" class="line" style="@(Model.Unfinished ? "" : "display: none;")">
-                    @Html.TextBoxFor(e => e.Hours, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) h&nbsp;&nbsp;
-                    @Html.TextBoxFor(e => e.Minutes, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) m&nbsp;&nbsp;
-                    @Html.TextBoxFor(e => e.Seconds, Model.Unfinished ? (object)new { @class = "unfinished" } : new { @class = "unfinished", @disabled = "disabled" }) s&nbsp;&nbsp;
+
+                  <div id="times" class="line" *ngIf="form.controls.unfinished.value == true">
+                    <input type="text" class="unfinished" formControlName="hours"> h&nbsp;&nbsp;
+                    <input type="text" class="unfinished" formControlName="minutes"> m&nbsp;&nbsp;
+                    <input type="text" class="unfinished" formControlName="seconds"> s&nbsp;&nbsp;
                   </div>
-      
+
                   <div class="line">
                     <span class="name">Move to top:</span>
-                    <span class="input-short">@Html.CheckBoxFor(e => e.MoveToTop)</span>
-                    <span class="info">@await Component.InvokeAsync(nameof(Tooltip), new TooltipModel { Text = "Move item to top of the list" })</span>
-                  </div> -->
+                    <span class="input-short"><input type="checkbox" class="standard" formControlName="moveToTop"></span>
+                    <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto" title="Move item to top of the list">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- <div class="panel panel-default">
+            <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Config</a>
@@ -77,13 +76,13 @@
                 <div class="panel-body">
                   <div class="line">
                     <span class="name">Name:</span>
-                    <span class="input">@Html.TextBoxFor(e => e.Name, new { @class = "standard" })</span>
+                    <span class="input"><input type="text" class="standard" formControlName="name"></span>
                     <span class="info"></span>
                   </div>
-      
+
                   <div class="line">
                     <span class="name">Image Url:</span>
-                    <span class="input">@Html.TextBoxFor(e => e.ImageUrl, new { @class = "standard" })</span>
+                    <span class="input"><input type="text" class="standard" formControlName="imageUrl"></span>
                     <span class="info"></span>
                   </div>
                 </div>
@@ -109,37 +108,20 @@
               </div>
               <div id="collapse4" class="panel-collapse collapse">
                 <div class="panel-body">
-                  @Html.HiddenFor(e => e.Remove)
+                  <input type="hidden" formControlName="remove">
+
                   <div class="removal-button">
-                    <a class="btn btn-red button-spacing" href="javascript:void(0);" onclick="popupContentUpdateRemove()">Remove</a>
+                    <a class="btn btn-red button-spacing" href="javascript:void(0);" (onclick)="remove">Remove</a>
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
           </div>
-        <!-- <div class="update-button">
-          <a class="btn button-spacing" href="javascript:void(0);" onclick="popupContentUpdate()">Update</a>
-        </div> -->
-      </div>
-    </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          <div class="update-button">
+            <button class="btn button-spacing" type="submit">Update</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
