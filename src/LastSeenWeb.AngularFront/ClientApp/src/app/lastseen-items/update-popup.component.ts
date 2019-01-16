@@ -42,10 +42,15 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
   }
 
   contentLoaded(me: UpdatePopupComponent, content: LastSeenItem) {
+    for (let i = 2; i <= 4; i++) {
+      if (this.$('#collapse' + i).hasClass('in')) {
+        this.$('#collapse' + i).collapse('toggle');
+      }
+    }
     me.updatePopupService.open();
-  }
-
-  popupContentUpdate() {
+    if (this.$('#collapse1').hasClass('in') === false) {
+      this.$('#collapse1').collapse('toggle');
+    }
   }
 
   remove() {
