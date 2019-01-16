@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UpdatePopupService } from './update-popup.service';
-import { LastSeenItem } from './lastseenitem';
 import { Subscription } from 'rxjs';
-import { JQ_TOKEN } from './jquery.service';
+import { LastSeenItem } from '../shared/lastseenitem';
+import { JQ_TOKEN } from '../shared/jquery.service';
 
 @Component({
   selector: 'app-update-popup',
