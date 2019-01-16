@@ -44,4 +44,14 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
   contentLoaded(me: UpdatePopupComponent, content: LastSeenItem) {
     me.updatePopupService.open();
   }
+
+  popupContentUpdate() {
+  }
+
+  remove() {
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+  }
 }
