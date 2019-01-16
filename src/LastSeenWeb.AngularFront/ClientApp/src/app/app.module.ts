@@ -23,6 +23,7 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     LastseenItemsModule,
     SharedModule,
+    LastseenItemsModule,
     RouterModule.forRoot([
       {
         path: '',
