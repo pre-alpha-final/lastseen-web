@@ -10,6 +10,8 @@ import { LastseenItemsModule } from './lastseen-items/lastseen-items.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './store/reducers/app.reducers';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { AuthModule } from './auth/auth.module';
     SharedModule,
     LastseenItemsModule,
     AuthModule,
+    StoreModule.forRoot(appReducers),
     AppRoutingModule
   ],
   providers: [JQUERY_PROVIDER],
