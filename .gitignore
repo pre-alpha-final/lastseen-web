@@ -277,3 +277,6 @@ __pycache__/
 #Minified files
 **/js/*.min.js
 **/css/*.min.css
+
+#Identity developer key
+/src/LastSeenWeb.AngularFront/tempkey.rsa

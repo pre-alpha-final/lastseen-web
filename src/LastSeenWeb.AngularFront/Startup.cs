@@ -1,5 +1,10 @@
+﻿using IdentityServer4.Services;
+using LastSeenWeb.Data.Identity;
+using LastSeenWeb.Data.Identity.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -9,20 +14,56 @@ namespace LastSeenWeb.AngularFront
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+		public IConfiguration Configuration { get; }
+		public IHostingEnvironment Environment { get; }
+
+		public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
 		{
 			Configuration = configuration;
+			Environment = hostingEnvironment;
 		}
-
-		public IConfiguration Configuration { get; }
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddDbContext<UsersDbContext>();
+			services.AddIdentity<ApplicationUser, IdentityRole>()
+				.AddEntityFrameworkStores<UsersDbContext>()
+				.AddDefaultTokenProviders();
+
+			services.AddIdentityServer()
+				.AddDeveloperSigningCredential()
+				.AddInMemoryPersistedGrants()
+				.AddInMemoryIdentityResources(Config.GetIdentityResources())
+				.AddInMemoryApiResources(Config.GetApiResources())
+				.AddInMemoryClients(Config.GetClients(Configuration["ClientSecret"]))
+				.AddAspNetIdentity<ApplicationUser>();
+			services.AddTransient<IProfileService, IdentityClaimsProfileService>();
+
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+			services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
+			.AddJwtBearer(options =>
+			{
+				options.Authority = Configuration["Authority"];
+				options.Audience = "lastseenapi";
+				options.RequireHttpsMetadata = true;
+			});
 
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/dist";
+			});
+
+			services.Configure<MvcOptions>(options =>
+			{
+				if (Environment.IsProduction())
+				{
+					options.Filters.Add(new RequireHttpsAttribute());
+				}
 			});
 		}
 
@@ -42,6 +83,8 @@ namespace LastSeenWeb.AngularFront
 			app.UseStaticFiles();
 			app.UseSpaStaticFiles();
 
+			app.UseIdentityServer();
+			app.UseAuthentication();
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
