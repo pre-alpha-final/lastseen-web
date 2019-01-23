@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LastSeenWeb.Core\LastSeenWeb.Core.csproj" />
     <ProjectReference Include="..\LastSeenWeb.Data.Identity\LastSeenWeb.Data.Identity.csproj" />
   </ItemGroup>
 

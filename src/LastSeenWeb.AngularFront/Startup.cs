@@ -1,5 +1,6 @@
-﻿using System;
-using IdentityServer4.Services;
+﻿using IdentityServer4.Services;
+using LastSeenWeb.Core.Services;
+using LastSeenWeb.Core.Services.Implementation;
 using LastSeenWeb.Data.Identity;
 using LastSeenWeb.Data.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,6 +28,9 @@ namespace LastSeenWeb.AngularFront
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddSingleton<IEmailSender, EmailSender>();
+			services.AddSingleton<IWebClientService, WebClientService>();
+
 			services.AddDbContext<UsersDbContext>();
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<UsersDbContext>()
