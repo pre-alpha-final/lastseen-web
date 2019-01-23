@@ -2,6 +2,8 @@
 using LastSeenWeb.Core.Infrastructure;
 using System;
 using System.Collections.Specialized;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,22 +64,43 @@ namespace LastSeenWeb.Core.Services.Implementation
 				{
 					if (attempt > 0)
 					{
-						webClientResult.DebugInfo.AppendLine("retrying...");
+						webClientResult.DebugInfo
+							= webClientResult.DebugInfo.AppendLine("retrying...");
 					}
 					webClientResult.Content = await makeRequest();
-					webClientResult.DebugInfo.AppendLine("Complete");
+					webClientResult.DebugInfo
+						= webClientResult.DebugInfo.AppendLine("Complete");
 					webClientResult.Success = true;
 					return webClientResult;
 				}
+				catch (WebException e)
+				{
+					var responseStream = e.Response?.GetResponseStream();
+					if (responseStream != null)
+					{
+						using (var resp = new StreamReader(responseStream))
+						{
+							webClientResult.DebugInfo
+								= webClientResult.DebugInfo.AppendLine(resp.ReadToEnd());
+						}
+					}
+					else
+					{
+						webClientResult.DebugInfo
+							= webClientResult.DebugInfo.AppendLine($"{e.Message}");
+					}
+				}
 				catch (Exception e)
 				{
-					webClientResult.DebugInfo.AppendLine($"{e.Message}");
+					webClientResult.DebugInfo
+						= webClientResult.DebugInfo.AppendLine($"{e.Message}");
 				}
 
 				await Task.Delay(1000);
 			}
 
-			webClientResult.DebugInfo.AppendLine("Failed");
+			webClientResult.DebugInfo
+				= webClientResult.DebugInfo.AppendLine("Failed");
 			return webClientResult;
 		}
 	}

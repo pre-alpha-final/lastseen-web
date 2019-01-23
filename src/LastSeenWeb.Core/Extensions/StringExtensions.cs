@@ -2,9 +2,9 @@
 {
 	public static class StringExtensions
 	{
-		public static void AppendLine(this string s, string text)
+		public static string AppendLine(this string s, string text)
 		{
-			s = $"{s}{(s.Length > 0 ? "\n" : string.Empty)}{text}";
+			return $"{s}{(s.Length > 0 ? "\n" : string.Empty)}{text}";
 		}
 	}
 }
