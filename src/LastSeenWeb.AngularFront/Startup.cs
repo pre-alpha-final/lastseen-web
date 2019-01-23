@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Services;
+﻿using System;
+using IdentityServer4.Services;
 using LastSeenWeb.Data.Identity;
 using LastSeenWeb.Data.Identity.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace LastSeenWeb.AngularFront
 {
@@ -67,7 +69,7 @@ namespace LastSeenWeb.AngularFront
 			});
 		}
 
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
 			if (env.IsDevelopment())
 			{
@@ -87,10 +89,11 @@ namespace LastSeenWeb.AngularFront
 			app.UseAuthentication();
 			app.UseMvc(routes =>
 			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller}/{action=Index}/{id?}");
+				routes.MapRoute("default", "{controller}/{action=Index}/{id?}");
 			});
+
+			loggerFactory.AddDebug();
+			loggerFactory.AddAzureWebAppDiagnostics();
 
 			app.UseSpa(spa =>
 			{
@@ -98,7 +101,7 @@ namespace LastSeenWeb.AngularFront
 
 				if (env.IsDevelopment())
 				{
-					spa.UseAngularCliServer(npmScript: "start");
+					spa.UseAngularCliServer("start");
 				}
 			});
 		}
