@@ -4,6 +4,17 @@ import { AppState } from '../store/state/app.state';
 import { username, loggedIn, accessToken } from '../store/selectors/user.selectors';
 import { UpdateUser } from '../store/actions/user.actions';
 import { Subscription } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+interface AccessTokenResponse {
+  access_token: string;
+}
+
+interface DecodedAccessToken {
+  username: string;
+}
 
 /*
  * Using ngrx to have ngrx
@@ -20,7 +31,7 @@ export class AuthService implements OnDestroy {
   private loggedInSubscription: Subscription;
   private accessTokenSubscription: Subscription;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private httpClient: HttpClient, private router: Router) {
     this.usernameSubscription = this.store.select(username).subscribe(e => this.username = e);
     this.loggedInSubscription = this.store.select(loggedIn).subscribe(e => this.loggedIn = e);
     this.accessTokenSubscription = this.store.select(accessToken).subscribe(e => this.accessToken = e);
@@ -32,7 +43,20 @@ export class AuthService implements OnDestroy {
     this.accessTokenSubscription.unsubscribe();
   }
 
-  logIn() {
+  isAuthenticated() {
+    const jwtHelperService = new JwtHelperService();
+    return this.loggedIn && !jwtHelperService.isTokenExpired(this.accessToken);
+  }
+
+  logIn(email: string, password: string) {
+    this.httpClient.post('/api/auth/login', {
+      login: email,
+      password: password
+    })
+    .subscribe(
+      e => this.onLogIn(e as AccessTokenResponse),
+      e => console.log(e),
+    );
   }
 
   logOut() {
@@ -41,11 +65,17 @@ export class AuthService implements OnDestroy {
     }));
   }
 
-  onLogIn() {
+  onLogIn(userData: AccessTokenResponse) {
+    const jwtHelperService = new JwtHelperService();
+    const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(userData.access_token);
     this.store.dispatch(new UpdateUser({
-      username: 'x',
+      username: decodedAccessToken.username,
       loggedIn: true,
-      accessToken: 'y',
+      accessToken: userData.access_token,
     }));
+
+    this.loggedIn = true;
+    this.accessToken = userData.access_token;
+    this.router.navigateByUrl('/');
   }
 }
