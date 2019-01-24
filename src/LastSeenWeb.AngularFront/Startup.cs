@@ -77,7 +77,7 @@ namespace LastSeenWeb.AngularFront
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				//app.UseDeveloperExceptionPage();
 			}
 			else
 			{

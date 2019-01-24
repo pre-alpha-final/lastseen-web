@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Net;
 using System.Threading.Tasks;
 using LastSeenWeb.Core.Services;
 using LastSeenWeb.Data.Identity.Models;
@@ -25,7 +26,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 		}
 
 		[HttpPost("login")]
-		public async Task<IActionResult> LogIn([FromForm] Credentials credentials)
+		public async Task<IActionResult> LogIn([FromBody] Credentials credentials)
 		{
 			var authority = $"{_configuration["Authority"]}/connect/token";
 			var clientSecret = _configuration["ClientSecret"];
@@ -38,10 +39,11 @@ namespace LastSeenWeb.AngularFront.Controllers
 					{ "scope", "lastseenapi" },
 					{ "client_id", "lastseen" },
 					{ "client_secret", clientSecret },
-				});
+				}, 1);
 			if (webClientResult.Success == false)
 			{
-				throw new Exception(webClientResult.DebugInfo);
+				return StatusCode((int)HttpStatusCode.InternalServerError,
+					webClientResult.DebugInfo);
 			}
 
 			return Ok(webClientResult.Content);
