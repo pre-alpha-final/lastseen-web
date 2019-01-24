@@ -33,6 +33,11 @@
           </div>
         </div>
         <div class="form-group">
+          <div class="text-danger" *ngIf="authService.lastError">
+            {{(authService.lastError | json | authError)}}
+          </div>
+        </div>
+        <div class="form-group">
           <button type="submit" class="btn button-spacing">Log in</button>
         </div>
         <div>
