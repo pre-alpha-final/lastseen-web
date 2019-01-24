@@ -26,6 +26,7 @@ export class AuthService implements OnDestroy {
   username: string;
   loggedIn: boolean;
   accessToken: string;
+  lastError: any;
 
   private usernameSubscription: Subscription;
   private loggedInSubscription: Subscription;
@@ -55,7 +56,7 @@ export class AuthService implements OnDestroy {
     })
     .subscribe(
       e => this.onLogIn(e as AccessTokenResponse),
-      e => console.log(e),
+      e => this.lastError = e,
     );
   }
 
@@ -74,6 +75,7 @@ export class AuthService implements OnDestroy {
       accessToken: userData.access_token,
     }));
 
+    this.lastError = '';
     this.loggedIn = true;
     this.accessToken = userData.access_token;
     this.router.navigateByUrl('/');
