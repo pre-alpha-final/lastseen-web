@@ -25,8 +25,13 @@ interface DecodedAccessToken {
 export class AuthService implements OnDestroy {
   username: string;
   loggedIn: boolean;
-  accessToken: string;
   lastError: any;
+  get accessToken(): string {
+    return localStorage.getItem('accessToken');
+  }
+  set accessToken(value: string) {
+    localStorage.setItem('accessToken', value);
+  }
 
   private usernameSubscription: Subscription;
   private loggedInSubscription: Subscription;
@@ -35,7 +40,11 @@ export class AuthService implements OnDestroy {
   constructor(private store: Store<AppState>, private httpClient: HttpClient, private router: Router) {
     this.usernameSubscription = this.store.select(username).subscribe(e => this.username = e);
     this.loggedInSubscription = this.store.select(loggedIn).subscribe(e => this.loggedIn = e);
-    this.accessTokenSubscription = this.store.select(accessToken).subscribe(e => this.accessToken = e);
+    this.accessTokenSubscription = this.store.select(accessToken).subscribe(e => {
+      if (e) {
+        this.accessToken = e;
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -46,6 +55,11 @@ export class AuthService implements OnDestroy {
 
   isAuthenticated() {
     const jwtHelperService = new JwtHelperService();
+    if (this.accessToken) {
+      this.loggedIn = true;
+      const decodedToken: DecodedAccessToken = jwtHelperService.decodeToken(this.accessToken);
+      this.username = decodedToken && decodedToken.username || '';
+    }
     return this.loggedIn && !jwtHelperService.isTokenExpired(this.accessToken);
   }
 
@@ -70,14 +84,14 @@ export class AuthService implements OnDestroy {
     const jwtHelperService = new JwtHelperService();
     const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(userData.access_token);
     this.store.dispatch(new UpdateUser({
-      username: decodedAccessToken.username,
+      username: decodedAccessToken && decodedAccessToken.username || '',
       loggedIn: true,
-      accessToken: userData.access_token,
+      accessToken: userData && userData.access_token || '',
     }));
 
     this.lastError = '';
     this.loggedIn = true;
-    this.accessToken = userData.access_token;
+    this.accessToken = userData && userData.access_token || '';
     this.router.navigateByUrl('/');
   }
 }
