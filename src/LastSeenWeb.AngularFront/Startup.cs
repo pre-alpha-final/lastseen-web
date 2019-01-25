@@ -1,8 +1,12 @@
-﻿using IdentityServer4.Services;
+﻿using AutoMapper;
+using IdentityServer4.Services;
+using LastSeenWeb.AngularFront.MappingProfiles;
 using LastSeenWeb.Core.Services;
 using LastSeenWeb.Core.Services.Implementation;
 using LastSeenWeb.Data.Identity;
 using LastSeenWeb.Data.Identity.Models;
+using LastSeenWeb.Data.Services;
+using LastSeenWeb.Data.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +16,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
 namespace LastSeenWeb.AngularFront
 {
@@ -28,13 +33,24 @@ namespace LastSeenWeb.AngularFront
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddSingleton<IEmailSender, EmailSender>();
 			services.AddSingleton<IWebClientService, WebClientService>();
+			services.AddTransient<IEmailSender, EmailSender>();
+			services.AddTransient<ILastSeenService, LastSeenService>();
+			services.AddTransient<ILastSeenRepository, LastSeenRepository>();
+
+			services.AddSingleton(new MapperConfiguration(e => e.AddProfile<AppMappingProfile>()));
+			services.AddTransient(e => e.GetService<MapperConfiguration>().CreateMapper());
 
 			services.AddDbContext<UsersDbContext>();
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<UsersDbContext>()
 				.AddDefaultTokenProviders();
+
+			services.AddSingleton<IMongoClient>(e =>
+			{
+				var configuration = e.GetService<IConfiguration>();
+				return new MongoClient(configuration.GetConnectionString("LastSeenWebDb"));
+			});
 
 			services.AddIdentityServer()
 				.AddDeveloperSigningCredential()
