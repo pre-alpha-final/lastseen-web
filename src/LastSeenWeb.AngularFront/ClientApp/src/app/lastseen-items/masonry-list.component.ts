@@ -13,8 +13,8 @@ export class MasonryListComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.data.subscribe((value: Data) => {
-      this.masonryItems = value['lastseenitems'];
+    this.route.data.subscribe((data: Data) => {
+      this.masonryItems = data['lastseenitems'];
     });
   }
 

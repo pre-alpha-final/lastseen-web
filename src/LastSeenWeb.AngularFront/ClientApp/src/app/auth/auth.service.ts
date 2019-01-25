@@ -74,7 +74,10 @@ export class AuthService implements OnDestroy {
     })
     .subscribe(
       e => this.onLogIn(e as AccessTokenResponse),
-      e => this.lastError = e,
+      e => {
+        this.lastError = e;
+        console.log(e);
+      },
     );
   }
 
