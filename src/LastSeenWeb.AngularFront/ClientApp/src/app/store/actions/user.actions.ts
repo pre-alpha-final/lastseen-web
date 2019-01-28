@@ -6,8 +6,8 @@ export enum UserActionsEnum {
 
 export interface UserPayload {
     username?: string;
-    loggedIn?: boolean;
     accessToken?: string;
+    refreshToken?: string;
 }
 
 export class UpdateUser implements Action {

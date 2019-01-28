@@ -1,11 +1,11 @@
 export interface UserState {
     username: string;
-    loggedIn: boolean;
     accessToken: string;
+    refreshToken: string;
 }
 
 export const initialUserState: UserState = {
   username: '',
-  loggedIn: false,
   accessToken: '',
+  refreshToken: '',
 };

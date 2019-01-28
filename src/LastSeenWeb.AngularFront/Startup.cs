@@ -87,6 +87,12 @@ namespace LastSeenWeb.AngularFront
 					options.Filters.Add(new RequireHttpsAttribute());
 				}
 			});
+
+			services.AddLogging(e =>
+			{
+				e.AddDebug();
+				e.AddAzureWebAppDiagnostics();
+			});
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -111,9 +117,6 @@ namespace LastSeenWeb.AngularFront
 			{
 				routes.MapRoute("default", "{controller}/{action=Index}/{id?}");
 			});
-
-			loggerFactory.AddDebug();
-			loggerFactory.AddAzureWebAppDiagnostics();
 
 			app.UseSpa(spa =>
 			{
