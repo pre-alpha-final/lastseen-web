@@ -1,19 +1,36 @@
 ﻿import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/state/app.state';
-import { username, loggedIn, accessToken } from '../store/selectors/user.selectors';
+import { user } from '../store/selectors/user.selectors';
 import { UpdateUser } from '../store/actions/user.actions';
 import { Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-interface AccessTokenResponse {
+interface TokenResponse {
   access_token: string;
+  refresh_token: string;
 }
 
 interface DecodedAccessToken {
   username: string;
+}
+
+class AuthData {
+  username: string;
+  get accessToken(): string {
+    return localStorage.getItem('accessToken') || '';
+  }
+  set accessToken(value: string) {
+    localStorage.setItem('accessToken', value);
+  }
+  get refreshToken(): string {
+    return localStorage.getItem('refreshToken') || '';
+  }
+  set refreshToken(value: string) {
+    localStorage.setItem('refreshToken', value);
+  }
 }
 
 /*
@@ -23,57 +40,45 @@ interface DecodedAccessToken {
   providedIn: 'root'
 })
 export class AuthService implements OnDestroy {
-  username: string;
-  loggedIn: boolean;
-  lastError: any;
-  get accessToken(): string {
-    return localStorage.getItem('accessToken');
-  }
-  set accessToken(value: string) {
-    localStorage.setItem('accessToken', value);
-  }
-
-  private usernameSubscription: Subscription;
-  private loggedInSubscription: Subscription;
-  private accessTokenSubscription: Subscription;
+  private authData: AuthData;
+  private userSubscription: Subscription;
+  lastError: string;
 
   constructor(private store: Store<AppState>, private httpClient: HttpClient, private router: Router) {
-    this.usernameSubscription = this.store.select(username).subscribe(e => this.username = e);
-    this.loggedInSubscription = this.store.select(loggedIn).subscribe(e => this.loggedIn = e);
-    this.accessTokenSubscription = this.store.select(accessToken).subscribe(e => {
-      if (e) {
-        this.accessToken = e;
-      }
+    this.authData = new AuthData();
+    this.userSubscription = this.store.select(user).subscribe(e => {
+      this.authData.username = e.username;
+      this.authData.accessToken = !e.accessToken ? this.authData.accessToken : e.accessToken;
+      this.authData.refreshToken = !e.refreshToken ? this.authData.refreshToken : e.refreshToken;
     });
-  }
-
-  getToken(): string {
-    return this.accessToken;
+    this.handleExistingLogin();
   }
 
   ngOnDestroy(): void {
-    this.usernameSubscription.unsubscribe();
-    this.loggedInSubscription.unsubscribe();
-    this.accessTokenSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
-  isAuthenticated() {
-    const jwtHelperService = new JwtHelperService();
-    if (this.accessToken) {
-      this.loggedIn = true;
-      const decodedToken: DecodedAccessToken = jwtHelperService.decodeToken(this.accessToken);
-      this.username = decodedToken && decodedToken.username || '';
+  getToken(): string {
+    return this.authData.accessToken;
+  }
+
+  async isAuthenticated(): Promise<boolean> {
+    if (this.checkAuthenticated()) {
+      return true;
     }
-    return this.loggedIn && !jwtHelperService.isTokenExpired(this.accessToken);
+    await this.refreshToken();
+    return this.checkAuthenticated();
   }
 
   logIn(email: string, password: string) {
     this.httpClient.post('/api/auth/login', {
       login: email,
       password: password
-    })
-    .subscribe(
-      e => this.onLogIn(e as AccessTokenResponse),
+    }).subscribe(
+      e => {
+        this.onNewToken(e as TokenResponse);
+        this.router.navigateByUrl('/');
+      },
       e => {
         this.lastError = e;
         console.log(e);
@@ -83,22 +88,55 @@ export class AuthService implements OnDestroy {
 
   logOut() {
     this.store.dispatch(new UpdateUser({
-      loggedIn: false,
+      accessToken: '',
+      refreshToken: '',
+    }));
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    this.router.navigateByUrl('/');
+  }
+
+  onNewToken(userData: TokenResponse) {
+    const jwtHelperService = new JwtHelperService();
+    const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(userData.access_token);
+    this.lastError = '';
+    this.store.dispatch(new UpdateUser({
+      username: decodedAccessToken && decodedAccessToken.username || '',
+      accessToken: userData && userData.access_token || '',
+      refreshToken: userData && userData.refresh_token || '',
     }));
   }
 
-  onLogIn(userData: AccessTokenResponse) {
+  private checkAuthenticated(): boolean {
     const jwtHelperService = new JwtHelperService();
-    const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(userData.access_token);
-    this.store.dispatch(new UpdateUser({
-      username: decodedAccessToken && decodedAccessToken.username || '',
-      loggedIn: true,
-      accessToken: userData && userData.access_token || '',
-    }));
+    if (!jwtHelperService.isTokenExpired(this.authData.accessToken)) {
+      return true;
+    }
+    return false;
+  }
 
-    this.lastError = '';
-    this.loggedIn = true;
-    this.accessToken = userData && userData.access_token || '';
-    this.router.navigateByUrl('/');
+  private handleExistingLogin() {
+    if (this.checkAuthenticated()) {
+      const jwtHelperService = new JwtHelperService();
+      const decodedToken: DecodedAccessToken = jwtHelperService.decodeToken(this.authData.accessToken);
+      this.authData.username = decodedToken && decodedToken.username || '';
+    }
+  }
+
+  private async refreshToken(): Promise<void> {
+    if (!this.authData.refreshToken) {
+      return;
+    }
+    await this.httpClient.post('/api/auth/refresh', {
+      refreshToken: this.authData.refreshToken,
+    }).toPromise().then(e => {
+      const tokenResponse = e as TokenResponse;
+      this.store.dispatch(new UpdateUser({
+        accessToken: tokenResponse && tokenResponse.access_token || '',
+        refreshToken: tokenResponse && tokenResponse.refresh_token || '',
+      }));
+    }).catch(e => {
+      console.log(e);
+    });
   }
 }
