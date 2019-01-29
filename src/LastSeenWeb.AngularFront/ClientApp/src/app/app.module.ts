@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { JQUERY_PROVIDER } from './shared/jquery.service';
 import { AppComponent } from './app.component';
-import { NavBarComponent } from './nav-bar.component';
+import { NavBarComponent } from './navbar.component';
 import { LastseenItemsModule } from './lastseen-items/lastseen-items.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
