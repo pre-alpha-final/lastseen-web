@@ -33,8 +33,8 @@
           </div>
         </div>
         <div class="form-group">
-          <div class="text-danger" *ngIf="authService.lastError">
-            {{(authService.lastError | json | authError)}}
+          <div class="text-danger" *ngIf="loginError">
+            {{(loginError | json | authError)}}
           </div>
         </div>
         <div class="form-group">

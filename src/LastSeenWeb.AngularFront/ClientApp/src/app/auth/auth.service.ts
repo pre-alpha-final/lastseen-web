@@ -7,7 +7,7 @@ import { Subscription, Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 interface TokenResponse {
   access_token: string;
@@ -47,7 +47,6 @@ class AuthData {
 export class AuthService implements OnDestroy {
   private authData: AuthData;
   private userSubscription: Subscription;
-  lastError: string;
 
   constructor(private store: Store<AppState>, private httpClient: HttpClient, private router: Router) {
     this.authData = new AuthData();
@@ -75,20 +74,11 @@ export class AuthService implements OnDestroy {
     return this.checkAuthenticated();
   }
 
-  logIn(email: string, password: string) {
-    this.httpClient.post('/api/auth/login', {
+  logIn(email: string, password: string): Observable<TokenResponse> {
+    return this.httpClient.post<TokenResponse>('/api/auth/login', {
       login: email,
       password: password
-    }).subscribe(
-      e => {
-        this.onNewToken(e as TokenResponse);
-        this.router.navigateByUrl('/');
-      },
-      e => {
-        this.lastError = e;
-        console.log(e);
-      },
-    );
+    }).pipe(tap(e => this.onNewToken(e)));
   }
 
   logOut() {
@@ -115,7 +105,6 @@ export class AuthService implements OnDestroy {
   onNewToken(userData: TokenResponse) {
     const jwtHelperService = new JwtHelperService();
     const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(userData.access_token);
-    this.lastError = '';
     this.store.dispatch(new UpdateUser({
       username: decodedAccessToken && decodedAccessToken.username || '',
       accessToken: userData && userData.access_token || '',
@@ -143,10 +132,10 @@ export class AuthService implements OnDestroy {
     if (!this.authData.refreshToken) {
       return;
     }
-    await this.httpClient.post('/api/auth/refresh', {
+    await this.httpClient.post<TokenResponse>('/api/auth/refresh', {
       refreshToken: this.authData.refreshToken,
     }).toPromise().then(e => {
-      const tokenResponse = e as TokenResponse;
+      const tokenResponse = e;
       this.store.dispatch(new UpdateUser({
         accessToken: tokenResponse && tokenResponse.access_token || '',
         refreshToken: tokenResponse && tokenResponse.refresh_token || '',
