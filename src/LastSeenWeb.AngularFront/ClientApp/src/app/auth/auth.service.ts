@@ -3,10 +3,11 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/state/app.state';
 import { user } from '../store/selectors/user.selectors';
 import { UpdateUser } from '../store/actions/user.actions';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
 
 interface TokenResponse {
   access_token: string;
@@ -15,6 +16,10 @@ interface TokenResponse {
 
 interface DecodedAccessToken {
   username: string;
+}
+
+interface CheckEmailResponse {
+  message: string;
 }
 
 class AuthData {
@@ -94,6 +99,17 @@ export class AuthService implements OnDestroy {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     this.router.navigateByUrl('/');
+  }
+
+  checkEmail(userId: string, code: string): Observable<CheckEmailResponse> {
+    return this.httpClient.get<CheckEmailResponse>('/api/auth/checkemail', {
+      params: {
+        'userId': userId || '',
+        'code': code || '',
+      }
+    }).pipe(catchError(e => {
+      return of({ 'message': 'Unable to process request' });
+    }));
   }
 
   onNewToken(userData: TokenResponse) {

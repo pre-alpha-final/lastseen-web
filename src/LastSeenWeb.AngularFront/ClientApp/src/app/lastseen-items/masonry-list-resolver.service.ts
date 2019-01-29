@@ -11,8 +11,7 @@ export class MasonryListResolver implements Resolve<any> {
   constructor(private httpClient: HttpClient) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.httpClient.get('/api/lastseenitems')
-    .pipe(
+    return this.httpClient.get('/api/lastseenitems').pipe(
       catchError(e => {
         console.error(e);
         return of([]);
