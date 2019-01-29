@@ -18,8 +18,9 @@ interface DecodedAccessToken {
   username: string;
 }
 
-interface CheckEmailResponse {
-  message: string;
+export interface CheckEmailResponse {
+  successMessage?: string;
+  errorMessage?: string;
 }
 
 class AuthData {
@@ -98,7 +99,7 @@ export class AuthService implements OnDestroy {
         'code': code || '',
       }
     }).pipe(catchError(e => {
-      return of({ 'message': 'Unable to process request' });
+      return of({ 'errorMessage': 'Unable to process request' });
     }));
   }
 

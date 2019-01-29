@@ -1,23 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from './auth.service';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { AuthService, CheckEmailResponse } from './auth.service';
 
 @Component({
   templateUrl: './emailconfirmation.component.html'
 })
 export class EmailConfirmationComponent implements OnInit {
-  emailCheckResponse$: Observable<string>;
+  checkEmailResponse: CheckEmailResponse;
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(e => {
-      this.emailCheckResponse$ =
-        this.authService.checkEmail(e['userId'], e['code']).pipe(
-          map(f => f.message)
-        );
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.authService.checkEmail(params['userId'], params['code']).subscribe(e => {
+        this.checkEmailResponse = e;
+      });
     });
   }
 }
