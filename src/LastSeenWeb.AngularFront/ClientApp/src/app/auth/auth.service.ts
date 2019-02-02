@@ -145,4 +145,10 @@ export class AuthService implements OnDestroy {
       console.log(e);
     });
   }
+
+  // private synchronousSleepHack(milisecondTimeout: number) {
+  //   const start = new Date().getTime(), expire = start + milisecondTimeout;
+  //   while (new Date().getTime() < expire) { }
+  //   return;
+  // }
 }
