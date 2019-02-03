@@ -17,7 +17,7 @@ namespace LastSeenWeb.Data.Identity
 		{
 			return new List<ApiResource>
 			{
-				new ApiResource("lastseenapi", "Last Seen API")
+				new ApiResource("lastseenapi", "Last Seen API", new List<string> { "LastSeenApiAccess" })
 			};
 		}
 

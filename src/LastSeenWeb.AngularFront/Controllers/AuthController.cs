@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Net;
 using System.Threading.Tasks;
+using LastSeenWeb.AngularFront.Controllers.Models;
 using LastSeenWeb.Core.Services;
 using LastSeenWeb.Data.Identity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -27,8 +28,20 @@ namespace LastSeenWeb.AngularFront.Controllers
 			_configuration = configuration;
 		}
 
+		[HttpPost("register")]
+		public async Task<IActionResult> Register([FromBody] RegistrationCredentials registrationCredentials)
+		{
+			//Dummy user
+			//_userManager.PasswordValidators.Clear();
+			//var user = new ApplicationUser { UserName = "username" };
+			//var result = await _userManager.CreateAsync(user, "password");
+			//await _userManager.AddClaimAsync(user, new Claim("LastSeenApiAccess", "true"));
+
+			return Ok();
+		}
+
 		[HttpPost("login")]
-		public async Task<IActionResult> LogIn([FromBody] Credentials credentials)
+		public async Task<IActionResult> LogIn([FromBody] LoginCredentials loginCredentials)
 		{
 			var authority = $"{_configuration["Authority"]}/connect/token";
 			var clientSecret = _configuration["ClientSecret"];
@@ -36,8 +49,8 @@ namespace LastSeenWeb.AngularFront.Controllers
 				new NameValueCollection
 				{
 					{ "grant_type", "password" },
-					{ "username", credentials.Login },
-					{ "password", credentials.Password },
+					{ "username", loginCredentials.Login },
+					{ "password", loginCredentials.Password },
 					{ "scope", "lastseenapi offline_access" },
 					{ "client_id", "lastseen" },
 					{ "client_secret", clientSecret },
@@ -115,26 +128,6 @@ namespace LastSeenWeb.AngularFront.Controllers
 			{
 				SuccessMessage = "Thank You for confirming Your email",
 			}));
-		}
-
-		public class Credentials
-		{
-			public string Login { get; set; }
-			public string Password { get; set; }
-		}
-
-		public class RefreshTokenResponse
-		{
-			[JsonProperty(PropertyName = "refreshToken")]
-			public string RefreshToken { get; set; }
-		}
-
-		public class CheckEmailResponse
-		{
-			[JsonProperty(PropertyName = "successMessage")]
-			public string SuccessMessage { get; set; }
-			[JsonProperty(PropertyName = "errorMessage")]
-			public string ErrorMessage { get; set; }
 		}
 	}
 }

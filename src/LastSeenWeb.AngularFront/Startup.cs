@@ -75,6 +75,11 @@ namespace LastSeenWeb.AngularFront
 				options.RequireHttpsMetadata = true;
 			});
 
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("LastSeenApiAccess", policy => policy.RequireClaim("LastSeenApiAccess", "true"));
+			});
+
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/dist";

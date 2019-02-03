@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LastSeenWeb.AngularFront.Controllers
 {
-	[Authorize]
+	[Authorize(Policy = "LastSeenApiAccess")]
 	[Route("api/lastseenitems")]
 	public class LastSeenItemsController : Controller
 	{
