@@ -80,7 +80,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 				var oldEntity = await lastSeenItems
 					.Find(e => e.OwnerName == ownerName && e.Id == lastSeenItem.Id)
 					.FirstOrDefaultAsync();
-				var lastModified = oldEntity != null ? oldEntity.Modified : DateTime.UtcNow;
+				var lastModified = oldEntity?.Modified ?? DateTime.UtcNow;
 
 				var entity = _mapper.Map<LastSeenItemEntity>(lastSeenItem);
 				entity.OwnerName = ownerName;

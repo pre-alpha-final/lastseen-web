@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using IdentityServer4.Services;
 using LastSeenWeb.AngularFront.MappingProfiles;
+using LastSeenWeb.AngularFront.Services;
+using LastSeenWeb.AngularFront.Services.Implementation;
 using LastSeenWeb.Core.Services;
 using LastSeenWeb.Core.Services.Implementation;
 using LastSeenWeb.Data.Identity;
@@ -33,7 +35,7 @@ namespace LastSeenWeb.AngularFront
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddSingleton<IWebClientService, WebClientService>();
+			services.AddSingleton<IHttpClientService, HttpClientService>();
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddTransient<ILastSeenService, LastSeenService>();
 			services.AddTransient<ILastSeenRepository, LastSeenRepository>();
