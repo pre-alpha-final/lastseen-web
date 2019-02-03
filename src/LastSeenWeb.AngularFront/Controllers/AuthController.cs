@@ -1,8 +1,8 @@
-﻿using System.Collections.Specialized;
-using System.Net;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using LastSeenWeb.AngularFront.Controllers.Models;
-using LastSeenWeb.Core.Services;
+using LastSeenWeb.AngularFront.Services;
 using LastSeenWeb.Data.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +16,15 @@ namespace LastSeenWeb.AngularFront.Controllers
 	{
 		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly UserManager<ApplicationUser> _userManager;
-		private readonly IWebClientService _webClientService;
+		private readonly IHttpClientService _httpClientService;
 		private readonly IConfiguration _configuration;
 
 		public AuthController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-			IWebClientService webClientService, IConfiguration configuration)
+			IHttpClientService httpClientService, IConfiguration configuration)
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
-			_webClientService = webClientService;
+			_httpClientService = httpClientService;
 			_configuration = configuration;
 		}
 
@@ -45,8 +45,8 @@ namespace LastSeenWeb.AngularFront.Controllers
 		{
 			var authority = $"{_configuration["Authority"]}/connect/token";
 			var clientSecret = _configuration["ClientSecret"];
-			var webClientResult = await _webClientService.Post(authority,
-				new NameValueCollection
+			var httpResponseMessage = await _httpClientService.Post(authority,
+				new FormUrlEncodedContent(new Dictionary<string, string>
 				{
 					{ "grant_type", "password" },
 					{ "username", loginCredentials.Login },
@@ -54,14 +54,10 @@ namespace LastSeenWeb.AngularFront.Controllers
 					{ "scope", "lastseenapi offline_access" },
 					{ "client_id", "lastseen" },
 					{ "client_secret", clientSecret },
-				}, 1);
-			if (webClientResult.Success == false)
-			{
-				return StatusCode((int)HttpStatusCode.InternalServerError,
-					webClientResult.DebugInfo);
-			}
+				}));
 
-			return Ok(webClientResult.Content);
+			return StatusCode((int)httpResponseMessage.StatusCode,
+				await httpResponseMessage.Content.ReadAsStringAsync());
 		}
 
 		[HttpPost("refresh")]
@@ -69,22 +65,18 @@ namespace LastSeenWeb.AngularFront.Controllers
 		{
 			var authority = $"{_configuration["Authority"]}/connect/token";
 			var clientSecret = _configuration["ClientSecret"];
-			var webClientResult = await _webClientService.Post(authority,
-				new NameValueCollection
+			var httpResponseMessage = await _httpClientService.Post(authority,
+				new FormUrlEncodedContent(new Dictionary<string, string>
 				{
 					{ "grant_type", "refresh_token" },
 					{ "refresh_token", refreshToken.RefreshToken },
 					{ "scope", "lastseenapi" },
 					{ "client_id", "lastseen" },
 					{ "client_secret", clientSecret },
-				}, 1);
-			if (webClientResult.Success == false)
-			{
-				return StatusCode((int)HttpStatusCode.InternalServerError,
-					webClientResult.DebugInfo);
-			}
+				}));
 
-			return Ok(webClientResult.Content);
+			return StatusCode((int)httpResponseMessage.StatusCode,
+				await httpResponseMessage.Content.ReadAsStringAsync());
 		}
 
 		[HttpGet("logout")]
