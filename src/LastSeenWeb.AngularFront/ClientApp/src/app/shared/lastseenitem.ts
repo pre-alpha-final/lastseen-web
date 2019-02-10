@@ -21,7 +21,4 @@ export interface LastSeenItem {
     // Tracking section
     trackingUrl?: string;
     episodesBehind?: number;
-
-    // Removal
-    remove?: boolean;
 }

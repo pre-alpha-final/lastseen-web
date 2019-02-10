@@ -31,7 +31,7 @@ namespace LastSeenWeb.Data.Models
 		public string TrackingUrl { get; set; }
 		public int EpisodesBehind { get; set; }
 
-		// Removal
-		public bool Remove { get; set; }
+		// Other
+		public bool Deleted { get; set; }
 	}
 }
