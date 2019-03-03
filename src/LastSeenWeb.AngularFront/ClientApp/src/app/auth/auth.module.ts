@@ -10,7 +10,11 @@ import { TokenInterceptor } from './token.interceptor';
 import { EmailConfirmationComponent } from './emailconfirmation.component';
 
 @NgModule({
-  declarations: [LoginComponent, AuthErrorPipe, EmailConfirmationComponent],
+  declarations: [
+    LoginComponent,
+    AuthErrorPipe,
+    EmailConfirmationComponent
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
