@@ -7,7 +7,11 @@ import { UpdatePopupComponent } from './update-popup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [MasonryListComponent, LastseenItemComponent, UpdatePopupComponent],
+  declarations: [
+    MasonryListComponent,
+    LastseenItemComponent,
+    UpdatePopupComponent
+  ],
   imports: [
     CommonModule,
     NgxMasonryModule,

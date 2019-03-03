@@ -24,7 +24,6 @@ import { appReducers } from './store/reducers/app.reducers';
     FormsModule,
     LastseenItemsModule,
     SharedModule,
-    LastseenItemsModule,
     AuthModule,
     StoreModule.forRoot(appReducers),
     AppRoutingModule
