@@ -26,7 +26,7 @@ namespace LastSeenWeb.Front.Controllers
 
 		public async Task<IActionResult> OnPostAsync(LastSeenItem model)
 		{
-			if (model.Remove == true)
+			if (model.Deleted == true)
 			{
 				await _lastSeenService.Delete(model.Id, HttpContext.User.Identity.Name);
 			}

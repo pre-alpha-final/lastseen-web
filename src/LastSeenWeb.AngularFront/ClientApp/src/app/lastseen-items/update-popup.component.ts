@@ -11,7 +11,7 @@ import { JQ_TOKEN } from '../shared/jquery.service';
   styleUrls: ['./update-popup.component.css']
 })
 export class UpdatePopupComponent implements OnInit, OnDestroy {
-  contentLoaded$: Subscription;
+  contentLoadedSubscription: Subscription;
   form = this.formBuilder.group({
     id: [''],
     season: [0],
@@ -33,12 +33,12 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.$('.custom-tooltip').tooltip();
-    this.contentLoaded$ = this.updatePopupService.contentLoaded.subscribe(
+    this.contentLoadedSubscription = this.updatePopupService.contentLoaded.subscribe(
       (e: LastSeenItem) => this.contentLoaded(this, e));
   }
 
   ngOnDestroy(): void {
-    this.contentLoaded$.unsubscribe();
+    this.contentLoadedSubscription.unsubscribe();
   }
 
   contentLoaded(me: UpdatePopupComponent, content: LastSeenItem) {

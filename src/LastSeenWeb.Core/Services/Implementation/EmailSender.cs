@@ -2,14 +2,22 @@
 using SendGrid.Helpers.Mail;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace LastSeenWeb.Core.Services.Implementation
 {
 	public class EmailSender : IEmailSender
 	{
+		private readonly IConfiguration _configuration;
+
+		public EmailSender(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}
+
 		public async Task SendEmailAsync(string email, string subject, string message)
 		{
-			var apiKey = Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+			var apiKey = Environment.GetEnvironmentVariable(_configuration["SendGridApiKey"]);
 			var client = new SendGridClient(apiKey);
 			var applicationSettings = new ApplicationSettings();
 			var msg = new SendGridMessage
