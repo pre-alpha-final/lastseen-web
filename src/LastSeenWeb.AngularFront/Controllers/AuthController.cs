@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using LastSeenWeb.AngularFront.Controllers.Models;
 using LastSeenWeb.AngularFront.Services;
+using LastSeenWeb.Core.Services;
 using LastSeenWeb.Data.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,16 @@ namespace LastSeenWeb.AngularFront.Controllers
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly IHttpClientService _httpClientService;
 		private readonly IConfiguration _configuration;
+		private readonly IEmailSender _emailSender;
 
 		public AuthController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-			IHttpClientService httpClientService, IConfiguration configuration)
+			IHttpClientService httpClientService, IConfiguration configuration, IEmailSender _emailSender)
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
 			_httpClientService = httpClientService;
 			_configuration = configuration;
+			this._emailSender = _emailSender;
 		}
 
 		[HttpPost("register")]
@@ -120,6 +123,26 @@ namespace LastSeenWeb.AngularFront.Controllers
 			{
 				SuccessMessage = "Thank You for confirming Your email",
 			}));
+		}
+
+		[HttpPost("forgotpassword")]
+		public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
+		{
+			var user = await _userManager.FindByEmailAsync(model.Email);
+			if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+			{
+				return Ok(JsonConvert.SerializeObject(new ForgotPasswordResponse
+				{
+					Error = "User does not exist or email unconfirmed"
+				}));
+			}
+
+			var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+			var callbackUrl = Url.Page("/Auth/ResetPassword", null,
+				new { user.Id, code }, Request.Scheme);
+			await _emailSender.SendResetPasswordAsync(model.Email, callbackUrl);
+
+			return Ok(new ForgotPasswordResponse());
 		}
 	}
 }
