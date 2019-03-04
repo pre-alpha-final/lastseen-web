@@ -5,7 +5,7 @@ import { user } from '../store/selectors/user.selectors';
 import { UpdateUser } from '../store/actions/user.actions';
 import { Subscription, Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -24,7 +24,7 @@ export interface CheckEmailResponse {
   error?: string;
 }
 
-export interface ForgotPasswordResponse {
+export interface VoidResponse {
   error?: string;
 }
 
@@ -80,6 +80,14 @@ export class AuthService implements OnDestroy {
     return this.checkAuthenticated();
   }
 
+  register(email: string, password: string, password2: string): Observable<VoidResponse> {
+    return this.httpClient.post<VoidResponse>('/api/auth/register', {
+      email: email,
+      password: password,
+      password2: password2
+    }).pipe(catchError(e => of({ error: (e as HttpErrorResponse).error.error })));
+  }
+
   logIn(email: string, password: string): Observable<TokenResponse> {
     return this.httpClient.post<TokenResponse>('/api/auth/login', {
       login: email,
@@ -109,8 +117,8 @@ export class AuthService implements OnDestroy {
     }).pipe(catchError(e => of({ error: 'Unable to process request' })));
   }
 
-  forgotPassword(email: string): Observable<ForgotPasswordResponse> {
-    return this.httpClient.post<ForgotPasswordResponse>('/api/auth/forgotpassword', {
+  forgotPassword(email: string): Observable<VoidResponse> {
+    return this.httpClient.post<VoidResponse>('/api/auth/forgotpassword', {
       email: email
     }).pipe(catchError(e => of({ error: 'Unable to process request' })));
   }
@@ -153,7 +161,7 @@ export class AuthService implements OnDestroy {
         accessToken: tokenResponse && tokenResponse.access_token || '',
         refreshToken: tokenResponse && tokenResponse.refresh_token || '',
       }));
-    }).catch(e => {});
+    }).catch(e => { });
   }
 
   // private synchronousSleepHack(milisecondTimeout: number) {
