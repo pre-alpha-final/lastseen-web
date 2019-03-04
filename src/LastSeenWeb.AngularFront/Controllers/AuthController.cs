@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using LastSeenWeb.AngularFront.Controllers.Models;
@@ -32,7 +33,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 		}
 
 		[HttpPost("register")]
-		public async Task<IActionResult> Register([FromBody] RegistrationCredentials registrationCredentials)
+		public async Task<IActionResult> Register([FromBody] RegisterModel model)
 		{
 			//Dummy user
 			//_userManager.PasswordValidators.Clear();
@@ -40,11 +41,33 @@ namespace LastSeenWeb.AngularFront.Controllers
 			//var result = await _userManager.CreateAsync(user, "password");
 			//await _userManager.AddClaimAsync(user, new Claim("LastSeenApiAccess", "true"));
 
-			return Ok();
+			if (model.Password != model.Password2)
+			{
+				return Ok(new VoidResponse { Error = "Passwords don't match" });
+			}
+
+			var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+			var result = await _userManager.CreateAsync(user, model.Password);
+			if (result.Succeeded)
+			{
+				var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+				var callbackUrl = Url.Page("/auth/emailconfirmation", null,
+					new { user.Id, code }, Request.Scheme);
+				await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+				await _signInManager.SignInAsync(user, false);
+
+				return Ok(new VoidResponse());
+			}
+
+			return BadRequest(new VoidResponse
+			{
+				Error = string.Join(", ", result.Errors.Select(e => e.Description))
+			});
 		}
 
 		[HttpPost("login")]
-		public async Task<IActionResult> LogIn([FromBody] LoginCredentials loginCredentials)
+		public async Task<IActionResult> LogIn([FromBody] LoginModel model)
 		{
 			var authority = $"{_configuration["Authority"]}/connect/token";
 			var clientSecret = _configuration["ClientSecret"];
@@ -52,8 +75,8 @@ namespace LastSeenWeb.AngularFront.Controllers
 				new FormUrlEncodedContent(new Dictionary<string, string>
 				{
 					{ "grant_type", "password" },
-					{ "username", loginCredentials.Login },
-					{ "password", loginCredentials.Password },
+					{ "username", model.Login },
+					{ "password", model.Password },
 					{ "scope", "lastseenapi offline_access" },
 					{ "client_id", "lastseen" },
 					{ "client_secret", clientSecret },
@@ -64,7 +87,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 		}
 
 		[HttpPost("refresh")]
-		public async Task<IActionResult> Refresh([FromBody] RefreshTokenResponse refreshToken)
+		public async Task<IActionResult> Refresh([FromBody] RefreshTokenResponse model)
 		{
 			var authority = $"{_configuration["Authority"]}/connect/token";
 			var clientSecret = _configuration["ClientSecret"];
@@ -72,7 +95,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 				new FormUrlEncodedContent(new Dictionary<string, string>
 				{
 					{ "grant_type", "refresh_token" },
-					{ "refresh_token", refreshToken.RefreshToken },
+					{ "refresh_token", model.RefreshToken },
 					{ "scope", "lastseenapi" },
 					{ "client_id", "lastseen" },
 					{ "client_secret", clientSecret },
@@ -131,18 +154,18 @@ namespace LastSeenWeb.AngularFront.Controllers
 			var user = await _userManager.FindByEmailAsync(model.Email);
 			if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
 			{
-				return Ok(JsonConvert.SerializeObject(new ForgotPasswordResponse
+				return Ok(JsonConvert.SerializeObject(new VoidResponse
 				{
 					Error = "User does not exist or email unconfirmed"
 				}));
 			}
 
 			var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-			var callbackUrl = Url.Page("/Auth/ResetPassword", null,
+			var callbackUrl = Url.Page("/auth/resetpassword", null,
 				new { user.Id, code }, Request.Scheme);
 			await _emailSender.SendResetPasswordAsync(model.Email, callbackUrl);
 
-			return Ok(new ForgotPasswordResponse());
+			return Ok(new VoidResponse());
 		}
 	}
 }

@@ -10,16 +10,15 @@ export class LoginComponent {
   tokenResponse: TokenResponse;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [
-      Validators.required,
-      // Validators.minLength(8),
-      // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{1,}$')
-    ]]
+    password: ['', Validators.required]
   });
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) { }
 
   onSubmit() {
+    if (this.form.valid === false) {
+      return;
+    }
     this.authService.logIn(
       this.form.controls.email.value,
       this.form.controls.password.value
