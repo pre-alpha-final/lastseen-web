@@ -11,7 +11,8 @@ const routes: Routes = [
     pathMatch: 'full',
     resolve: { lastseenitems: MasonryListResolver },
     canActivate: [AuthGuard]
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

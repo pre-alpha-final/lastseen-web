@@ -12,9 +12,8 @@ export class EmailConfirmationComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.authService.checkEmail(params['userId'], params['code']).subscribe(e => {
-        this.checkEmailResponse = e;
-      });
+      this.authService.checkEmail(params['userId'], params['code']).subscribe(e =>
+        this.checkEmailResponse = e);
     });
   }
 }

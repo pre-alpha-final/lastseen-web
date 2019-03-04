@@ -97,7 +97,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 			{
 				return Ok(JsonConvert.SerializeObject(new CheckEmailResponse
 				{
-					ErrorMessage = "Invalid arguments",
+					Error = "Invalid arguments",
 				}));
 			}
 
@@ -106,7 +106,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 			{
 				return Ok(JsonConvert.SerializeObject(new CheckEmailResponse
 				{
-					ErrorMessage = $"Unable to load user with ID '{userId}'",
+					Error = $"Unable to load user with ID '{userId}'",
 				}));
 			}
 
@@ -115,13 +115,13 @@ namespace LastSeenWeb.AngularFront.Controllers
 			{
 				return Ok(JsonConvert.SerializeObject(new CheckEmailResponse
 				{
-					ErrorMessage = $"Error confirming email for user with ID '{userId}'",
+					Error = $"Error confirming email for user with ID '{userId}'",
 				}));
 			}
 
 			return Ok(JsonConvert.SerializeObject(new CheckEmailResponse
 			{
-				SuccessMessage = "Thank You for confirming Your email",
+				Success = "Thank You for confirming Your email",
 			}));
 		}
 
