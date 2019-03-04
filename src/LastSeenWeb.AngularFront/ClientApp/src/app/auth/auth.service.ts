@@ -9,18 +9,23 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 
-interface TokenResponse {
-  access_token: string;
-  refresh_token: string;
-}
-
 interface DecodedAccessToken {
   username: string;
 }
 
+export interface TokenResponse {
+  access_token?: string;
+  refresh_token?: string;
+  error?: string;
+}
+
 export interface CheckEmailResponse {
-  successMessage?: string;
-  errorMessage?: string;
+  success?: string;
+  error?: string;
+}
+
+export interface ForgotPasswordResponse {
+  error?: string;
 }
 
 class AuthData {
@@ -79,7 +84,10 @@ export class AuthService implements OnDestroy {
     return this.httpClient.post<TokenResponse>('/api/auth/login', {
       login: email,
       password: password
-    }).pipe(tap(e => this.onNewToken(e)));
+    }).pipe(
+      tap(e => this.onNewToken(e)),
+      catchError(e => of({ error: e }))
+    );
   }
 
   logOut() {
@@ -98,9 +106,13 @@ export class AuthService implements OnDestroy {
         'userId': userId || '',
         'code': code || '',
       }
-    }).pipe(catchError(e => {
-      return of({ 'errorMessage': 'Unable to process request' });
-    }));
+    }).pipe(catchError(e => of({ error: 'Unable to process request' })));
+  }
+
+  forgotPassword(email: string): Observable<ForgotPasswordResponse> {
+    return this.httpClient.post<ForgotPasswordResponse>('/api/auth/forgotpassword', {
+      email: email
+    }).pipe(catchError(e => of({ error: 'Unable to process request' })));
   }
 
   onNewToken(userData: TokenResponse) {
@@ -141,9 +153,7 @@ export class AuthService implements OnDestroy {
         accessToken: tokenResponse && tokenResponse.access_token || '',
         refreshToken: tokenResponse && tokenResponse.refresh_token || '',
       }));
-    }).catch(e => {
-      console.log(e);
-    });
+    }).catch(e => {});
   }
 
   // private synchronousSleepHack(milisecondTimeout: number) {
