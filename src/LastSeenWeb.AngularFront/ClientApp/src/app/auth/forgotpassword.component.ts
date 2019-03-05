@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { VoidResponse, AuthService } from './auth.service';
+import { ErrorResponse, AuthService } from './auth.service';
 
 @Component({
   templateUrl: './forgotpassword.component.html'
 })
 export class ForgotPasswordComponent {
-  forgotPasswordResponse: VoidResponse;
+  forgotPasswordResponse: Object | ErrorResponse;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]]
   });
@@ -18,6 +18,6 @@ export class ForgotPasswordComponent {
       return;
     }
     this.authService.forgotPassword(this.form.controls.email.value).subscribe(
-      e => this.forgotPasswordResponse = e);
+      e => this.forgotPasswordResponse = e || {});
   }
 }
