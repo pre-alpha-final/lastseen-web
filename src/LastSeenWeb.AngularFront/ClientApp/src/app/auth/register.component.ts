@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, ValidationErrors } from '@angular/forms';
-import { AuthService, ErrorResponse } from './auth.service';
+import { AuthService } from './auth.service';
+import { ErrorType } from '../shared/errortype';
 
 @Component({
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
-  registerResponse: Object | ErrorResponse;
+  registerResponse: Object | ErrorType;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [

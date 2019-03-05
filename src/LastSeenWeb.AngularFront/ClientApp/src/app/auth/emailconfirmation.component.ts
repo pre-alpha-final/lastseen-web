@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService, ErrorResponse } from './auth.service';
+import { AuthService } from './auth.service';
+import { ErrorType } from '../shared/errortype';
 
 @Component({
   templateUrl: './emailconfirmation.component.html'
 })
 export class EmailConfirmationComponent implements OnInit {
-  checkEmailResponse: Object | ErrorResponse;
+  checkEmailResponse: Object | ErrorType;
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService) { }
 

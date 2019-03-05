@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ErrorResponse, AuthService } from './auth.service';
+import { AuthService } from './auth.service';
+import { ErrorType } from '../shared/errortype';
 
 @Component({
   templateUrl: './forgotpassword.component.html'
 })
 export class ForgotPasswordComponent {
-  forgotPasswordResponse: Object | ErrorResponse;
+  forgotPasswordResponse: Object | ErrorType;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]]
   });
