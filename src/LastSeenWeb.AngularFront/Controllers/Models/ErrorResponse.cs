@@ -2,7 +2,7 @@
 
 namespace LastSeenWeb.AngularFront.Controllers.Models
 {
-	public class VoidResponse
+	public class ErrorResponse
 	{
 		[JsonProperty(PropertyName = "error")]
 		public string Error { get; set; }

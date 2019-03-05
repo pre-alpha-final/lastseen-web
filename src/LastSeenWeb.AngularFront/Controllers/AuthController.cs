@@ -43,7 +43,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 
 			if (model.Password != model.Password2)
 			{
-				return Ok(new VoidResponse { Error = "Passwords don't match" });
+				return Ok(new ErrorResponse { Error = "Passwords don't match" });
 			}
 
 			var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -57,10 +57,10 @@ namespace LastSeenWeb.AngularFront.Controllers
 
 				await _signInManager.SignInAsync(user, false);
 
-				return Ok(new VoidResponse());
+				return Ok();
 			}
 
-			return BadRequest(new VoidResponse
+			return BadRequest(new ErrorResponse
 			{
 				Error = string.Join(", ", result.Errors.Select(e => e.Description))
 			});
@@ -118,7 +118,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 		{
 			if (userId == null || code == null)
 			{
-				return Ok(JsonConvert.SerializeObject(new CheckEmailResponse
+				return Ok(JsonConvert.SerializeObject(new ErrorResponse
 				{
 					Error = "Invalid arguments",
 				}));
@@ -127,7 +127,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 			var user = await _userManager.FindByIdAsync(userId);
 			if (user == null)
 			{
-				return Ok(JsonConvert.SerializeObject(new CheckEmailResponse
+				return Ok(JsonConvert.SerializeObject(new ErrorResponse
 				{
 					Error = $"Unable to load user with ID '{userId}'",
 				}));
@@ -136,16 +136,13 @@ namespace LastSeenWeb.AngularFront.Controllers
 			var result = await _userManager.ConfirmEmailAsync(user, code);
 			if (result.Succeeded == false)
 			{
-				return Ok(JsonConvert.SerializeObject(new CheckEmailResponse
+				return Ok(JsonConvert.SerializeObject(new ErrorResponse
 				{
 					Error = $"Error confirming email for user with ID '{userId}'",
 				}));
 			}
 
-			return Ok(JsonConvert.SerializeObject(new CheckEmailResponse
-			{
-				Success = "Thank You for confirming Your email",
-			}));
+			return Ok();
 		}
 
 		[HttpPost("forgotpassword")]
@@ -154,7 +151,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 			var user = await _userManager.FindByEmailAsync(model.Email);
 			if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
 			{
-				return Ok(JsonConvert.SerializeObject(new VoidResponse
+				return Ok(JsonConvert.SerializeObject(new ErrorResponse
 				{
 					Error = "User does not exist or email unconfirmed"
 				}));
@@ -165,7 +162,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 				new { user.Id, code }, Request.Scheme);
 			await _emailSender.SendResetPasswordAsync(model.Email, callbackUrl);
 
-			return Ok(new VoidResponse());
+			return Ok();
 		}
 	}
 }

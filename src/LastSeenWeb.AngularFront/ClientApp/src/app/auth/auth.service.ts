@@ -19,12 +19,7 @@ export interface TokenResponse {
   error?: string;
 }
 
-export interface CheckEmailResponse {
-  success?: string;
-  error?: string;
-}
-
-export interface VoidResponse {
+export interface ErrorResponse {
   error?: string;
 }
 
@@ -80,8 +75,8 @@ export class AuthService implements OnDestroy {
     return this.checkAuthenticated();
   }
 
-  register(email: string, password: string, password2: string): Observable<VoidResponse> {
-    return this.httpClient.post<VoidResponse>('/api/auth/register', {
+  register(email: string, password: string, password2: string): Observable<void | ErrorResponse> {
+    return this.httpClient.post<void | ErrorResponse>('/api/auth/register', {
       email: email,
       password: password,
       password2: password2
@@ -108,8 +103,8 @@ export class AuthService implements OnDestroy {
     this.router.navigateByUrl('/');
   }
 
-  checkEmail(userId: string, code: string): Observable<CheckEmailResponse> {
-    return this.httpClient.get<CheckEmailResponse>('/api/auth/checkemail', {
+  checkEmail(userId: string, code: string): Observable<void | ErrorResponse> {
+    return this.httpClient.get<void | ErrorResponse>('/api/auth/checkemail', {
       params: {
         'userId': userId || '',
         'code': code || '',
@@ -117,8 +112,8 @@ export class AuthService implements OnDestroy {
     }).pipe(catchError(e => of({ error: 'Unable to process request' })));
   }
 
-  forgotPassword(email: string): Observable<VoidResponse> {
-    return this.httpClient.post<VoidResponse>('/api/auth/forgotpassword', {
+  forgotPassword(email: string): Observable<void | ErrorResponse> {
+    return this.httpClient.post<void | ErrorResponse>('/api/auth/forgotpassword', {
       email: email
     }).pipe(catchError(e => of({ error: 'Unable to process request' })));
   }
@@ -161,7 +156,7 @@ export class AuthService implements OnDestroy {
         accessToken: tokenResponse && tokenResponse.access_token || '',
         refreshToken: tokenResponse && tokenResponse.refresh_token || '',
       }));
-    }).catch(e => { });
+    }).catch(e => {});
   }
 
   // private synchronousSleepHack(milisecondTimeout: number) {

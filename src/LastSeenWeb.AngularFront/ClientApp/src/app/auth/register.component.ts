@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, ValidationErrors } from '@angular/forms';
-import { AuthService, VoidResponse } from './auth.service';
+import { AuthService, ErrorResponse } from './auth.service';
 
 @Component({
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
-  registerResponse: VoidResponse;
+  registerResponse: Object | ErrorResponse;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [
       Validators.required,
       Validators.minLength(8),
-      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{1,}$')
+      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[ A-Za-z\\d@$!%*?&]{1,}$')
     ]],
     password2: ['']
   }, { validator: this.passwordMatchValidator });
@@ -36,6 +36,6 @@ export class RegisterComponent {
       this.form.controls.email.value,
       this.form.controls.password.value,
       this.form.controls.password2.value
-    ).subscribe(e => this.registerResponse = e);
+    ).subscribe(e => this.registerResponse = e || {});
   }
 }
