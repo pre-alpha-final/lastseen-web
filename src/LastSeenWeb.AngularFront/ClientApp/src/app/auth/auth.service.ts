@@ -8,19 +8,15 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
+import { ErrorType } from '../shared/errortype';
 
 interface DecodedAccessToken {
   username: string;
 }
 
 export interface TokenResponse {
-  access_token?: string;
-  refresh_token?: string;
-  error?: string;
-}
-
-export interface ErrorResponse {
-  error?: string;
+  access_token: string;
+  refresh_token: string;
 }
 
 class AuthData {
@@ -75,21 +71,21 @@ export class AuthService implements OnDestroy {
     return this.checkAuthenticated();
   }
 
-  register(email: string, password: string, password2: string): Observable<void | ErrorResponse> {
-    return this.httpClient.post<void | ErrorResponse>('/api/auth/register', {
+  register(email: string, password: string, password2: string): Observable<void | ErrorType> {
+    return this.httpClient.post<void | ErrorType>('/api/auth/register', {
       email: email,
       password: password,
       password2: password2
     }).pipe(catchError(e => of({ error: (e as HttpErrorResponse).error.error })));
   }
 
-  logIn(email: string, password: string): Observable<TokenResponse> {
-    return this.httpClient.post<TokenResponse>('/api/auth/login', {
+  logIn(email: string, password: string): Observable<TokenResponse | HttpErrorResponse> {
+    return this.httpClient.post<TokenResponse | HttpErrorResponse>('/api/auth/login', {
       login: email,
       password: password
     }).pipe(
-      tap(e => this.onNewToken(e)),
-      catchError(e => of({ error: e }))
+      tap(e => this.onNewToken(e as TokenResponse)),
+      catchError(e => of(e as HttpErrorResponse))
     );
   }
 
@@ -103,22 +99,25 @@ export class AuthService implements OnDestroy {
     this.router.navigateByUrl('/');
   }
 
-  checkEmail(userId: string, code: string): Observable<void | ErrorResponse> {
-    return this.httpClient.get<void | ErrorResponse>('/api/auth/checkemail', {
+  checkEmail(userId: string, code: string): Observable<void | ErrorType> {
+    return this.httpClient.get<void | ErrorType>('/api/auth/checkemail', {
       params: {
         'userId': userId || '',
         'code': code || '',
       }
-    }).pipe(catchError(e => of({ error: 'Unable to process request' })));
+    }).pipe(catchError(e => of({ error: 'Unable to process request' } as ErrorType)));
   }
 
-  forgotPassword(email: string): Observable<void | ErrorResponse> {
-    return this.httpClient.post<void | ErrorResponse>('/api/auth/forgotpassword', {
+  forgotPassword(email: string): Observable<void | ErrorType> {
+    return this.httpClient.post<void | ErrorType>('/api/auth/forgotpassword', {
       email: email
-    }).pipe(catchError(e => of({ error: 'Unable to process request' })));
+    }).pipe(catchError(e => of({ error: 'Unable to process request' } as ErrorType)));
   }
 
   onNewToken(userData: TokenResponse) {
+    if (userData == null) {
+      return;
+    }
     const jwtHelperService = new JwtHelperService();
     const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(userData.access_token);
     this.store.dispatch(new UpdateUser({
@@ -156,7 +155,7 @@ export class AuthService implements OnDestroy {
         accessToken: tokenResponse && tokenResponse.access_token || '',
         refreshToken: tokenResponse && tokenResponse.refresh_token || '',
       }));
-    }).catch(e => {});
+    }).catch(e => { });
   }
 
   // private synchronousSleepHack(milisecondTimeout: number) {

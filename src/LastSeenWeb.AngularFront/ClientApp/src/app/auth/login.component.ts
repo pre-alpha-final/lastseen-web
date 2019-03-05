@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService, TokenResponse } from './auth.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  tokenResponse: TokenResponse;
+  tokenResponse: TokenResponse | HttpErrorResponse;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
@@ -24,7 +25,7 @@ export class LoginComponent {
       this.form.controls.password.value
     ).subscribe(e => {
       this.tokenResponse = e;
-      if (e.error == null) {
+      if ((<HttpErrorResponse>e).error == null) {
         this.router.navigateByUrl('/');
       }
     });
