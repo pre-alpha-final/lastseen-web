@@ -90,13 +90,15 @@ export class AuthService implements OnDestroy {
   }
 
   logOut() {
+    this.httpClient.get<void | ErrorType>('/api/auth/logout').pipe(
+      catchError(e => of({ error: 'Logging out failed' } as ErrorType)));
     this.store.dispatch(new UpdateUser({
       accessToken: '',
       refreshToken: '',
     }));
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/auth/login');
   }
 
   checkEmail(userId: string, code: string): Observable<void | ErrorType> {
@@ -138,8 +140,12 @@ export class AuthService implements OnDestroy {
   private handleExistingLogin() {
     if (this.checkAuthenticated()) {
       const jwtHelperService = new JwtHelperService();
-      const decodedToken: DecodedAccessToken = jwtHelperService.decodeToken(this.authData.accessToken);
-      this.authData.username = decodedToken && decodedToken.username || '';
+      const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(this.authData.accessToken);
+      this.store.dispatch(new UpdateUser({
+        username: decodedAccessToken && decodedAccessToken.username || '',
+        accessToken: this.authData.accessToken,
+        refreshToken: this.authData.refreshToken,
+      }));
     }
   }
 
