@@ -1,9 +1,13 @@
 <div class="container">
   <h2>Email Confirmation</h2>
-  <div class="text-danger" *ngIf="checkEmailResponse?.errorMessage">
-    {{checkEmailResponse?.errorMessage}}
+  <hr />
+  <div *ngIf="checkEmailResponse == null">
+    Confirming email...
   </div>
-  <div *ngIf="checkEmailResponse?.successMessage">
-    {{checkEmailResponse?.successMessage}}
+  <div *ngIf="checkEmailResponse && checkEmailResponse.error == null">
+    Thank you for confirming your email
+  </div>
+  <div class="text-danger" *ngIf="checkEmailResponse?.error">
+    {{checkEmailResponse.error}}
   </div>
 </div>

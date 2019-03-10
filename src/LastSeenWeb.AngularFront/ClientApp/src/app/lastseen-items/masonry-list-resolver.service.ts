@@ -12,10 +12,7 @@ export class MasonryListResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.httpClient.get('/api/lastseenitems').pipe(
-      catchError(e => {
-        console.log(e);
-        return of(e);
-      })
+      catchError(e => of(e))
     );
   }
 }
