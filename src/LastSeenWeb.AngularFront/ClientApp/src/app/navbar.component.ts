@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/state/app.state';
 import { accessToken } from './store/selectors/user.selectors';
-import { AuthService } from './auth/auth.service';
+import { AuthApiCallsService } from './auth/auth-apicalls.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +14,7 @@ export class NavBarComponent implements OnDestroy {
   private userSubscription: Subscription;
   private loggedIn: boolean;
 
-  constructor(private store: Store<AppState>, private authService: AuthService) {
+  constructor(private store: Store<AppState>, private authApiCallsService: AuthApiCallsService) {
     this.userSubscription = this.store.select(accessToken).subscribe(e => this.loggedIn = !!e);
   }
 
@@ -23,6 +23,6 @@ export class NavBarComponent implements OnDestroy {
   }
 
   logOut(): void {
-    this.authService.logOut();
+    this.authApiCallsService.logOut();
   }
 }
