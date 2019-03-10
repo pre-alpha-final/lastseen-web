@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UpdatePopupService } from './update-popup.service';
-import { LastSeenItem } from '../shared/lastseenitem';
+import { LastSeenItem } from '../shared/lastseen-item';
 
 @Component({
   selector: 'app-lastseen-item',

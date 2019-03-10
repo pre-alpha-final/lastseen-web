@@ -7,14 +7,14 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
-import { ErrorType } from '../shared/errortype';
-import { TokenResponse } from '../shared/tokenresponse';
-import { DecodedAccessToken } from '../shared/decodedaccesstoken';
+import { ErrorType } from '../shared/error-type';
+import { TokenResponse } from '../shared/token-response';
+import { DecodedAccessToken } from '../shared/decoded-access-token';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthApiCallsService {
+export class AuthApiWrapperService {
   constructor(private store: Store<AppState>, private httpClient: HttpClient, private router: Router) { }
 
   register(email: string, password: string, password2: string): Observable<void | ErrorType> {

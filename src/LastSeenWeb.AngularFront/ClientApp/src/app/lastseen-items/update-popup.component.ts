@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UpdatePopupService } from './update-popup.service';
 import { Subscription } from 'rxjs';
-import { LastSeenItem } from '../shared/lastseenitem';
+import { LastSeenItem } from '../shared/lastseen-item';
 import { JQ_TOKEN } from '../shared/jquery.service';
 
 @Component({

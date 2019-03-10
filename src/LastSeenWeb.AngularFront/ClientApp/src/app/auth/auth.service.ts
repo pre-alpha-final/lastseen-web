@@ -7,9 +7,9 @@ import { Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { TokenResponse } from '../shared/tokenresponse';
-import { DecodedAccessToken } from '../shared/decodedaccesstoken';
-import { LocalStorageAuthData } from './localstorageauthdata';
+import { TokenResponse } from '../shared/token-response';
+import { DecodedAccessToken } from '../shared/decoded-access-token';
+import { LocalStorageAuthData } from './localstorage-auth-data';
 
 interface AuthData {
   username: string;
