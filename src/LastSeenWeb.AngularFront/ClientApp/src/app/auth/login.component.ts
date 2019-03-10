@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService, TokenResponse } from './auth.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthApiCallsService } from './auth-apicalls.service';
+import { TokenResponse } from '../shared/tokenresponse';
 
 @Component({
   templateUrl: './login.component.html'
@@ -14,13 +15,13 @@ export class LoginComponent {
     password: ['', Validators.required]
   });
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private authApiCallsService: AuthApiCallsService, private router: Router) { }
 
   onSubmit() {
     if (this.form.valid === false) {
       return;
     }
-    this.authService.logIn(
+    this.authApiCallsService.logIn(
       this.form.controls.email.value,
       this.form.controls.password.value
     ).subscribe(e => {
