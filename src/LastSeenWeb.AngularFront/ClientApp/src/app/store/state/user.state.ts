@@ -5,7 +5,7 @@ export interface UserState {
 }
 
 export const initialUserState: UserState = {
-  username: '',
-  accessToken: '',
-  refreshToken: '',
+  username: 'n/a',
+  accessToken: 'n/a',
+  refreshToken: 'n/a',
 };

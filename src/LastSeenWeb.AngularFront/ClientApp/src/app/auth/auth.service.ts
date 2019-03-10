@@ -28,14 +28,18 @@ export class AuthService implements OnDestroy {
     this.authData = new LocalStorageAuthData();
     this.userSubscription = this.store.select(user).subscribe(e => {
       this.authData.username = e.username;
-      this.authData.accessToken = !e.accessToken ? this.authData.accessToken : e.accessToken;
-      this.authData.refreshToken = !e.refreshToken ? this.authData.refreshToken : e.refreshToken;
+      this.authData.accessToken = (e.accessToken != null && e.accessToken !== 'n/a') ? e.accessToken : this.authData.accessToken;
+      this.authData.refreshToken = (e.refreshToken != null && e.refreshToken !== 'n/a') ? e.refreshToken : this.authData.refreshToken;
     });
     this.handleExistingLogin();
   }
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+  }
+
+  getToken() {
+    return this.authData.accessToken;
   }
 
   async isAuthenticated(): Promise<boolean> {
