@@ -6,26 +6,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Last Seen</a>
+      <a class="navbar-brand" routerLink="#">Last Seen</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <!-- @if (SignInManager.IsSignedIn(User))
-				{
-					foreach (var link in ApplicationSettings.NavBarLoggedIn)
-					{
-						<li><a href="@link.Item1" onclick="@link.Item2">@link.Item3</a></li>
-					}
-				}
-				else
-				{
-					foreach (var link in ApplicationSettings.NavBarLoggedOut)
-					{
-						<li><a href="@link.Item1" onclick="@link.Item2">@link.Item3</a></li>
-					}
-        } -->
-        <li><a href="/">Register</a></li>
-        <li><a href="/">Log in</a></li>
+        <li *ngIf="loggedIn == false"><a routerLink="/auth/register">Register</a></li>
+        <li *ngIf="loggedIn == false"><a routerLink="/auth/login">Log in</a></li>
+        <li *ngIf="loggedIn"><a (click)="logOut()" href="javascript:void(0);">Log out</a></li>
       </ul>
     </div>
   </div>

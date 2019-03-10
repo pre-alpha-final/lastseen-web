@@ -5,22 +5,18 @@ import { user } from '../store/selectors/user.selectors';
 import { UpdateUser } from '../store/actions/user.actions';
 import { Subscription, Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
-
-interface TokenResponse {
-  access_token: string;
-  refresh_token: string;
-}
+import { ErrorType } from '../shared/errortype';
 
 interface DecodedAccessToken {
   username: string;
 }
 
-export interface CheckEmailResponse {
-  successMessage?: string;
-  errorMessage?: string;
+export interface TokenResponse {
+  access_token: string;
+  refresh_token: string;
 }
 
 class AuthData {
@@ -75,35 +71,55 @@ export class AuthService implements OnDestroy {
     return this.checkAuthenticated();
   }
 
-  logIn(email: string, password: string): Observable<TokenResponse> {
-    return this.httpClient.post<TokenResponse>('/api/auth/login', {
+  register(email: string, password: string, password2: string): Observable<void | ErrorType> {
+    return this.httpClient.post<void | ErrorType>('/api/auth/register', {
+      email: email,
+      password: password,
+      password2: password2
+    }).pipe(catchError(e => of({ error: (e as HttpErrorResponse).error.error })));
+  }
+
+  logIn(email: string, password: string): Observable<TokenResponse | HttpErrorResponse> {
+    return this.httpClient.post<TokenResponse | HttpErrorResponse>('/api/auth/login', {
       login: email,
       password: password
-    }).pipe(tap(e => this.onNewToken(e)));
+    }).pipe(
+      tap(e => this.onNewToken(e as TokenResponse)),
+      catchError(e => of(e as HttpErrorResponse))
+    );
   }
 
   logOut() {
+    this.httpClient.get<void | ErrorType>('/api/auth/logout').pipe(
+      catchError(e => of({ error: 'Logging out failed' } as ErrorType)));
     this.store.dispatch(new UpdateUser({
       accessToken: '',
       refreshToken: '',
     }));
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/auth/login');
   }
 
-  checkEmail(userId: string, code: string): Observable<CheckEmailResponse> {
-    return this.httpClient.get<CheckEmailResponse>('/api/auth/checkemail', {
+  checkEmail(userId: string, code: string): Observable<void | ErrorType> {
+    return this.httpClient.get<void | ErrorType>('/api/auth/checkemail', {
       params: {
         'userId': userId || '',
         'code': code || '',
       }
-    }).pipe(catchError(e => {
-      return of({ 'errorMessage': 'Unable to process request' });
-    }));
+    }).pipe(catchError(e => of({ error: 'Unable to process request' } as ErrorType)));
+  }
+
+  forgotPassword(email: string): Observable<void | ErrorType> {
+    return this.httpClient.post<void | ErrorType>('/api/auth/forgotpassword', {
+      email: email
+    }).pipe(catchError(e => of({ error: 'Unable to process request' } as ErrorType)));
   }
 
   onNewToken(userData: TokenResponse) {
+    if (userData == null) {
+      return;
+    }
     const jwtHelperService = new JwtHelperService();
     const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(userData.access_token);
     this.store.dispatch(new UpdateUser({
@@ -124,8 +140,12 @@ export class AuthService implements OnDestroy {
   private handleExistingLogin() {
     if (this.checkAuthenticated()) {
       const jwtHelperService = new JwtHelperService();
-      const decodedToken: DecodedAccessToken = jwtHelperService.decodeToken(this.authData.accessToken);
-      this.authData.username = decodedToken && decodedToken.username || '';
+      const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(this.authData.accessToken);
+      this.store.dispatch(new UpdateUser({
+        username: decodedAccessToken && decodedAccessToken.username || '',
+        accessToken: this.authData.accessToken,
+        refreshToken: this.authData.refreshToken,
+      }));
     }
   }
 
@@ -141,9 +161,7 @@ export class AuthService implements OnDestroy {
         accessToken: tokenResponse && tokenResponse.access_token || '',
         refreshToken: tokenResponse && tokenResponse.refresh_token || '',
       }));
-    }).catch(e => {
-      console.log(e);
-    });
+    }).catch(e => { });
   }
 
   // private synchronousSleepHack(milisecondTimeout: number) {

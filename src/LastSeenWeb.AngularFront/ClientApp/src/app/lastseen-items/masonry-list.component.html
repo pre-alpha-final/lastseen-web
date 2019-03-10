@@ -1,12 +1,12 @@
 <div class="container">
-  <div class="row text-center" id="masonry-display">
+  <div class="row text-center" id="masonry-display" *ngIf="masonryItems && masonryItems.error == null">
     <ngx-masonry [updateLayout]="updateMasonryLayout">
       <ngxMasonryItem class="masonry-item" *ngFor="let item of masonryItems">
         <app-lastseen-item [item]=item (loaded)="onLoaded()"></app-lastseen-item>
       </ngxMasonryItem>
     </ngx-masonry>
   </div>
-  <div class="row text-center text-danger" *ngIf="error">
-    {{error}}
+  <div class="row text-center text-danger" style="margin-top: 10px;" *ngIf="masonryItems?.error">
+    {{masonryItems.error}}
   </div>
 </div>

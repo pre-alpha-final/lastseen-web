@@ -57,6 +57,9 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    if (this.form.valid === false) {
+      return;
+    }
     console.log(this.form.value);
   }
 }
