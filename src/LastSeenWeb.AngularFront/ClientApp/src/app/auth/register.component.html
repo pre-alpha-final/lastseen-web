@@ -26,8 +26,7 @@
             Password must be at least 8 characters long
           </div>
           <div *ngIf="form.controls.password.errors.pattern">
-            Password must contain at least one uppercase letter, one lowercase letter, one number and one special
-            character
+            Password must contain at least one of each: uppercase letter, lowercase letter, number, special character
           </div>
         </div>
       </div>
@@ -42,7 +41,7 @@
       </div>
       <div class="form-group">
         <div class="text-danger" *ngIf="registerResponse?.error">
-            {{registerResponse.error}}
+          {{registerResponse.error}}
         </div>
       </div>
       <div class="form-group">
