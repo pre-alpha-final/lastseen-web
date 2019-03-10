@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data } from '@angular/router';
-import { LastSeenItem } from '../shared/lastseenitem';
+import { LastSeenItem } from '../shared/lastseen-item';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorType } from '../shared/errortype';
+import { ErrorType } from '../shared/error-type';
 
 @Component({
   templateUrl: './masonry-list.component.html',

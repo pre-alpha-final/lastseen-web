@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, ValidationErrors } from '@angular/forms';
-import { ErrorType } from '../shared/errortype';
-import { AuthApiCallsService } from './auth-apicalls.service';
+import { ErrorType } from '../shared/error-type';
+import { AuthApiWrapperService } from './auth-api-wrapper.service';
 
 @Component({
   templateUrl: './register.component.html'
@@ -18,7 +18,7 @@ export class RegisterComponent {
     password2: ['']
   }, { validator: this.passwordMatchValidator });
 
-  constructor(private formBuilder: FormBuilder, private authApiCallsService: AuthApiCallsService) { }
+  constructor(private formBuilder: FormBuilder, private authApiWrapperService: AuthApiWrapperService) { }
 
   passwordMatchValidator(group: FormGroup): ValidationErrors {
     const password = group.controls.password.value;
@@ -33,7 +33,7 @@ export class RegisterComponent {
     if (this.form.valid === false) {
       return;
     }
-    this.authApiCallsService.register(
+    this.authApiWrapperService.register(
       this.form.controls.email.value,
       this.form.controls.password.value,
       this.form.controls.password2.value

@@ -7,8 +7,8 @@ import { LoginComponent } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthErrorPipe } from './auth-error.pipe';
 import { TokenInterceptor } from './token.interceptor';
-import { EmailConfirmationComponent } from './emailconfirmation.component';
-import { ForgotPasswordComponent } from './forgotpassword.component';
+import { EmailConfirmationComponent } from './email-confirmation.component';
+import { ForgotPasswordComponent } from './forgot-password.component';
 import { RegisterComponent } from './register.component';
 
 @NgModule({

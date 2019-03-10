@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
-import { EmailConfirmationComponent } from './emailconfirmation.component';
-import { ForgotPasswordComponent } from './forgotpassword.component';
+import { EmailConfirmationComponent } from './email-confirmation.component';
+import { ForgotPasswordComponent } from './forgot-password.component';
 import { RegisterComponent } from './register.component';
 
 const routes: Routes = [

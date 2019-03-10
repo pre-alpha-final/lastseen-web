@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ErrorType } from '../shared/errortype';
-import { AuthApiCallsService } from './auth-apicalls.service';
+import { ErrorType } from '../shared/error-type';
+import { AuthApiWrapperService } from './auth-api-wrapper.service';
 
 @Component({
-  templateUrl: './forgotpassword.component.html'
+  templateUrl: './forgot-password.component.html'
 })
 export class ForgotPasswordComponent {
   forgotPasswordResponse: Object | ErrorType;
@@ -12,13 +12,13 @@ export class ForgotPasswordComponent {
     email: ['', [Validators.required, Validators.email]]
   });
 
-  constructor(private formBuilder: FormBuilder, private authApiCallsService: AuthApiCallsService) { }
+  constructor(private formBuilder: FormBuilder, private authApiWrapperService: AuthApiWrapperService) { }
 
   onSubmit() {
     if (this.form.valid === false) {
       return;
     }
-    this.authApiCallsService.forgotPassword(this.form.controls.email.value).subscribe(
+    this.authApiWrapperService.forgotPassword(this.form.controls.email.value).subscribe(
       e => this.forgotPasswordResponse = e || {});
   }
 }
