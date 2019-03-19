@@ -108,17 +108,15 @@
               </div>
               <div id="collapse4" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <input type="hidden" formControlName="remove">
-
                   <div class="removal-button">
-                    <a class="btn btn-red button-spacing" href="javascript:void(0);" (onclick)="remove">Remove</a>
+                    <a class="btn btn-red button-spacing" href="javascript:void(0);" (click)="remove()">Remove</a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="update-button">
-            <button class="btn button-spacing" type="submit">Update</button>
+            <button class="btn button-spacing" type="submit">{{this.form.controls.id.value != '' ? 'Update' : 'Create'}}</button>
           </div>
         </div>
       </form>
