@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UpdatePopupService } from './update-popup.service';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { LastSeenItem } from '../shared/lastseen-item';
 import { JQ_TOKEN } from '../shared/jquery.service';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-popup',
@@ -27,8 +30,8 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
     imageUrl: ['']
   });
 
-  constructor(private updatePopupService: UpdatePopupService,
-    private formBuilder: FormBuilder, @Inject(JQ_TOKEN) private $: any) { }
+  constructor(private updatePopupService: UpdatePopupService, private httpClient: HttpClient,
+    private formBuilder: FormBuilder, private router: Router, @Inject(JQ_TOKEN) private $: any) { }
 
   ngOnInit() {
     this.$('.custom-tooltip').tooltip();
@@ -69,7 +72,13 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
     if (!this.form.controls.id.value) {
       return;
     }
-    console.log('remove' + this.form.controls.id.value);
+    this.httpClient.delete('/api/lastseenitems/' + this.form.controls.id.value)
+      .pipe(catchError(e => of(e)))
+      .subscribe(e => {
+        this.updatePopupService.close();
+        this.router.navigated = false;
+        this.router.navigate(['/']);
+      });
   }
 
   onSubmit() {

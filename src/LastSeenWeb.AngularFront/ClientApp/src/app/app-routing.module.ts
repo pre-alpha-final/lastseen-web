@@ -10,7 +10,8 @@ const routes: Routes = [
     component: MasonryListComponent,
     pathMatch: 'full',
     resolve: { lastseenitems: MasonryListResolver },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'always'
   },
   { path: '**', redirectTo: '' }
 ];
