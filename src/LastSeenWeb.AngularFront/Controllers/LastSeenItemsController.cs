@@ -36,7 +36,14 @@ namespace LastSeenWeb.AngularFront.Controllers
 			return Ok(_stub.FirstOrDefault(e => e.Id == id));
 		}
 
-		private List<LastSeenItem> _stub = new List<LastSeenItem>
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> Delete(string id)
+		{
+			_stub.Remove(_stub.Where(e => e.Id == id).FirstOrDefault());
+			return Ok();
+		}
+
+		private static List<LastSeenItem> _stub = new List<LastSeenItem>
 		{
 			new LastSeenItem { Id = "1", Name = "item 1", Season = 1, Unfinished = true, Hours = 2, Minutes = 3, Notes = "some notes", VisitUrl = "http://google.com", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png" },
 			new LastSeenItem { Id = "2", Name = "item 2", Season  = 1, Episode = 1, ImageUrl = "https://images-na.ssl-images-amazon.com/images/I/51zLZbEVSTL._SX425_.jpg" },
