@@ -19,10 +19,9 @@ namespace LastSeenWeb.Core.Services.Implementation
 		{
 			var apiKey = Environment.GetEnvironmentVariable(_configuration["SendGridApiKey"]);
 			var client = new SendGridClient(apiKey);
-			var applicationSettings = new ApplicationSettings();
 			var msg = new SendGridMessage
 			{
-				From = new EmailAddress($"no-reply@{applicationSettings.Domain}", "Last Seen"),
+				From = new EmailAddress($"no-reply@{_configuration["Domain"]}", "Last Seen"),
 				Subject = subject,
 				HtmlContent = message
 			};
