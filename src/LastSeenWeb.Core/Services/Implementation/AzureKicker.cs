@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Threading;
+using Microsoft.Extensions.Configuration;
 
 namespace LastSeenWeb.Core.Services.Implementation
 {
 	public class AzureKicker : IAzureKicker
 	{
 		private readonly IWebClientService _webClientService;
+		private readonly IConfiguration _configuration;
 		private const double DueTime = 0;
 		private const double Period = 5;
 		private Timer _timer;
 
-		public AzureKicker(IWebClientService webClientService)
+		public AzureKicker(IWebClientService webClientService, IConfiguration configuration)
 		{
 			_webClientService = webClientService;
+			_configuration = configuration;
 		}
 
 		public void Start()
@@ -27,8 +30,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 		{
 			try
 			{
-				var applicationSettings = new ApplicationSettings();
-				var link = $"https://{applicationSettings.Domain}/Auth/Login?ReturnUrl=%2F";
+				var link = $"https://{_configuration["Domain"]}/Auth/Login?ReturnUrl=%2F";
 				await _webClientService.Get(link);
 			}
 			catch (Exception e)
