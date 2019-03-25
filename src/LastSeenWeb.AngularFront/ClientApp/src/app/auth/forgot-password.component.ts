@@ -7,7 +7,7 @@ import { AuthApiWrapperService } from './auth-api-wrapper.service';
   templateUrl: './forgot-password.component.html'
 })
 export class ForgotPasswordComponent {
-  forgotPasswordResponse: Object | ErrorType;
+  forgotPasswordResponse: any; // Angular doesn't support unions in templates during aot. Should be: Object | ErrorType;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]]
   });

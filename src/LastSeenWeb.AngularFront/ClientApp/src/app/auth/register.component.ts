@@ -7,7 +7,7 @@ import { AuthApiWrapperService } from './auth-api-wrapper.service';
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
-  registerResponse: Object | ErrorType;
+  registerResponse: any; // Angular doesn't support unions in templates during aot. Should be: Object | ErrorType;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [

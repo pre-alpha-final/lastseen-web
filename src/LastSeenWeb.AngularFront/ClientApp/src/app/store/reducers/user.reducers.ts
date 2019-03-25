@@ -1,10 +1,7 @@
 import { initialUserState, UserState } from '../state/user.state';
 import { UserActions, UserActionsEnum } from '../actions/user.actions';
 
-export const userReducers = (
-    state = initialUserState,
-    action: UserActions
-): UserState => {
+export function userReducers(state = initialUserState, action: UserActions): UserState {
     switch (action.type) {
         case UserActionsEnum.UpdateUser: {
             return {
@@ -16,4 +13,4 @@ export const userReducers = (
         default:
             return state;
     }
-};
+}

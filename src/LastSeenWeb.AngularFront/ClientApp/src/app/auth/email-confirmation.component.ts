@@ -7,7 +7,7 @@ import { AuthApiWrapperService } from './auth-api-wrapper.service';
   templateUrl: './email-confirmation.component.html'
 })
 export class EmailConfirmationComponent implements OnInit {
-  checkEmailResponse: Object | ErrorType;
+  checkEmailResponse: any; // Angular doesn't support unions in templates during aot. Should be: Object | ErrorType;
 
   constructor(private activatedRoute: ActivatedRoute, private authApiWrapperService: AuthApiWrapperService) { }
 

@@ -9,7 +9,7 @@ import { TokenResponse } from '../shared/token-response';
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  tokenResponse: TokenResponse | HttpErrorResponse;
+  tokenResponse: any; // Angular doesn't support unions in templates during aot. Should be: TokenResponse | HttpErrorResponse;
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]

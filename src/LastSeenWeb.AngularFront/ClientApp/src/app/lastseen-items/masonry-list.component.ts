@@ -10,7 +10,7 @@ import { ErrorType } from '../shared/error-type';
 })
 export class MasonryListComponent implements OnInit {
   updateMasonryLayout: boolean;
-  masonryItems: LastSeenItem[] | ErrorType;
+  masonryItems: any; // Angular doesn't support unions in templates during aot. Should be: beLastSeenItem[] | ErrorType;
 
   constructor(private route: ActivatedRoute) { }
 
