@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using LastSeenWeb.AngularFront.Controllers.Models;
 using LastSeenWeb.AngularFront.Services;
@@ -48,6 +49,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 
 			var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 			var result = await _userManager.CreateAsync(user, model.Password);
+			await _userManager.AddClaimAsync(user, new Claim("LastSeenApiAccess", "true"));
 			if (result.Succeeded)
 			{
 				var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

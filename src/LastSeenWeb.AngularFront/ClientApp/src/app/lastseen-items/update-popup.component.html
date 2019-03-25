@@ -16,13 +16,13 @@
 
                   <div class="line">
                     <span class="name">Season:</span>
-                    <span class="input standard"><input type="text" class="standard" formControlName="season"></span>
+                    <span class="input standard"><input type="number" class="standard" formControlName="season"></span>
                     <span class="info"></span>
                   </div>
 
                   <div class="line">
                     <span class="name">Episode:</span>
-                    <span class="input"><input type="text" class="standard" formControlName="episode"></span>
+                    <span class="input"><input type="number" class="standard" formControlName="episode"></span>
                     <span class="info"></span>
                   </div>
 
@@ -51,9 +51,9 @@
                   </div>
 
                   <div id="times" class="line" *ngIf="form.controls.unfinished.value == true">
-                    <input type="text" class="unfinished" formControlName="hours"> h&nbsp;&nbsp;
-                    <input type="text" class="unfinished" formControlName="minutes"> m&nbsp;&nbsp;
-                    <input type="text" class="unfinished" formControlName="seconds"> s&nbsp;&nbsp;
+                    <input type="number" class="unfinished" formControlName="hours"> h&nbsp;&nbsp;
+                    <input type="number" class="unfinished" formControlName="minutes"> m&nbsp;&nbsp;
+                    <input type="number" class="unfinished" formControlName="seconds"> s&nbsp;&nbsp;
                   </div>
 
                   <div class="line">
@@ -108,17 +108,15 @@
               </div>
               <div id="collapse4" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <input type="hidden" formControlName="remove">
-
                   <div class="removal-button">
-                    <a class="btn btn-red button-spacing" href="javascript:void(0);" (onclick)="remove">Remove</a>
+                    <a class="btn btn-red button-spacing" href="javascript:void(0);" (click)="remove()">Remove</a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="update-button">
-            <button class="btn button-spacing" type="submit">Update</button>
+            <button class="btn button-spacing" type="submit">{{this.form.controls.id.value != '' ? 'Update' : 'Create'}}</button>
           </div>
         </div>
       </form>
