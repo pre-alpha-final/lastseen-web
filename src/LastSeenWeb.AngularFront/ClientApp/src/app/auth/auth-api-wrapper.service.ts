@@ -39,6 +39,7 @@ export class AuthApiWrapperService {
     this.httpClient.get<void | ErrorType>('/api/auth/logout').pipe(
       catchError(e => of({ error: 'Logging out failed' } as ErrorType)));
     this.store.dispatch(new UpdateUser({
+      username: '',
       accessToken: '',
       refreshToken: '',
     }));
