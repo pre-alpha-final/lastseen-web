@@ -16,13 +16,13 @@
 
                   <div class="line">
                     <span class="name">Season:</span>
-                    <span class="input standard"><input type="text" class="standard" formControlName="season"></span>
+                    <span class="input standard"><input type="number" class="standard" formControlName="season"></span>
                     <span class="info"></span>
                   </div>
 
                   <div class="line">
                     <span class="name">Episode:</span>
-                    <span class="input"><input type="text" class="standard" formControlName="episode"></span>
+                    <span class="input"><input type="number" class="standard" formControlName="episode"></span>
                     <span class="info"></span>
                   </div>
 
@@ -51,9 +51,9 @@
                   </div>
 
                   <div id="times" class="line" *ngIf="form.controls.unfinished.value == true">
-                    <input type="text" class="unfinished" formControlName="hours"> h&nbsp;&nbsp;
-                    <input type="text" class="unfinished" formControlName="minutes"> m&nbsp;&nbsp;
-                    <input type="text" class="unfinished" formControlName="seconds"> s&nbsp;&nbsp;
+                    <input type="number" class="unfinished" formControlName="hours"> h&nbsp;&nbsp;
+                    <input type="number" class="unfinished" formControlName="minutes"> m&nbsp;&nbsp;
+                    <input type="number" class="unfinished" formControlName="seconds"> s&nbsp;&nbsp;
                   </div>
 
                   <div class="line">
