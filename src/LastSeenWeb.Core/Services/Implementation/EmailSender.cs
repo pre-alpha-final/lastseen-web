@@ -22,7 +22,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 			var applicationSettings = new ApplicationSettings();
 			var msg = new SendGridMessage
 			{
-				From = new EmailAddress($"no-reply@{applicationSettings.Domain}", applicationSettings.ApplicationName),
+				From = new EmailAddress($"no-reply@{applicationSettings.Domain}", "Last Seen"),
 				Subject = subject,
 				HtmlContent = message
 			};
