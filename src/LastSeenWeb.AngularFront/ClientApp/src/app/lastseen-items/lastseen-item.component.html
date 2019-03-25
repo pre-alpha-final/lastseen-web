@@ -19,7 +19,7 @@
       <span>{{item.notes}}</span>
 		</div>
     <div class="row">
-			<a *ngIf="item?.visitUrl" class="btn button-spacing" href="item?.visitUrl" target="_blank">Watch</a>
+			<a *ngIf="item?.visitUrl" class="btn button-spacing" [href]="item?.visitUrl" target="_blank">Watch</a>
 			<button class="btn button-spacing" (click)="onClick()">Update</button>
 		</div>
   </div>

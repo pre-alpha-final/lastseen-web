@@ -53,7 +53,7 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
     this.form.controls.hours.setValue(content.hours);
     this.form.controls.minutes.setValue(content.minutes);
     this.form.controls.seconds.setValue(content.seconds);
-    this.form.controls.moveToTop.setValue(content.moveToTop);
+    this.form.controls.moveToTop.setValue(true);
     this.form.controls.name.setValue(content.name);
     this.form.controls.imageUrl.setValue(content.imageUrl);
 
@@ -85,6 +85,12 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
     if (this.form.valid === false) {
       return;
     }
-    console.log(this.form.value);
+    this.httpClient.put('/api/lastseenitems/', this.form.value)
+      .pipe(catchError(e => of(e)))
+      .subscribe(e => {
+        this.updatePopupService.close();
+        this.router.navigated = false;
+        this.router.navigate(['/']);
+      });
   }
 }
