@@ -1,5 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { LastSeenItem } from '../shared/lastseen-item';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +10,7 @@ import { LastSeenItem } from '../shared/lastseen-item';
 export class UpdatePopupService {
   contentLoaded: EventEmitter<LastSeenItem> = new EventEmitter<LastSeenItem>();
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     window.onclick = event => {
       if (event.target === this.getPopup()) {
         this.close();
@@ -15,11 +18,15 @@ export class UpdatePopupService {
     };
   }
 
-  loadContent(): void {
-    let content: LastSeenItem;
-    // tslint:disable-next-line:max-line-length
-    content = { name: 'item 1', season: 1, unfinished: true, hours: 2, minutes: 3, notes: 'some notes', visitUrl: 'http://google.com', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png' };
-    this.contentLoaded.emit(content);
+  loadContent(id?: string): void {
+    if (!id) {
+      this.contentLoaded.emit(this.generateInitialContent());
+      return;
+    }
+
+    this.httpClient.get('/api/lastseenitems/' + id)
+      .pipe(catchError(e => of(this.generateInitialContent())))
+      .subscribe(e => this.contentLoaded.emit(e));
   }
 
   open(): void {
@@ -32,5 +39,22 @@ export class UpdatePopupService {
 
   private getPopup(): any {
     return document.getElementById('popup');
+  }
+
+  private generateInitialContent(): LastSeenItem {
+    return {
+      id: '',
+      season: 0,
+      episode: 0,
+      visitUrl: '',
+      notes: '',
+      unfinished: false,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      moveToTop: true,
+      name: '',
+      imageUrl: '',
+    };
   }
 }

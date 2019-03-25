@@ -18,6 +18,6 @@ export class LastseenItemComponent {
   }
 
   onClick(): void {
-    this.updatePopupService.loadContent();
+    this.updatePopupService.loadContent(this.item.id);
   }
 }
