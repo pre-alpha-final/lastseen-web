@@ -1,5 +1,5 @@
 # LastSeen
-Simplifies tracking of shows You watch.
+Simplifies tracking the shows You watch.
 
 # Demo environment
 For testing purposes log in here:  
@@ -7,6 +7,21 @@ For testing purposes log in here:
 with these credentials:  
 User: **demo@example.com**  
 Password: **demo**  
+
+# Development
+Setting needed for development, mirrored in secrets.json
+```
+{  
+  "ConnectionStrings":{
+    "UsersDbContext":"",
+    "LastSeenWebDb":""
+  },
+  "SendGridApiKey":"",
+  "ClientSecret":"",
+  "Authority":"",
+  "Domain":""
+}
+```
 
 License
 ----

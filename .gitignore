@@ -46,7 +46,6 @@ dlldata.c
 project.lock.json
 project.fragment.lock.json
 artifacts/
-**/Properties/launchSettings.json
 
 *_i.c
 *_p.c
@@ -277,3 +276,6 @@ __pycache__/
 #Minified files
 **/js/*.min.js
 **/css/*.min.css
+
+#Identity developer key
+/src/LastSeenWeb.AngularFront/tempkey.rsa

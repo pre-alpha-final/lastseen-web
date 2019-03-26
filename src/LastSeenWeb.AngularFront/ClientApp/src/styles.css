@@ -1,0 +1,54 @@
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	color: #f1f1f1 !important;
+	background-color: #111 !important;
+}
+
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.btn {
+	padding: 10px 20px;
+	background-color: #333;
+	color: #f1f1f1;
+	transition: .2s;
+}
+
+.btn-red {
+	background-color: #d43f3a;
+}
+
+.button-spacing {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+.btn:hover, .btn:focus {
+	border: 1px solid #333;
+	background-color: #f1f1f1;
+	color: #000;
+}
+
+.tooltip .tooltip-inner {
+	background-color: #00acd6;
+	color: #fff;
+}
+
+.tooltip.top .tooltip-arrow {
+	border-top-color: #00acd6;
+}
+
+.tooltip.right .tooltip-arrow {
+	border-right-color: #00acd6;
+}
+
+.tooltip.bottom .tooltip-arrow {
+	border-bottom-color: #00acd6;
+}
+
+.tooltip.left .tooltip-arrow {
+	border-left-color: #00acd6;
+}
