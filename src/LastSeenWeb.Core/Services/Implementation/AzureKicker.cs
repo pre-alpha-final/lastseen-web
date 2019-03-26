@@ -30,7 +30,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 		{
 			try
 			{
-				var link = $"https://{_configuration["Domain"]}/Auth/Login?ReturnUrl=%2F";
+				var link = $"https://{_configuration["Domain"]}/auth/login";
 				await _webClientService.Get(link);
 			}
 			catch (Exception e)
