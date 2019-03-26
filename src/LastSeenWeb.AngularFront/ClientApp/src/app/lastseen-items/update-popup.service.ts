@@ -3,6 +3,8 @@ import { LastSeenItem } from '../shared/lastseen-item';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ import { of } from 'rxjs';
 export class UpdatePopupService {
   contentLoaded: EventEmitter<LastSeenItem> = new EventEmitter<LastSeenItem>();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) {
     window.onclick = event => {
       if (event.target === this.getPopup()) {
         this.close();
@@ -24,9 +26,14 @@ export class UpdatePopupService {
       return;
     }
 
-    this.httpClient.get('/api/lastseenitems/' + id)
-      .pipe(catchError(e => of(this.generateInitialContent())))
-      .subscribe(e => this.contentLoaded.emit(e));
+    this.authService.isAuthenticated(60)
+      .then(authenticated => {
+        if (authenticated !== true) {
+          this.router.navigate(['auth/login']);
+        } else {
+          this.handleItem(id);
+        }
+      });
   }
 
   open(): void {
@@ -35,6 +42,12 @@ export class UpdatePopupService {
 
   close(): void {
     this.getPopup().style.display = 'none';
+  }
+
+  private handleItem(id?: string) {
+    this.httpClient.get('/api/lastseenitems/' + id)
+      .pipe(catchError(e => of(this.generateInitialContent())))
+      .subscribe(e => this.contentLoaded.emit(e));
   }
 
   private getPopup(): any {

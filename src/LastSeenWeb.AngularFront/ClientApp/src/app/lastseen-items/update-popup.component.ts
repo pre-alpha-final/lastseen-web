@@ -7,6 +7,7 @@ import { JQ_TOKEN } from '../shared/jquery.service';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-update-popup',
@@ -30,8 +31,8 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
     imageUrl: ['']
   });
 
-  constructor(private updatePopupService: UpdatePopupService, private httpClient: HttpClient,
-    private formBuilder: FormBuilder, private router: Router, @Inject(JQ_TOKEN) private $: any) { }
+  constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private authService: AuthService,
+    private updatePopupService: UpdatePopupService, private router: Router, @Inject(JQ_TOKEN) private $: any) { }
 
   ngOnInit() {
     this.$('.custom-tooltip').tooltip();
@@ -72,6 +73,33 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
     if (!this.form.controls.id.value) {
       return;
     }
+
+    this.authService.isAuthenticated()
+      .then(authenticated => {
+        if (authenticated !== true) {
+          this.router.navigate(['auth/login']);
+        } else {
+          this.removeItem();
+        }
+      });
+  }
+
+  onSubmit() {
+    if (this.form.valid === false) {
+      return;
+    }
+
+    this.authService.isAuthenticated()
+      .then(authenticated => {
+        if (authenticated !== true) {
+          this.router.navigate(['auth/login']);
+        } else {
+          this.upsertItem();
+        }
+      });
+  }
+
+  private removeItem() {
     this.httpClient.delete('/api/lastseenitems/' + this.form.controls.id.value)
       .pipe(catchError(e => of(e)))
       .subscribe(e => {
@@ -81,10 +109,7 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSubmit() {
-    if (this.form.valid === false) {
-      return;
-    }
+  private upsertItem() {
     this.httpClient.put('/api/lastseenitems/', this.form.value)
       .pipe(catchError(e => of(e)))
       .subscribe(e => {
