@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using IdentityServer4.Services;
 using LastSeenWeb.AngularFront.MappingProfiles;
 using LastSeenWeb.AngularFront.Services;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 
 namespace LastSeenWeb.AngularFront
@@ -75,6 +77,14 @@ namespace LastSeenWeb.AngularFront
 				options.Authority = Configuration["Authority"];
 				options.Audience = "lastseenapi";
 				options.RequireHttpsMetadata = true;
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateAudience = true,
+					ValidateIssuer = true,
+					ValidateIssuerSigningKey = true,
+					ValidateLifetime = true,
+					ClockSkew = TimeSpan.Zero,
+				};
 			});
 
 			services.AddAuthorization(options =>
