@@ -32,7 +32,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 				var db = _mongoClient.GetDatabase(DatabaseName);
 				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
 				var result = await lastSeenItems
-					.Find(e => e.OwnerName == ownerName)
+					.Find(e => e.OwnerName == ownerName && e.Deleted == false)
 					.SortByDescending(e => e.Modified)
 					.ToListAsync();
 
@@ -53,7 +53,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 				var db = _mongoClient.GetDatabase(DatabaseName);
 				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
 				var result = await lastSeenItems
-					.Find(e => e.Id == id && e.OwnerName == ownerName)
+					.Find(e => e.Id == id && e.OwnerName == ownerName && e.Deleted == false)
 					.FirstOrDefaultAsync();
 
 				return _mapper.Map<LastSeenItem>(result);
@@ -80,7 +80,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 				var oldEntity = await lastSeenItems
 					.Find(e => e.OwnerName == ownerName && e.Id == lastSeenItem.Id)
 					.FirstOrDefaultAsync();
-				var lastModified = oldEntity != null ? oldEntity.Modified : DateTime.UtcNow;
+				var lastModified = oldEntity?.Modified ?? DateTime.UtcNow;
 
 				var entity = _mapper.Map<LastSeenItemEntity>(lastSeenItem);
 				entity.OwnerName = ownerName;
@@ -107,7 +107,11 @@ namespace LastSeenWeb.Data.Services.Implementation
 			{
 				var db = _mongoClient.GetDatabase(DatabaseName);
 				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
-				await lastSeenItems.DeleteOneAsync(e => e.Id == id && e.OwnerName == ownerName);
+				var entity = await lastSeenItems
+					.Find(e => e.OwnerName == ownerName && e.Id == id)
+					.FirstOrDefaultAsync();
+				entity.Deleted = true;
+				await lastSeenItems.ReplaceOneAsync(e => e.Id == entity.Id, entity);
 			}
 			catch (Exception e)
 			{

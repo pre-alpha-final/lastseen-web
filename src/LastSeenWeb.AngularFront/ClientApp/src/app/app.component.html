@@ -1,0 +1,14 @@
+<app-update-popup></app-update-popup>
+<div class='container-fluid'>
+  <div class='row'>
+    <div *ngIf="username === 'demo@example.com'">
+      <mark>Application working in demo mode (read-only)</mark>
+    </div>
+    <div>
+      <app-navbar></app-navbar>
+    </div>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

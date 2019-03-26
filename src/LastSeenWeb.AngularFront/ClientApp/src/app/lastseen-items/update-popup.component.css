@@ -1,0 +1,124 @@
+.popup {
+	display: none;
+	position: fixed;
+	z-index: 1050;
+	padding-top: 50px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	-webkit-justify-content: center;
+	justify-content: center;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.7);
+}
+
+.popup .thumbnail {
+	position: relative;
+	padding: 0;
+	display: inline-table;
+	color: #555;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	-webkit-animation-name: animatetop;
+	-webkit-animation-duration: 0.4s;
+	animation-name: animatetop;
+	animation-duration: 0.4s
+}
+
+@-webkit-keyframes animatetop {
+	from {
+		top: -300px;
+		opacity: 0
+	}
+
+	to {
+		top: 0;
+		opacity: 1
+	}
+}
+
+@keyframes animatetop {
+	from {
+		top: -300px;
+		opacity: 0
+	}
+
+	to {
+		top: 0;
+		opacity: 1
+	}
+}
+
+.popup-content-shell {
+	background-color: #f1f1f1;
+	width: 300px;
+	height: 100%;
+}
+
+.popup-content {
+	padding: 15px;
+}
+
+.popup-content .panel-heading {
+	color: #fff;
+	background-color: #333;
+}
+
+.popup-content .removal-button {
+	text-align: center;
+}
+
+.popup-content .update-button {
+	text-align: center;
+}
+
+.popup-content .standard {
+	width: 100%;
+}
+
+.popup-content .unfinished {
+	width: 30px;
+}
+
+.popup-content .line {
+	margin: 8px 5px;
+	width: 250px;
+}
+
+.popup-content .name {
+	width: 35%;
+	white-space: nowrap;
+	display: inline-block;
+}
+
+.popup-content .input {
+	width: 55%;
+	display: inline-block;
+}
+
+.popup-content .input-short {
+	width: 15px;
+	display: inline-block;
+}
+
+.popup-content .info {
+	width: 15px;
+	display: inline-block;
+	text-align: center;
+}
+
+.popup-content input {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #a9a9a9;
+}
+
+.popup-content input:disabled {
+	background: #ddd;
+}
+
+.custom-tooltip, .custom-tooltip:hover, .custom-tooltip:visited {
+	color: #000;
+	margin-left: 3px;
+}
