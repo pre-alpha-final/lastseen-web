@@ -17,7 +17,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 
 		public async Task SendEmailAsync(string email, string subject, string message)
 		{
-			var apiKey = Environment.GetEnvironmentVariable(_configuration["SendGridApiKey"]);
+			var apiKey = _configuration["SendGridApiKey"];
 			var client = new SendGridClient(apiKey);
 			var msg = new SendGridMessage
 			{
