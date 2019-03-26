@@ -42,17 +42,17 @@ export class AuthService implements OnDestroy {
     return this.authData.accessToken;
   }
 
-  async isAuthenticated(): Promise<boolean> {
-    if (this.checkTokens()) {
+  async isAuthenticated(offset?: number): Promise<boolean> {
+    if (this.checkTokens(offset)) {
       return true;
     }
     await this.refreshToken();
-    return this.checkTokens();
+    return this.checkTokens(offset);
   }
 
-  private checkTokens(): boolean {
+  private checkTokens(offset?: number): boolean {
     const jwtHelperService = new JwtHelperService();
-    if (!jwtHelperService.isTokenExpired(this.authData.accessToken)) {
+    if (!jwtHelperService.isTokenExpired(this.authData.accessToken, offset ? offset : 0)) {
       return true;
     }
     return false;
