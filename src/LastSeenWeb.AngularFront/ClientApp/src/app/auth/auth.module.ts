@@ -10,6 +10,7 @@ import { TokenInterceptor } from './token.interceptor';
 import { EmailConfirmationComponent } from './email-confirmation.component';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { RegisterComponent } from './register.component';
+import { ResetPasswordComponent } from './reset-password.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { RegisterComponent } from './register.component';
     AuthErrorPipe,
     EmailConfirmationComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
     RegisterComponent
   ],
   imports: [

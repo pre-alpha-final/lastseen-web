@@ -61,6 +61,15 @@ export class AuthApiWrapperService {
     }).pipe(catchError(e => of({ error: 'Unable to process request' } as ErrorType)));
   }
 
+  resetPassword(userId: string, code: string, password: string, password2: string): Observable<void | ErrorType> {
+    return this.httpClient.post<void | ErrorType>('/api/auth/resetpassword', {
+      userId: userId,
+      code: code,
+      password: password,
+      password2: password2
+    }).pipe(catchError(e => of({ error: 'Unable to process request' } as ErrorType)));
+  }
+
   private onNewToken(userData: TokenResponse) {
     if (userData == null) {
       return;

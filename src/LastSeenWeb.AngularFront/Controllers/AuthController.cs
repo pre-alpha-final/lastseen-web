@@ -53,8 +53,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 			if (result.Succeeded)
 			{
 				var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-				var callbackUrl = Url.Page("/auth/emailconfirmation", null,
-					new { user.Id, code }, Request.Scheme);
+				var callbackUrl = $"https://{_configuration["Domain"]}/auth/emailconfirmation?userId={user.Id}&code={code}";
 				await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
 				await _signInManager.SignInAsync(user, false);
@@ -135,7 +134,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 				}));
 			}
 
-			var result = await _userManager.ConfirmEmailAsync(user, code);
+			var result = await _userManager.ConfirmEmailAsync(user, code.Replace(' ', '+'));
 			if (result.Succeeded == false)
 			{
 				return Ok(JsonConvert.SerializeObject(new ErrorResponse
@@ -160,11 +159,36 @@ namespace LastSeenWeb.AngularFront.Controllers
 			}
 
 			var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-			var callbackUrl = Url.Page("/auth/resetpassword", null,
-				new { user.Id, code }, Request.Scheme);
+			var callbackUrl = $"https://{_configuration["Domain"]}/auth/resetpassword?userId={user.Id}&code={code}";
 			await _emailSender.SendResetPasswordAsync(model.Email, callbackUrl);
 
 			return Ok();
+		}
+
+		[HttpPost("resetpassword")]
+		public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+		{
+			if (model.Password != model.Password2)
+			{
+				return Ok(new ErrorResponse { Error = "Passwords don't match" });
+			}
+
+			var user = await _userManager.FindByIdAsync(model.UserId);
+			if (user == null)
+			{
+				return Ok(JsonConvert.SerializeObject(new ErrorResponse
+				{
+					Error = "Invalid user"
+				}));
+			}
+
+			var result = await _userManager.ResetPasswordAsync(user, model.Code.Replace(' ', '+'), model.Password);
+			if (result.Succeeded)
+			{
+				return Ok();
+			}
+
+			return Ok(new ErrorResponse { Error = "Password reset error" });
 		}
 	}
 }
