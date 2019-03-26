@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, ValidationErrors } from '@angular/forms';
 import { ErrorType } from '../shared/error-type';
 import { AuthApiWrapperService } from './auth-api-wrapper.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  templateUrl: './register.component.html'
+  templateUrl: './reset-password.component.html'
 })
-export class RegisterComponent {
-  registerResponse: any; // Angular doesn't support unions in templates during aot. Should be: Object | ErrorType;
+export class ResetPasswordComponent implements OnInit {
+  resetPasswordResponse: any; // Angular doesn't support unions in templates during aot. Should be: Object | ErrorType;
+  private userId: string;
+  private code: string;
   form = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
     password: ['', [
       Validators.required,
       Validators.minLength(8),
@@ -18,7 +20,15 @@ export class RegisterComponent {
     password2: ['']
   }, { validator: this.passwordMatchValidator });
 
-  constructor(private formBuilder: FormBuilder, private authApiWrapperService: AuthApiWrapperService) { }
+  constructor(private formBuilder: FormBuilder, private authApiWrapperService: AuthApiWrapperService,
+    private activatedRoute: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.userId = params['userId'];
+      this.code = params['code'];
+    });
+  }
 
   passwordMatchValidator(group: FormGroup): ValidationErrors {
     const password = group.controls.password.value;
@@ -33,10 +43,11 @@ export class RegisterComponent {
     if (this.form.valid === false) {
       return;
     }
-    this.authApiWrapperService.register(
-      this.form.controls.email.value,
+    this.authApiWrapperService.resetPassword(
+      this.userId,
+      this.code,
       this.form.controls.password.value,
       this.form.controls.password2.value
-    ).subscribe(e => this.registerResponse = e || {});
+    ).subscribe(e => this.resetPasswordResponse = e || {});
   }
 }

@@ -17,7 +17,7 @@ export class NavBarComponent implements OnDestroy {
 
   constructor(private store: Store<AppState>, private authApiWrapperService: AuthApiWrapperService,
     private updatePopupService: UpdatePopupService) {
-    this.userSubscription = this.store.select(accessToken).subscribe(e => this.loggedIn = !!e);
+    this.userSubscription = this.store.select(accessToken).subscribe(e => this.loggedIn = !!e && e !== 'n/a');
   }
 
   ngOnDestroy(): void {
