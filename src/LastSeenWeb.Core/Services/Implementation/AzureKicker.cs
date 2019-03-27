@@ -24,36 +24,29 @@ namespace LastSeenWeb.Core.Services.Implementation
 
 		public void Start()
 		{
-			try
+			_cancellationTokenSource?.Cancel();
+			_cancellationTokenSource = new CancellationTokenSource();
+			Task.Run(async () =>
 			{
-				_cancellationTokenSource?.Cancel();
-				_cancellationTokenSource = new CancellationTokenSource();
-				Task.Run(async () =>
+				try
 				{
 					var cancellationTokenSource = _cancellationTokenSource;
 					while (true)
 					{
 						if (cancellationTokenSource.IsCancellationRequested)
 						{
-							cancellationTokenSource.Token.ThrowIfCancellationRequested();
+							return Task.CompletedTask;
 						}
 						await Kick();
 						await Task.Delay(TimeSpan.FromMinutes(Period), cancellationTokenSource.Token);
 					}
-				}).GetAwaiter().GetResult();
-			}
-			catch (AggregateException ae)
-			{
-				ae.Handle(e =>
+				}
+				catch (Exception e)
 				{
 					_logger.LogError(e.Message);
-					return true;
-				});
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e.Message);
-			}
+					return Task.CompletedTask;
+				}
+			});
 		}
 
 		private async Task Kick()
