@@ -7,16 +7,19 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace LastSeenWeb.Core.Services.Implementation
 {
 	public class WebClientService : IWebClientService
 	{
+		private readonly ILogger<WebClientService> _logger;
 		private readonly CookieAwareWebClient _webClient;
 		private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1);
 
-		public WebClientService()
+		public WebClientService(ILogger<WebClientService> logger)
 		{
+			_logger = logger;
 			_webClient = new CookieAwareWebClient();
 		}
 
@@ -55,7 +58,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 			}
 		}
 
-		private static async Task<WebClientResult> RetryableRequest(Func<Task<string>> makeRequest, int retryCount)
+		private async Task<WebClientResult> RetryableRequest(Func<Task<string>> makeRequest, int retryCount)
 		{
 			var webClientResult = new WebClientResult();
 			for (var attempt = 0; attempt < retryCount; attempt++)
@@ -82,18 +85,21 @@ namespace LastSeenWeb.Core.Services.Implementation
 						{
 							webClientResult.DebugInfo
 								= webClientResult.DebugInfo.AppendLine(resp.ReadToEnd());
+							_logger.LogError(webClientResult.DebugInfo);
 						}
 					}
 					else
 					{
 						webClientResult.DebugInfo
 							= webClientResult.DebugInfo.AppendLine($"{e.Message}");
+						_logger.LogError(webClientResult.DebugInfo);
 					}
 				}
 				catch (Exception e)
 				{
 					webClientResult.DebugInfo
 						= webClientResult.DebugInfo.AppendLine($"{e.Message}");
+					_logger.LogError(webClientResult.DebugInfo);
 				}
 
 				await Task.Delay(1000);
@@ -101,6 +107,7 @@ namespace LastSeenWeb.Core.Services.Implementation
 
 			webClientResult.DebugInfo
 				= webClientResult.DebugInfo.AppendLine("Failed");
+			_logger.LogError(webClientResult.DebugInfo);
 			return webClientResult;
 		}
 	}
