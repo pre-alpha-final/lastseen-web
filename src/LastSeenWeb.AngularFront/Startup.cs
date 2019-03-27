@@ -38,6 +38,8 @@ namespace LastSeenWeb.AngularFront
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddSingleton<IHttpClientService, HttpClientService>();
+			services.AddSingleton<IAzureKicker, AzureKicker>();
+			services.AddSingleton<IWebClientService, WebClientService>();
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddTransient<ILastSeenService, LastSeenService>();
 			services.AddTransient<ILastSeenRepository, LastSeenRepository>();
@@ -112,7 +114,8 @@ namespace LastSeenWeb.AngularFront
 			});
 		}
 
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+			ILoggerFactory loggerFactory, IAzureKicker azureKicker)
 		{
 			if (env.IsDevelopment())
 			{
@@ -144,6 +147,8 @@ namespace LastSeenWeb.AngularFront
 					spa.UseAngularCliServer("start");
 				}
 			});
+
+			azureKicker.Start();
 		}
 	}
 }
