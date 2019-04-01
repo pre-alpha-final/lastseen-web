@@ -59,7 +59,9 @@ namespace LastSeenWeb.AngularFront
 			});
 
 			services.AddIdentityServer()
-				.AddDeveloperSigningCredential()
+				.AddSigningCredential(new SigningCredentials(
+					new JsonWebKey(Configuration["IdentityJwk"]),
+					SecurityAlgorithms.RsaSha256Signature))
 				.AddInMemoryPersistedGrants()
 				.AddInMemoryIdentityResources(Config.GetIdentityResources())
 				.AddInMemoryApiResources(Config.GetApiResources())
@@ -97,14 +99,6 @@ namespace LastSeenWeb.AngularFront
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/dist";
-			});
-
-			services.Configure<MvcOptions>(options =>
-			{
-				if (Environment.IsProduction())
-				{
-					options.Filters.Add(new RequireHttpsAttribute());
-				}
 			});
 
 			services.AddLogging(e =>
