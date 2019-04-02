@@ -19,7 +19,8 @@ Setting needed for development, mirrored in secrets.json
   "SendGridApiKey":"",
   "ClientSecret":"",
   "Authority":"",
-  "Domain":""
+  "Domain":"",
+  "IdentityJwk":""
 }
 ```
 
