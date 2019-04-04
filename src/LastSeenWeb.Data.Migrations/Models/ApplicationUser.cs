@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace LastSeenWeb.Data.Identity.Models
+namespace LastSeenWeb.Data.Migrations.Models
 {
 	public class ApplicationUser : IdentityUser
 	{
