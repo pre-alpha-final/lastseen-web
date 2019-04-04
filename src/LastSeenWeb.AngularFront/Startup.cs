@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define HTTPS
+
+using System;
 using AutoMapper;
 using IdentityServer4.Services;
 using LastSeenWeb.AngularFront.MappingProfiles;
@@ -38,6 +40,8 @@ namespace LastSeenWeb.AngularFront
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddSingleton<IHttpClientService, HttpClientService>();
+			services.AddSingleton<IAzureKicker, AzureKicker>();
+			services.AddSingleton<IWebClientService, WebClientService>();
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddTransient<ILastSeenService, LastSeenService>();
 			services.AddTransient<ILastSeenRepository, LastSeenRepository>();
@@ -57,7 +61,9 @@ namespace LastSeenWeb.AngularFront
 			});
 
 			services.AddIdentityServer()
-				.AddDeveloperSigningCredential()
+				.AddSigningCredential(new SigningCredentials(
+					new JsonWebKey(Configuration["IdentityJwk"]),
+					SecurityAlgorithms.RsaSha256Signature))
 				.AddInMemoryPersistedGrants()
 				.AddInMemoryIdentityResources(Config.GetIdentityResources())
 				.AddInMemoryApiResources(Config.GetApiResources())
@@ -76,7 +82,11 @@ namespace LastSeenWeb.AngularFront
 			{
 				options.Authority = Configuration["Authority"];
 				options.Audience = "lastseenapi";
+#if HTTPS
 				options.RequireHttpsMetadata = true;
+#else
+				options.RequireHttpsMetadata = false;
+#endif
 				options.TokenValidationParameters = new TokenValidationParameters
 				{
 					ValidateAudience = true,
@@ -97,14 +107,6 @@ namespace LastSeenWeb.AngularFront
 				configuration.RootPath = "ClientApp/dist";
 			});
 
-			services.Configure<MvcOptions>(options =>
-			{
-				if (Environment.IsProduction())
-				{
-					options.Filters.Add(new RequireHttpsAttribute());
-				}
-			});
-
 			services.AddLogging(e =>
 			{
 				e.AddDebug();
@@ -112,7 +114,8 @@ namespace LastSeenWeb.AngularFront
 			});
 		}
 
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+			ILoggerFactory loggerFactory, IAzureKicker azureKicker)
 		{
 			if (env.IsDevelopment())
 			{
@@ -124,7 +127,10 @@ namespace LastSeenWeb.AngularFront
 				app.UseHsts();
 			}
 
+
+#if HTTPS
 			app.UseHttpsRedirection();
+#endif
 			app.UseStaticFiles();
 			app.UseSpaStaticFiles();
 
@@ -144,6 +150,8 @@ namespace LastSeenWeb.AngularFront
 					spa.UseAngularCliServer("start");
 				}
 			});
+
+			azureKicker.Start();
 		}
 	}
 }
