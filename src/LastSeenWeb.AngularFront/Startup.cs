@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define HTTPS
+
+using System;
 using AutoMapper;
 using IdentityServer4.Services;
 using LastSeenWeb.AngularFront.MappingProfiles;
@@ -80,7 +82,11 @@ namespace LastSeenWeb.AngularFront
 			{
 				options.Authority = Configuration["Authority"];
 				options.Audience = "lastseenapi";
+#if HTTPS
 				options.RequireHttpsMetadata = true;
+#else
+				options.RequireHttpsMetadata = false;
+#endif
 				options.TokenValidationParameters = new TokenValidationParameters
 				{
 					ValidateAudience = true,
@@ -121,7 +127,10 @@ namespace LastSeenWeb.AngularFront
 				app.UseHsts();
 			}
 
+
+#if HTTPS
 			app.UseHttpsRedirection();
+#endif
 			app.UseStaticFiles();
 			app.UseSpaStaticFiles();
 
