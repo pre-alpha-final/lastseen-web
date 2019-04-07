@@ -9,7 +9,7 @@ User: **demo@example.com**
 Password: **demo**  
 
 # Development
-Setting needed for development, mirrored in secrets.json
+Settings needed for development, mirrored in secrets.json
 ```
 {  
   "ConnectionStrings":{
