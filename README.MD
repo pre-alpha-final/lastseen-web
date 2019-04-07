@@ -1,4 +1,4 @@
-# LastSeen
+﻿# LastSeen
 Simplifies tracking the shows You watch.
 
 # Demo environment
@@ -9,7 +9,7 @@ User: **demo@example.com**
 Password: **demo**  
 
 # Development
-Setting needed for development, mirrored in secrets.json
+Settings needed for development, mirrored in secrets.json
 ```
 {  
   "ConnectionStrings":{
@@ -19,7 +19,8 @@ Setting needed for development, mirrored in secrets.json
   "SendGridApiKey":"",
   "ClientSecret":"",
   "Authority":"",
-  "Domain":""
+  "Domain":"",
+  "IdentityJwk":""
 }
 ```
 
