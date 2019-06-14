@@ -2,7 +2,9 @@
 
 using System;
 using AutoMapper;
+using IdentityServer4.EntityFramework.Stores;
 using IdentityServer4.Services;
+using IdentityServer4.Stores;
 using LastSeenWeb.AngularFront.MappingProfiles;
 using LastSeenWeb.AngularFront.Services;
 using LastSeenWeb.AngularFront.Services.Implementation;
@@ -18,6 +20,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -64,12 +67,15 @@ namespace LastSeenWeb.AngularFront
 				.AddSigningCredential(new SigningCredentials(
 					new JsonWebKey(Configuration["IdentityJwk"]),
 					SecurityAlgorithms.RsaSha256Signature))
-				.AddInMemoryPersistedGrants()
+				.AddOperationalStore(options =>
+					options.ConfigureDbContext = builder =>
+						builder.UseMySql(Configuration.GetConnectionString("UsersDbContext")))
 				.AddInMemoryIdentityResources(Config.GetIdentityResources())
 				.AddInMemoryApiResources(Config.GetApiResources())
 				.AddInMemoryClients(Config.GetClients(Configuration["ClientSecret"]))
 				.AddAspNetIdentity<ApplicationUser>();
 			services.AddTransient<IProfileService, IdentityClaimsProfileService>();
+			services.AddTransient<IPersistedGrantStore, PersistedGrantStore>();
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -126,7 +132,6 @@ namespace LastSeenWeb.AngularFront
 				app.UseExceptionHandler("/Error");
 				app.UseHsts();
 			}
-
 
 #if HTTPS
 			app.UseHttpsRedirection();
