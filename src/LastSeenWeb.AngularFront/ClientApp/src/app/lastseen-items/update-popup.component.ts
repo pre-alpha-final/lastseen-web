@@ -63,10 +63,12 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
         this.$('#collapse' + i).collapse('toggle');
       }
     }
-    this.updatePopupService.open();
-    if (this.$('#collapse1').hasClass('in') === false) {
-      this.$('#collapse1').collapse('toggle');
-    }
+    setTimeout(() => {
+      this.updatePopupService.open();
+      if (this.$('#collapse1').hasClass('in') === false) {
+        this.$('#collapse1').collapse('toggle');
+      }
+    }, 100);
   }
 
   remove() {
