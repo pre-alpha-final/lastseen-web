@@ -21,16 +21,16 @@ namespace LastSeenWeb.Core.Extensions
 		}
 
 		// IMPORTANT
-		// Needs to be awaited in using() or Task is returned
+		// Needs to be awaited in using() otherwise returns a task
 		// instead of Disposable -> no Dispose = stuck
 		public static async Task<IDisposable> DisposableWaitAsync(this SemaphoreSlim semaphoreSlim, TimeSpan timeout)
 		{
-			var miliseconds = (int)timeout.TotalMilliseconds;
+			var milliseconds = (int)timeout.TotalMilliseconds;
 			if (timeout == TimeSpan.MaxValue)
 			{
-				miliseconds = int.MaxValue; // Max for WaitAsync
+				milliseconds = int.MaxValue; // Max for WaitAsync
 			}
-			await semaphoreSlim.WaitAsync(miliseconds).ConfigureAwait(false);
+			await semaphoreSlim.WaitAsync(milliseconds).ConfigureAwait(false);
 
 			return new Disposable(semaphoreSlim);
 		}
