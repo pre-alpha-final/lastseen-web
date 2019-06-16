@@ -36,7 +36,7 @@ namespace LastSeenWeb.Data.Identity
 					AccessTokenLifetime = (int) TimeSpan.FromHours(1).TotalSeconds,
 					AllowOfflineAccess = true,
 					RefreshTokenExpiration = TokenExpiration.Sliding,
-					SlidingRefreshTokenLifetime = (int) TimeSpan.FromHours(10).TotalSeconds,
+					SlidingRefreshTokenLifetime = (int) TimeSpan.FromHours(24).TotalSeconds,
 					AllowedScopes = {
 						"lastseenapi"
 					}
