@@ -14,7 +14,7 @@ namespace LastSeenWeb.Tests
 		{
 			const int taskCount = 1000;
 
-			var semaphoreSlim = new SemaphoreSlim(1);
+			var semaphoreSlim = new SemaphoreSlim(10, 10);
 			var tasks = new List<Task<bool>>();
 			for (var count = 0; count < taskCount; count++)
 			{
@@ -32,7 +32,7 @@ namespace LastSeenWeb.Tests
 
 			using (await semaphoreSlim.DisposableWaitAsync(TimeSpan.MaxValue))
 			{
-				await Task.Delay(random.Next(1, 10));
+				await Task.Delay(random.Next(1, 100));
 
 				return true;
 			}
