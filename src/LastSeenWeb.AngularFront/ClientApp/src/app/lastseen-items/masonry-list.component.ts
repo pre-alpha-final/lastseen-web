@@ -5,8 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorType } from '../shared/error-type';
 
 @Component({
-  templateUrl: './masonry-list.component.html',
-  styleUrls: ['./masonry-list.component.css']
+  templateUrl: './masonry-list.component.html'
 })
 export class MasonryListComponent implements OnInit {
   updateMasonryLayout: boolean;
