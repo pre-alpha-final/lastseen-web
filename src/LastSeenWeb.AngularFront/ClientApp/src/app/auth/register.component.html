@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Register</h2>
   <hr />
-  <div class="row col-md-4" *ngIf="registerResponse == null || registerResponse.error">
+  <div class="col-md-4 align-self-center" *ngIf="registerResponse == null || registerResponse.error">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="email">Email</label>
@@ -45,11 +45,11 @@
         </div>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn button-spacing">Register</button>
+        <button type="submit" class="btn btn-primary">Register</button>
       </div>
     </form>
   </div>
-  <div class="row col-md-4" *ngIf="registerResponse && registerResponse.error == null">
+  <div class="col-md-4 align-self-center" *ngIf="registerResponse && registerResponse.error == null">
     Thank you for registering
   </div>
 </div>
