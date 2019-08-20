@@ -1,123 +1,200 @@
-<div id="popup" class="popup">
-  <div class="thumbnail">
-    <div class="popup-content-shell">
+<div id="popupOverlay" class="pt-5 justify-content-center">
+  <div id="accordion" class="card">
+    <div class="card-body p-2">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="popup-content">
-          <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Status</a>
-                </h4>
-              </div>
-              <div id="collapse1" class="panel-collapse collapse in">
-                <div class="panel-body">
-                  <input type="hidden" formControlName="id">
 
-                  <div class="line">
-                    <span class="name">Season:</span>
-                    <span class="input standard"><input type="number" class="standard" formControlName="season"></span>
-                    <span class="info"></span>
-                  </div>
-
-                  <div class="line">
-                    <span class="name">Episode:</span>
-                    <span class="input"><input type="number" class="standard" formControlName="episode"></span>
-                    <span class="info"></span>
-                  </div>
-
-                  <div class="line">
-                    <span class="name">Watch Url:</span>
-                    <span class="input"><input type="text" class="standard" formControlName="visitUrl"></span>
-                    <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto" title="Link to go to when 'Watch' button is pressed">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </a>
-                  </div>
-
-                  <div class="line">
-                    <span class="name">Notes:</span>
-                    <span class="input"><input type="text" class="standard" formControlName="notes"></span>
-                    <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto" title="Notes will appear on item if present">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </a>
-                  </div>
-
-                  <div class="line">
-                    <span class="name">Unfinished:</span>
-                    <span class="input-short"><input type="checkbox" class="standard" formControlName="unfinished"></span>
-                    <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto" title="Check if You haven't finished watching the entire episode">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </a>
-                  </div>
-
-                  <div id="times" class="line" *ngIf="form.controls.unfinished.value == true">
-                    <input type="number" class="unfinished" formControlName="hours"> h&nbsp;&nbsp;
-                    <input type="number" class="unfinished" formControlName="minutes"> m&nbsp;&nbsp;
-                    <input type="number" class="unfinished" formControlName="seconds"> s&nbsp;&nbsp;
-                  </div>
-
-                  <div class="line">
-                    <span class="name">Move to top:</span>
-                    <span class="input-short"><input type="checkbox" class="standard" formControlName="moveToTop"></span>
-                    <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto" title="Move item to top of the list">
-                      <span class="glyphicon glyphicon-info-sign"></span>
-                    </a>
-                  </div>
-                </div>
-              </div>
+        <div class="card m-1">
+          <div class="card-header" id="headingOne">
+            <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <h6 class="mb-0">Collapsible Group Item #1</h6>
+            </a>
+          </div>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+              moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+              shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+              proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Config</a>
-                </h4>
-              </div>
-              <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <div class="line">
-                    <span class="name">Name:</span>
-                    <span class="input"><input type="text" class="standard" formControlName="name"></span>
-                    <span class="info"></span>
-                  </div>
+          </div>
+        </div>
 
-                  <div class="line">
-                    <span class="name">Image Url:</span>
-                    <span class="input"><input type="text" class="standard" formControlName="imageUrl"></span>
-                    <span class="info"></span>
-                  </div>
-                </div>
-              </div>
+        <div class="card m-1">
+          <div class="card-header" id="headingTwo">
+            <a data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              <h6 class="mb-0">Collapsible Group Item #1</h6>
+            </a>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+              moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+              shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+              proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Tracking</a>
-                </h4>
-              </div>
-              <div id="collapse3" class="panel-collapse collapse">
-                <div class="panel-body">
-                  Currently in development
-                </div>
-              </div>
+          </div>
+        </div>
+
+        <div class="card m-1">
+          <div class="card-header" id="headingThree">
+            <a data-toggle="collapse" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+              <h6 class="mb-0">Collapsible Group Item #1</h6>
+            </a>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+              moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+              shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+              proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Removal</a>
-                </h4>
+          </div>
+        </div>
+
+        <div class="card m-1">
+          <div class="card-header" id="headingFour">
+            <a data-toggle="collapse" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+              <h6 class="mb-0">Collapsible Group Item #1</h6>
+            </a>
+          </div>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
+              moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+              Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+              shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
+              proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+              aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="card m-2">
+          <div id="headingOne" class="card-header">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
+                Status
+              </button>
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              <input type="hidden" formControlName="id">
+
+              <div class="line">
+                <span class="name">Season:</span>
+                <span class="input standard"><input type="number" class="standard" formControlName="season"></span>
+                <span class="info"></span>
               </div>
-              <div id="collapse4" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <div class="removal-button">
-                    <a class="btn btn-red" href="javascript:void(0);" (click)="remove()">Remove</a>
-                  </div>
-                </div>
+
+              <div class="line">
+                <span class="name">Episode:</span>
+                <span class="input"><input type="number" class="standard" formControlName="episode"></span>
+                <span class="info"></span>
+              </div>
+
+              <div class="line">
+                <span class="name">Watch Url:</span>
+                <span class="input"><input type="text" class="standard" formControlName="visitUrl"></span>
+                <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto"
+                  title="Link to go to when 'Watch' button is pressed">
+                  <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
+              </div>
+
+              <div class="line">
+                <span class="name">Notes:</span>
+                <span class="input"><input type="text" class="standard" formControlName="notes"></span>
+                <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto"
+                  title="Notes will appear on item if present">
+                  <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
+              </div>
+
+              <div class="line">
+                <span class="name">Unfinished:</span>
+                <span class="input-short"><input type="checkbox" class="standard" formControlName="unfinished"></span>
+                <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto"
+                  title="Check if You haven't finished watching the entire episode">
+                  <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
+              </div>
+
+              <div id="times" class="line" *ngIf="form.controls.unfinished.value == true">
+                <input type="number" class="unfinished" formControlName="hours"> h&nbsp;&nbsp;
+                <input type="number" class="unfinished" formControlName="minutes"> m&nbsp;&nbsp;
+                <input type="number" class="unfinished" formControlName="seconds"> s&nbsp;&nbsp;
+              </div>
+
+              <div class="line">
+                <span class="name">Move to top:</span>
+                <span class="input-short"><input type="checkbox" class="standard" formControlName="moveToTop"></span>
+                <a class="custom-tooltip" data-toggle="tooltip" data-placement="auto"
+                  title="Move item to top of the list">
+                  <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
               </div>
             </div>
           </div>
-          <div class="update-button">
-            <button class="btn" type="submit">{{this.form.controls.id.value != '' ? 'Update' : 'Create'}}</button>
+        </div>
+        <div class="card m-2">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Config</a>
+            </h4>
           </div>
+          <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">
+              <div class="line">
+                <span class="name">Name:</span>
+                <span class="input"><input type="text" class="standard" formControlName="name"></span>
+                <span class="info"></span>
+              </div>
+
+              <div class="line">
+                <span class="name">Image Url:</span>
+                <span class="input"><input type="text" class="standard" formControlName="imageUrl"></span>
+                <span class="info"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card m-2">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Tracking</a>
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">
+              Currently in development
+            </div>
+          </div>
+        </div>
+        <div class="card m-2">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Removal</a>
+            </h4>
+          </div>
+          <div id="collapse4" class="panel-collapse collapse">
+            <div class="panel-body">
+              <div class="removal-button">
+                <a class="btn btn-red" href="javascript:void(0);" (click)="remove()">Remove</a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="d-flex justify-content-center m-2">
+          <button class="btn btn-success"
+            type="submit">{{this.form.controls.id.value != '' ? 'Update' : 'Create'}}</button>
         </div>
       </form>
     </div>
