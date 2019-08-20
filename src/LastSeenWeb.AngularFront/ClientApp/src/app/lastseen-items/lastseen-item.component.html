@@ -1,26 +1,25 @@
-<div class="itemview">
-  <div class="thumbnail">
-    <div><img class="image" [src]="item?.imageUrl" (load)="onLoad()"/></div>
-    <div class="title">
-      <p><strong>{{item?.name}}</strong></p>
-    </div>
-    <div class="season-episode">
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-center"><img class="image" [src]="item?.imageUrl" (load)="onLoad()" /></div>
+    <div class="d-flex justify-content-center mt-1"><h4 class="card-title mb-1">{{item?.name}}</h4></div>
+    <div class="d-flex justify-content-center">
       <span *ngIf="item?.season">S: {{item.season}}</span>
-      <span *ngIf="item?.season && item.season != 0 && item?.episode && item.episode != 0">, </span>
+      <span class="mr-1" *ngIf="item?.season && item.season != 0 && item?.episode && item.episode != 0">,</span>
       <span *ngIf="item?.episode">E: {{item.episode}}</span>
     </div>
-    <div *ngIf="item?.unfinished && (item?.hours != 0 || item?.minutes != 0 || item?.seconds != 0)" class="seen">
-      <span>Seen: </span>
-      <span *ngIf="item?.hours != 0">{{item.hours}}h</span>
-      <span *ngIf="item?.minutes != 0"> {{item.minutes}}m</span>
-      <span *ngIf="item?.seconds != 0"> {{item.seconds}}s</span>
+    <div class="d-flex justify-content-center"
+      *ngIf="item?.unfinished && (item?.hours != 0 || item?.minutes != 0 || item?.seconds != 0)">
+      <span class="mr-1">Seen: </span>
+      <span class="mr-1" *ngIf="item?.hours != 0">{{item.hours}}h</span>
+      <span class="mr-1" *ngIf="item?.minutes != 0">{{item.minutes}}m</span>
+      <span class="mr-1" *ngIf="item?.seconds != 0">{{item.seconds}}s</span>
     </div>
-    <div *ngIf="item?.notes != ''" class="notes">
+    <div class="d-flex justify-content-center" *ngIf="item?.notes != ''">
       <span>{{item.notes}}</span>
-		</div>
-    <div class="row">
-			<a *ngIf="item?.visitUrl" class="btn" [href]="item?.visitUrl" target="_blank">Watch</a>
-			<button class="btn" (click)="onClick()">Update</button>
-		</div>
+    </div>
+    <div class="row mt-2 justify-content-center">
+        <a *ngIf="item?.visitUrl" class="btn btn-success" [href]="item?.visitUrl" target="_blank">Watch</a>
+        <button class="btn btn-info ml-2" (click)="onClick()">Update</button>
+      </div>
   </div>
 </div>
