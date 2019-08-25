@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy, Inject, AfterViewChecked } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UpdatePopupService } from './update-popup.service';
 import { Subscription, of } from 'rxjs';
@@ -14,7 +14,7 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './update-popup.component.html',
   styleUrls: ['./update-popup.component.css']
 })
-export class UpdatePopupComponent implements OnInit, OnDestroy {
+export class UpdatePopupComponent implements OnInit, OnDestroy, AfterViewChecked {
   contentLoadedSubscription: Subscription;
   form = this.formBuilder.group({
     id: [''],
@@ -35,13 +35,19 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
     private updatePopupService: UpdatePopupService, private router: Router, @Inject(JQ_TOKEN) private $: any) { }
 
   ngOnInit() {
-    this.$('.custom-tooltip').tooltip();
+    this.$('[data-toggle="tooltip"]').tooltip();
     this.contentLoadedSubscription = this.updatePopupService.contentLoaded.subscribe(
       (e: LastSeenItem) => this.contentLoaded(this, e));
   }
 
   ngOnDestroy(): void {
     this.contentLoadedSubscription.unsubscribe();
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.$('#popupOverlay').css('display') === 'none' && this.$('#collapse1').hasClass('show') === false) {
+      this.$('#collapse1').collapse('toggle');
+    }
   }
 
   contentLoaded(_: UpdatePopupComponent, content: LastSeenItem) {
@@ -59,16 +65,11 @@ export class UpdatePopupComponent implements OnInit, OnDestroy {
     this.form.controls.imageUrl.setValue(content.imageUrl);
 
     for (let i = 2; i <= 4; i++) {
-      if (this.$('#collapse' + i).hasClass('in')) {
+      if (this.$('#collapse' + i).hasClass('show')) {
         this.$('#collapse' + i).collapse('toggle');
       }
     }
-    setTimeout(() => {
-      this.updatePopupService.open();
-      if (this.$('#collapse1').hasClass('in') === false) {
-        this.$('#collapse1').collapse('toggle');
-      }
-    }, 100);
+    this.updatePopupService.open();
   }
 
   remove() {

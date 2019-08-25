@@ -2,6 +2,14 @@ a {
     text-decoration: none !important
 }
 
+.popup-line {
+    height: 40px;
+}
+
+.fa {
+    color: #00acd6;
+}
+
 #popupOverlay {
     display: none;
     position: fixed;
@@ -18,7 +26,6 @@ a {
 #accordion {
     position: relative;
     width: 300px;
-    height: fit-content;
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
