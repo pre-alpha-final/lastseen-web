@@ -50,7 +50,6 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm audit fix" />
     <!-- stats-json added for 'npx webpack-bundle-analyzer dist\stats.json' -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod --stats-json" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
