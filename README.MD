@@ -1,5 +1,8 @@
-# LastSeen
+﻿# LastSeen
 Simplifies tracking the shows You watch.
+
+# Screens
+[![](/docs/screens.jpg)](https://lastseen.azurewebsites.net)
 
 # Demo environment
 For testing purposes log in here:  
