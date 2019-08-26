@@ -14,7 +14,7 @@ export class UpdatePopupService {
 
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) {
     window.onclick = event => {
-      if (event.target === this.getPopup()) {
+      if (event.target === this.getPopupOverlay()) {
         this.close();
       }
     };
@@ -37,11 +37,11 @@ export class UpdatePopupService {
   }
 
   open(): void {
-    this.getPopup().style.display = 'flex';
+    this.getPopupOverlay().style.display = 'flex';
   }
 
   close(): void {
-    this.getPopup().style.display = 'none';
+    this.getPopupOverlay().style.display = 'none';
   }
 
   private handleItem(id?: string) {
@@ -50,8 +50,8 @@ export class UpdatePopupService {
       .subscribe(e => this.contentLoaded.emit(e));
   }
 
-  private getPopup(): any {
-    return document.getElementById('popup');
+  private getPopupOverlay(): any {
+    return document.getElementById('popupOverlay');
   }
 
   private generateInitialContent(): LastSeenItem {

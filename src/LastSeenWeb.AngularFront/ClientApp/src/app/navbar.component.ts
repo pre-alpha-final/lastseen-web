@@ -8,8 +8,7 @@ import { UpdatePopupService } from './lastseen-items/update-popup.service';
 
 @Component({
   selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  templateUrl: './navbar.component.html'
 })
 export class NavBarComponent implements OnDestroy {
   private userSubscription: Subscription;

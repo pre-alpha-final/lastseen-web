@@ -1,43 +1,4 @@
-.itemview {
-	padding: 0;
-}
-
-.itemview .thumbnail {
-	background-color: #f9f9ff
-}
-
-.itemview .thumbnail p {
-	color: #333;
-	padding-bottom: 4px;
-	margin: 0;
-}
-
-.itemview .thumbnail .image {
-	height: auto;
+.card-body .image {
 	max-height: 200px;
 	max-width: 100%;
-	margin-top: 10px;
-}
-
-.itemview .thumbnail .title {
-	margin-top: 15px;
-	font-size: 22px;
-}
-
-.itemview .thumbnail .season-episode {
-	color: #555;
-	font-size: 18px;
-	margin-bottom: 4px;
-}
-
-.itemview .thumbnail .seen {
-	color: #555;
-	font-size: 18px;
-	margin-bottom: 4px;
-}
-
-.itemview .thumbnail .notes {
-	margin: 0px 15px 10px;
-	font-size: 16px;
-	color: #aaa;
 }

@@ -1,55 +1,55 @@
-body {
-	padding-top: 50px;
-	padding-bottom: 20px;
-	color: #f1f1f1 !important;
-	background-image: url("assets/footer_lodyas_dark.png");
-	background-color: #111 !important;
+﻿/* Better look witch sketchy bootstrap */
+a, button:focus {
+    outline: 0;
 }
 
-.body-content {
-	padding-left: 15px;
-	padding-right: 15px;
+/* Better look witch sketchy bootstrap */
+input[type=checkbox] {
+    outline: none;
 }
 
-.btn {
-	padding: 10px 20px;
-	background-color: #333;
-	color: #f1f1f1;
-	transition: .2s;
+/* tooltip color */
+.tooltip-inner {
+    background-color: #00acd6;
 }
 
-.btn-red {
-	background-color: #d43f3a;
+/* tooltip color */
+.bs-tooltip-auto[x-placement^=right] .arrow:before,
+.bs-tooltip-right .arrow:before {
+    border-right-color: #00acd6 !important;
 }
 
-.button-spacing {
-	margin-left: 3px;
-	margin-right: 3px;
+/* tooltip color */
+.bs-tooltip-auto[x-placement^=left] .arrow:before,
+.bs-tooltip-left .arrow:before {
+    border-left-color: #00acd6 !important;
 }
 
-.btn:hover, .btn:focus {
-	border: 1px solid #333;
-	background-color: #f1f1f1;
-	color: #000;
+/* tooltip color */
+.bs-tooltip-auto[x-placement^=bottom] .arrow:before,
+.bs-tooltip-bottom .arrow:before {
+    border-bottom-color: #00acd6 !important;
 }
 
-.tooltip .tooltip-inner {
-	background-color: #00acd6;
-	color: #fff;
+/* tooltip color */
+.bs-tooltip-auto[x-placement^=top] .arrow:before,
+.bs-tooltip-top .arrow:before {
+    border-top-color: #00acd6 !important;
 }
 
-.tooltip.top .tooltip-arrow {
-	border-top-color: #00acd6;
+/* popper.js positioning fix */
+.tooltip {
+    top: 0;
 }
 
-.tooltip.right .tooltip-arrow {
-	border-right-color: #00acd6;
-}
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {}
 
-.tooltip.bottom .tooltip-arrow {
-	border-bottom-color: #00acd6;
-}
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {}
 
-.tooltip.left .tooltip-arrow {
-	border-left-color: #00acd6;
-}
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
