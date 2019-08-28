@@ -23,6 +23,9 @@ interface AuthData {
 export class AuthService implements OnDestroy {
   private authData: AuthData;
   private userSubscription: Subscription;
+  get accessToken() {
+    return this.authData.accessToken;
+  }
 
   constructor(private store: Store<AppState>, private httpClient: HttpClient, private router: Router) {
     this.authData = new LocalStorageAuthData();
@@ -31,51 +34,9 @@ export class AuthService implements OnDestroy {
       this.authData.accessToken = (e.accessToken != null && e.accessToken !== 'n/a') ? e.accessToken : this.authData.accessToken;
       this.authData.refreshToken = (e.refreshToken != null && e.refreshToken !== 'n/a') ? e.refreshToken : this.authData.refreshToken;
     });
-    this.handleExistingLogin();
-  }
 
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-  }
-
-  getToken() {
-    return this.authData.accessToken;
-  }
-
-  async isAuthenticated(offset?: number): Promise<boolean> {
-    if (this.checkTokens(offset)) {
-      return true;
-    }
-    await this.refreshToken();
-    return this.checkTokens(offset);
-  }
-
-  private checkTokens(offset?: number): boolean {
-    const jwtHelperService = new JwtHelperService();
-    if (!jwtHelperService.isTokenExpired(this.authData.accessToken, offset ? offset : 0)) {
-      return true;
-    }
-    return false;
-  }
-
-  private async refreshToken(): Promise<void> {
-    if (!this.authData.refreshToken) {
-      return;
-    }
-    await this.httpClient.post<TokenResponse>('/api/auth/refresh', {
-      refreshToken: this.authData.refreshToken,
-    }).toPromise().then(e => {
-      this.store.dispatch(new UpdateUser({
-        accessToken: e && e.access_token || '',
-        refreshToken: e && e.refresh_token || '',
-      }));
-    }).catch(e => { });
-  }
-
-  private handleExistingLogin() {
-    if (this.checkTokens()) {
-      const jwtHelperService = new JwtHelperService();
-      const decodedAccessToken: DecodedAccessToken = jwtHelperService.decodeToken(this.authData.accessToken);
+    if (this.isTokenValid()) {
+      const decodedAccessToken: DecodedAccessToken = new JwtHelperService().decodeToken(this.authData.accessToken);
       this.store.dispatch(new UpdateUser({
         username: decodedAccessToken && decodedAccessToken.username || '',
         accessToken: this.authData.accessToken,
@@ -84,9 +45,42 @@ export class AuthService implements OnDestroy {
     }
   }
 
-  // private synchronousSleepHack(milisecondTimeout: number) {
-  //   const start = new Date().getTime(), expire = start + milisecondTimeout;
-  //   while (new Date().getTime() < expire) { }
-  //   return;
-  // }
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
+
+  isAuthenticated(offset?: number): Promise<boolean> {
+    return new Promise<boolean>(resolve => {
+      if (this.isTokenValid(offset)) {
+        return resolve(true);
+      }
+      this.refreshToken()
+        .then(() => resolve(this.isTokenValid(offset)));
+    });
+  }
+
+  private isTokenValid(offset?: number): boolean {
+    const jwtHelperService = new JwtHelperService();
+    if (!jwtHelperService.isTokenExpired(this.authData.accessToken, offset ? offset : 0)) {
+      return true;
+    }
+    return false;
+  }
+
+  private refreshToken(): Promise<void> {
+    return new Promise<void>(resolve => {
+      if (!this.authData.refreshToken) {
+        resolve();
+      }
+      this.httpClient.post<TokenResponse>('/api/auth/refresh', {
+        refreshToken: this.authData.refreshToken,
+      }).toPromise().then(e => {
+        this.store.dispatch(new UpdateUser({
+          accessToken: e && e.access_token || '',
+          refreshToken: e && e.refresh_token || '',
+        }));
+        resolve();
+      }).catch(e => resolve());
+    });
+  }
 }
