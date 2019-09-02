@@ -1,6 +1,4 @@
-﻿#define HTTPS
-
-using System;
+﻿using System;
 using AutoMapper;
 using IdentityServer4.EntityFramework.Stores;
 using IdentityServer4.Services;
@@ -88,7 +86,7 @@ namespace LastSeenWeb.AngularFront
 			{
 				options.Authority = Configuration["Authority"];
 				options.Audience = "lastseenapi";
-#if HTTPS
+#if !DEBUG
 				options.RequireHttpsMetadata = true;
 #else
 				options.RequireHttpsMetadata = false;
@@ -133,7 +131,7 @@ namespace LastSeenWeb.AngularFront
 				app.UseHsts();
 			}
 
-#if HTTPS
+#if !DEBUG
 			app.UseHttpsRedirection();
 #endif
 			app.UseStaticFiles();
