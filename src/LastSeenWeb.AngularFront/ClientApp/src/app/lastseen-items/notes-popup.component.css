@@ -23,6 +23,13 @@ a {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
+#notes-popupOverlay .card {
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 8px;
+}
+
 @-webkit-keyframes animatetop {
     from {
         top: -300px;

@@ -4,23 +4,27 @@ import { MasonryListComponent } from './masonry-list.component';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { LastseenItemComponent } from './lastseen-item.component';
 import { UpdatePopupComponent } from './update-popup.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NotesPopupComponent } from './notes-popup/notes-popup.component';
+import { NotesPopupComponent } from './notes-popup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 
 @NgModule({
   declarations: [
     MasonryListComponent,
     LastseenItemComponent,
     UpdatePopupComponent,
-    NotesPopupComponent
+    NotesPopupComponent,
   ],
   imports: [
     CommonModule,
     NgxMasonryModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    LMarkdownEditorModule
   ],
   exports: [
-    UpdatePopupComponent
+    UpdatePopupComponent,
+    NotesPopupComponent
   ]
 })
 export class LastseenItemsModule { }

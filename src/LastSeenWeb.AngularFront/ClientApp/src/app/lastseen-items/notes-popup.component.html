@@ -1,5 +1,12 @@
 <div id="notes-popupOverlay" class="pt-5 justify-content-center">
   <div>
-hello
+    <div class="card">
+      <h3>NOTES:</h3>
+      <form novalidate #form="ngForm">
+        <md-editor name="Content" [height]="'200'" [mode]="mode" [options]="options" [(ngModel)]="content" required
+          maxlength="500">
+        </md-editor>
+      </form>
+    </div>
   </div>
 </div>

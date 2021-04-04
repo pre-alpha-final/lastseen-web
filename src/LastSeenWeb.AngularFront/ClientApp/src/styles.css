@@ -42,6 +42,11 @@ input[type=checkbox] {
     top: 0;
 }
 
+/* margin fix */
+.md-editor-container {
+    margin-bottom: 0 !important;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {}
 

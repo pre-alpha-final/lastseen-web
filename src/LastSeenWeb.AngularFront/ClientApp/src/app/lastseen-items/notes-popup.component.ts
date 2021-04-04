@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { MdEditorOption } from 'ngx-markdown-editor';
 
 @Component({
   selector: 'app-notes-popup',
@@ -30,6 +31,27 @@ export class NotesPopupComponent implements OnInit, OnDestroy, AfterViewChecked 
     name: [''],
     imageUrl: ['']
   });
+
+  public options: MdEditorOption = {
+    showPreviewPanel: false,
+    enablePreviewContentClick: false,
+    resizable: true,
+    customRender: {
+      image: function (href: string, title: string, text: string) {
+        let out = `<img style="max-width: 100%; border: 20px solid red;" src="${href}" alt="${text}"`;
+        if (title) {
+          out += ` title="${title}"`;
+        }
+        out += (<any>this.options).xhtml ? "/>" : ">";
+        return out;
+      }
+    },
+    markedjsOpt: {
+      sanitize: true
+    }
+  };
+  public content = 'foo';
+  public mode = 'preview';
 
   constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private authService: AuthService,
     private notesPopupService: NotesPopupService, private router: Router, @Inject(JQ_TOKEN) private $: any) { }
