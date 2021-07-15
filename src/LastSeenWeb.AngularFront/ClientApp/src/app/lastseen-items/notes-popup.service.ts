@@ -20,18 +20,15 @@ export class NotesPopupService {
     };
   }
 
-  loadContent(id?: string): void {
-    if (!id) {
-      this.contentLoaded.emit(this.generateInitialContent());
-      return;
-    }
-
+  loadContent(): void {
     this.authService.isAuthenticated(60)
       .then(authenticated => {
         if (authenticated !== true) {
           this.router.navigate(['auth/login']);
         } else {
-          this.handleItem(id);
+          this.httpClient.get('/api/lastseenitems/')
+          .pipe(catchError(e => of(this.generateInitialContent())))
+          .subscribe(e => this.contentLoaded.emit(e));
         }
       });
   }
@@ -44,12 +41,6 @@ export class NotesPopupService {
     Array.from(document.getElementsByClassName('popup-overlay')).forEach(element => {
       element.style.display = 'none';
     });
-  }
-
-  private handleItem(id?: string) {
-    this.httpClient.get('/api/lastseenitems/' + id)
-      .pipe(catchError(e => of(this.generateInitialContent())))
-      .subscribe(e => this.contentLoaded.emit(e));
   }
 
   private getPopupOverlay(): any {

@@ -34,7 +34,7 @@ export class NotesPopupComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   public options: MdEditorOption = {
     showPreviewPanel: false,
-    enablePreviewContentClick: false,
+    enablePreviewContentClick: true,
     resizable: true,
     customRender: {
       image: function (href: string, title: string, text: string) {
@@ -50,7 +50,7 @@ export class NotesPopupComponent implements OnInit, OnDestroy, AfterViewChecked 
       sanitize: true
     }
   };
-  public content = 'foo';
+  public content = 'foo2';
   public mode = 'preview';
 
   constructor(private formBuilder: FormBuilder, private httpClient: HttpClient, private authService: AuthService,
@@ -86,11 +86,6 @@ export class NotesPopupComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.form.controls.name.setValue(content.name);
     this.form.controls.imageUrl.setValue(content.imageUrl);
 
-    for (let i = 2; i <= 4; i++) {
-      if (this.$('#collapse' + i).hasClass('show')) {
-        this.$('#collapse' + i).collapse('toggle');
-      }
-    }
     this.notesPopupService.open();
   }
 
