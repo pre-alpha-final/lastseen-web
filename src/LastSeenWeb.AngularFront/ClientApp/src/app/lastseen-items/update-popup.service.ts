@@ -14,7 +14,7 @@ export class UpdatePopupService {
 
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) {
     window.onclick = event => {
-      if (event.target === this.getPopupOverlay()) {
+      if ((<HTMLElement>event.target).classList.contains('popup-overlay')) {
         this.close();
       }
     };
@@ -41,7 +41,9 @@ export class UpdatePopupService {
   }
 
   close(): void {
-    this.getPopupOverlay().style.display = 'none';
+    Array.from(document.getElementsByClassName('popup-overlay')).forEach(element => {
+      element.style.display = 'none';
+    });
   }
 
   private handleItem(id?: string) {
