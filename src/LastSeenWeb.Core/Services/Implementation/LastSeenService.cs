@@ -47,5 +47,20 @@ namespace LastSeenWeb.Core.Services.Implementation
 				? Task.CompletedTask
 				: _lastSeenRepository.Delete(id, ownerName);
 		}
+
+		public async Task UpsertNotes(string notes, string ownerName)
+		{
+			if (new ApplicationSettings().DemoUsername == ownerName)
+			{
+				return;
+			}
+
+			await _lastSeenRepository.UpsertNotes(notes, ownerName);
+		}
+
+		public Task<string> GetNotes(string ownerName)
+		{
+			return _lastSeenRepository.GetNotes(ownerName);
+		}
 	}
 }

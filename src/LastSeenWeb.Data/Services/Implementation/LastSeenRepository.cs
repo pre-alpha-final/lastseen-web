@@ -12,7 +12,8 @@ namespace LastSeenWeb.Data.Services.Implementation
 	public class LastSeenRepository : ILastSeenRepository
 	{
 		private const string DatabaseName = "mo10097_lastseen";
-		private const string CollectionName = "LastSeenItems";
+		private const string ItemsCollectionName = "LastSeenItems";
+		private const string NotesCollectionName = "LastSeenNotes";
 
 		private readonly IMapper _mapper;
 		private readonly IMongoClient _mongoClient;
@@ -30,7 +31,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 			try
 			{
 				var db = _mongoClient.GetDatabase(DatabaseName);
-				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
+				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(ItemsCollectionName);
 				var result = await lastSeenItems
 					.Find(e => e.OwnerName == ownerName && e.Deleted == false)
 					.SortByDescending(e => e.Modified)
@@ -51,7 +52,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 			try
 			{
 				var db = _mongoClient.GetDatabase(DatabaseName);
-				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
+				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(ItemsCollectionName);
 				var result = await lastSeenItems
 					.Find(e => e.Id == id && e.OwnerName == ownerName && e.Deleted == false)
 					.FirstOrDefaultAsync();
@@ -76,7 +77,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 				}
 
 				var db = _mongoClient.GetDatabase(DatabaseName);
-				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
+				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(ItemsCollectionName);
 				var oldEntity = await lastSeenItems
 					.Find(e => e.OwnerName == ownerName && e.Id == lastSeenItem.Id)
 					.FirstOrDefaultAsync();
@@ -106,7 +107,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 			try
 			{
 				var db = _mongoClient.GetDatabase(DatabaseName);
-				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(CollectionName);
+				var lastSeenItems = db.GetCollection<LastSeenItemEntity>(ItemsCollectionName);
 				var entity = await lastSeenItems
 					.Find(e => e.OwnerName == ownerName && e.Id == id)
 					.FirstOrDefaultAsync();
@@ -117,6 +118,58 @@ namespace LastSeenWeb.Data.Services.Implementation
 			{
 				_logger.LogError(e.Message);
 			}
+		}
+
+		public async Task UpsertNotes(string notes, string ownerName)
+		{
+			try
+			{
+				var db = _mongoClient.GetDatabase(DatabaseName);
+				var notesEntities = db.GetCollection<NotesEntity>(NotesCollectionName);
+				var oldEntity = await notesEntities
+					.Find(e => e.OwnerName == ownerName)
+					.FirstOrDefaultAsync();
+
+				var entity = new NotesEntity
+				{
+					Id = oldEntity?.Id,
+					OwnerName = ownerName,
+					Notes = notes,
+				};
+
+				if (entity.Id == null)
+				{
+					await notesEntities.InsertOneAsync(entity);
+				}
+				else
+				{
+					await notesEntities.ReplaceOneAsync(e => e.Id == entity.Id, entity);
+				}
+			}
+			catch (Exception e)
+			{
+				_logger.LogError(e.Message);
+			}
+		}
+
+		public async Task<string> GetNotes(string ownerName)
+		{
+			try
+			{
+				var db = _mongoClient.GetDatabase(DatabaseName);
+				var notesEntities = db.GetCollection<NotesEntity>(NotesCollectionName);
+				var result = await notesEntities
+					.Find(e => e.OwnerName == ownerName)
+					.FirstOrDefaultAsync();
+
+				return result.Notes;
+			}
+			catch (Exception e)
+			{
+				_logger.LogError(e.Message);
+			}
+
+			return null;
 		}
 	}
 }

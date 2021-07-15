@@ -10,5 +10,7 @@ namespace LastSeenWeb.Core.Services
 		Task<LastSeenItem> Get(string id, string ownerName);
 		Task Upsert(LastSeenItem lastSeenItem, string ownerName);
 		Task Delete(string id, string ownerName);
+		Task UpsertNotes(string notes, string ownerName);
+		Task<string> GetNotes(string ownerName);
 	}
 }
