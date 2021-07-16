@@ -1,0 +1,14 @@
+<div id="notes-popupOverlay" class="pt-5 justify-content-center popup-overlay">
+  <div>
+    <div class="card">
+      <h3>NOTES:</h3>
+      <md-editor name="Content" [mode]="mode" [options]="options" [(ngModel)]="content" required
+        maxlength="500">
+      </md-editor>
+      <div class="d-flex justify-content-center m-2">
+        <button class="btn btn-success" type="button" (click)="toogleMode()">{{this.mode === 'preview' ? 'Edit' : 'Preview'}}</button>
+        <button class="btn btn-info ml-2" type="button" (click)="save()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
