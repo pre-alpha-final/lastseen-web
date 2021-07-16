@@ -31,7 +31,7 @@ namespace LastSeenWeb.AngularFront.Controllers
 		{
 			var notes = await _lastSeenService.GetNotes(GetUsername());
 
-			return Ok(notes);
+			return Ok(new { notes });
 		}
 
 		private string GetUsername()

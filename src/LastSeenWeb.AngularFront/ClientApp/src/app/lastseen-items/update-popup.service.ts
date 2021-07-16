@@ -42,7 +42,7 @@ export class UpdatePopupService {
 
   close(): void {
     Array.from(document.getElementsByClassName('popup-overlay')).forEach(element => {
-      element.style.display = 'none';
+      (<HTMLElement>element).style.display = 'none';
     });
   }
 

@@ -47,6 +47,12 @@ input[type=checkbox] {
     margin-bottom: 0 !important;
 }
 
+/* min md editor size */
+.md-editor-container {
+    min-width: 250px;
+    min-height: 300px;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {}
 

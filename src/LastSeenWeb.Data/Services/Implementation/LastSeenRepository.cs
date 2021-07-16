@@ -162,7 +162,7 @@ namespace LastSeenWeb.Data.Services.Implementation
 					.Find(e => e.OwnerName == ownerName)
 					.FirstOrDefaultAsync();
 
-				return result.Notes;
+				return result?.Notes;
 			}
 			catch (Exception e)
 			{
