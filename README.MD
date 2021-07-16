@@ -1,5 +1,5 @@
 # LastSeen
-Simplifies tracking the shows You watch.
+Simplifies tracking the shows you watch.
 
 # Screens
 [![](/docs/main.jpg)](https://lastseen.azurewebsites.net)
